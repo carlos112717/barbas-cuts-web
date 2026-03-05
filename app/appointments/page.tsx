@@ -64,7 +64,7 @@ export default function AppointmentsScreen() {
     }
   };
 
-  // 3. Lógica de Cancelación (Regla de 8 horas)
+  // 3. Lógica de Cancelación Corregida
   const handleCancel = async (appointment: Appointment) => {
     // Calculamos el tiempo real de la cita
     const appointmentDate = new Date(`${appointment.date}T${appointment.time}:00`);
@@ -74,18 +74,23 @@ export default function AppointmentsScreen() {
     const diffInMs = appointmentDate.getTime() - now.getTime();
     const diffInHours = diffInMs / (1000 * 60 * 60);
 
-    // Si la cita ya pasó o falta menos de 8 horas
-    if (diffInHours < 8 && diffInHours > 0) {
+    // Si el número es negativo, la cita YA PASÓ
+    if (diffInHours < 0) {
+      alert("No puedes cancelar una cita que ya ocurrió o está ocurriendo.");
+      return;
+    }
+
+    // Si falta menos de 8 horas para la cita
+    if (diffInHours < 8) {
       alert("⚠️ No puedes cancelar una cita con menos de 8 horas de antelación. Por favor, comunícate con nosotros por WhatsApp.");
       return;
     }
 
-    // Confirmación nativa
+    // Confirmación nativa (solo si pasamos los bloqueos anteriores)
     if (window.confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
       setCancelingId(appointment.id);
       try {
         await deleteDoc(doc(db, "appointments", appointment.id));
-        // Actualizamos la lista en pantalla borrando la que acabamos de cancelar
         setAppointments((prev) => prev.filter((app) => app.id !== appointment.id));
         alert("Cita cancelada correctamente.");
       } catch (error) {
