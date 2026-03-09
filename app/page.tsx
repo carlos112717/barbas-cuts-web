@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; // Importamos las funciones de la base de datos
+import { doc, setDoc, getDoc } from "firebase/firestore"; // Importamos getDoc
 import { FirebaseError } from "firebase/app";
 import { auth, db } from "../lib/firebase"; 
 import { useRouter } from "next/navigation";
@@ -11,11 +11,10 @@ export default function AuthScreen() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   
-  // Estados del formulario
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");   // Nuevo
-  const [phone, setPhone] = useState(""); // Nuevo
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,23 +27,30 @@ export default function AuthScreen() {
     try {
       if (isLogin) {
         // INICIAR SESIÓN
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push("/home");
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        
+        // --- NUEVA LÓGICA DE REDIRECCIÓN ---
+        const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+        if (userDoc.exists() && userDoc.data().role === "admin") {
+          router.push("/admin"); // Si es admin, va al panel de control
+        } else {
+          router.push("/home"); // Si es cliente, va a reservas
+        }
+        
       } else {
         // REGISTRO
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Guardamos el Nombre y Teléfono en la colección "users" de Firestore
         await setDoc(doc(db, "users", user.uid), {
           name: name,
           phone: phone,
           email: email,
-          role: "client", // Por defecto todos son clientes. Luego haremos al admin.
+          role: "client",
           createdAt: new Date().toISOString()
         });
 
-        router.push("/home");
+        router.push("/home"); // Un registro nuevo siempre es cliente
       }
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
@@ -77,76 +83,39 @@ export default function AuthScreen() {
 
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           
-          {/* Campos extra SOLO para el Registro */}
           {!isLogin && (
             <>
               <div>
                 <label className="text-gray-400 text-sm mb-1 block">Nombre Completo</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors"
-                  placeholder="Juan Pérez"
-                  required={!isLogin} // Solo es obligatorio si se está registrando
-                />
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors" placeholder="Juan Pérez" required={!isLogin} />
               </div>
               <div>
                 <label className="text-gray-400 text-sm mb-1 block">Teléfono / WhatsApp</label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors"
-                  placeholder="+34 600 000 000"
-                  required={!isLogin}
-                />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors" placeholder="+34 600 000 000" required={!isLogin} />
               </div>
             </>
           )}
 
           <div>
             <label className="text-gray-400 text-sm mb-1 block">Correo Electrónico</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors"
-              placeholder="tu@correo.com"
-              required
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors" placeholder="tu@correo.com" required />
           </div>
 
           <div>
             <label className="text-gray-400 text-sm mb-1 block">Contraseña</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors"
-              placeholder="••••••••"
-              required
-            />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors" placeholder="••••••••" required />
           </div>
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50"
-          >
+          <button type="submit" disabled={loading} className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50">
             {loading ? "Cargando..." : (isLogin ? "INICIAR SESIÓN" : "REGISTRARSE")}
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-400">
           {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-barbas-gold font-bold hover:underline"
-          >
+          <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-barbas-gold font-bold hover:underline">
             {isLogin ? "Regístrate aquí" : "Inicia sesión"}
           </button>
         </div>
