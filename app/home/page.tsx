@@ -67,12 +67,12 @@ export default function HomeScreen() {
   if (!user) return null;
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6">
+    <main className="min-h-screen bg-barbas-black p-4 sm:p-6">
       <div className="max-w-md mx-auto">
-        <header className="flex justify-between items-center mb-10 mt-4">
-          <div>
+        <header className="flex items-start justify-between gap-3 mb-8 mt-2">
+          <div className="min-w-0">
             <p className="text-gray-400 text-sm">Hola, {userName}</p>
-            <h1 className="text-white text-2xl font-bold">Bienvenido a Barbas Cut&apos;s</h1>
+            <h1 className="text-white text-xl sm:text-2xl font-bold leading-tight">Bienvenido a Barbas Cut&apos;s</h1>
           </div>
           <button onClick={handleLogout} className="p-2 text-barbas-gold hover:bg-white/10 rounded-full transition-colors" title="Cerrar Sesión">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -84,7 +84,7 @@ export default function HomeScreen() {
           <div><h2 className="text-barbas-black text-xl font-bold">Reservar Cita</h2><p className="text-barbas-black/80 text-sm">Elige tu estilo y horario ideal</p></div>
         </button>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button onClick={() => router.push("/appointments")} className="bg-barbas-dark rounded-2xl p-5 flex flex-col justify-between h-36 border border-white/5 hover:border-barbas-gold/50 transition-colors text-left">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-barbas-gold mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <div><h2 className="text-white font-bold">Mis Citas</h2><p className="text-gray-400 text-xs">Historial y estado</p></div>

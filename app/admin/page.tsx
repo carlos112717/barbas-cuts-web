@@ -7,13 +7,21 @@ import { FirebaseError } from "firebase/app";
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, db, storage } from "../../lib/firebase";
-import { createAppointmentWithLock, deleteAppointmentAndLock, getBookedTimesForBarber } from "../../lib/appointments";
+import {
+  createAppointmentWithLock,
+  deleteAppointmentAndLock,
+  getBookedTimesForBarber,
+  queueAppointmentCancellationEmail,
+} from "../../lib/appointments";
 import { buildTimeSlots, DEFAULT_BUSINESS_HOURS, normalizeBusinessHours, type BusinessHours } from "../../lib/scheduling";
 
 interface Appointment {
   id: string;
+  customerId: string;
   customerName: string;
   customerEmail: string;
+  customerPhone?: string;
+  customerPhotoURL?: string;
   barberId: string;
   barberName: string;
   serviceId: string;
@@ -55,6 +63,14 @@ const getToday = () => {
 
 const sortAppointments = (items: Appointment[]) => {
   return [...items].sort((a, b) => new Date(`${a.date}T${a.time}:00`).getTime() - new Date(`${b.date}T${b.time}:00`).getTime());
+};
+
+const getWhatsAppLink = (phone: string | undefined) => {
+  if (!phone) return "";
+  const digits = phone.replace(/\D/g, "");
+  const normalized = digits.startsWith("00") ? digits.slice(2) : digits;
+  if (normalized.length < 8) return "";
+  return `https://wa.me/${normalized}`;
 };
 
 export default function AdminDashboard() {
@@ -120,8 +136,11 @@ export default function AdminDashboard() {
       const data = docSnap.data();
       return {
         id: docSnap.id,
+        customerId: typeof data.customerId === "string" ? data.customerId : "",
         customerName: typeof data.customerName === "string" ? data.customerName : "Cliente",
         customerEmail: typeof data.customerEmail === "string" ? data.customerEmail : "",
+        customerPhone: typeof data.customerPhone === "string" ? data.customerPhone : "",
+        customerPhotoURL: typeof data.customerPhotoURL === "string" ? data.customerPhotoURL : "",
         barberId: typeof data.barberId === "string" ? data.barberId : "",
         barberName: typeof data.barberName === "string" ? data.barberName : "",
         serviceId: typeof data.serviceId === "string" ? data.serviceId : "",
@@ -130,6 +149,34 @@ export default function AdminDashboard() {
         date: typeof data.date === "string" ? data.date : "",
         time: typeof data.time === "string" ? data.time : "",
         lockId: typeof data.lockId === "string" ? data.lockId : undefined,
+      };
+    });
+
+    const customerIds = Array.from(
+      new Set(mappedAppointments.map((appointment) => appointment.customerId).filter((id) => id && id !== "manual"))
+    );
+    const customerDataById = new Map<string, { name: string; phone: string; photoURL: string }>();
+
+    if (customerIds.length > 0) {
+      const customerSnapshots = await Promise.all(customerIds.map((customerId) => getDoc(doc(db, "users", customerId))));
+      customerSnapshots.forEach((snap, index) => {
+        if (!snap.exists()) return;
+        const data = snap.data();
+        customerDataById.set(customerIds[index], {
+          name: typeof data.name === "string" ? data.name : "",
+          phone: typeof data.phone === "string" ? data.phone : "",
+          photoURL: typeof data.photoURL === "string" ? data.photoURL : "",
+        });
+      });
+    }
+
+    const enrichedAppointments = mappedAppointments.map((appointment) => {
+      const customerData = customerDataById.get(appointment.customerId);
+      return {
+        ...appointment,
+        customerName: appointment.customerName || customerData?.name || "Cliente",
+        customerPhone: appointment.customerPhone || customerData?.phone || "",
+        customerPhotoURL: appointment.customerPhotoURL || customerData?.photoURL || "",
       };
     });
 
@@ -170,7 +217,7 @@ export default function AdminDashboard() {
 
     const normalizedHours = normalizeBusinessHours(settingsSnap.exists() ? (settingsSnap.data() as Partial<BusinessHours>) : undefined);
 
-    setAppointments(sortAppointments(mappedAppointments));
+    setAppointments(sortAppointments(enrichedAppointments));
     setBarbers(mappedBarbers.sort((a, b) => a.name.localeCompare(b.name)));
     setServices(mappedServices.sort((a, b) => a.name.localeCompare(b.name)));
     setClosures(mappedClosures);
@@ -258,6 +305,22 @@ export default function AdminDashboard() {
     };
   }, [getBlockedTimesForDate, isModalOpen, newDate, newBarberId, manualSlots]);
 
+  const notifyCancellationByEmail = async (appointment: Appointment) => {
+    try {
+      await queueAppointmentCancellationEmail(db, {
+        customerEmail: appointment.customerEmail,
+        customerName: appointment.customerName,
+        barberName: appointment.barberName,
+        serviceName: appointment.serviceName,
+        date: appointment.date,
+        time: appointment.time,
+        canceledBy: "admin",
+      });
+    } catch (error) {
+      console.error("Error queuing cancellation email:", error);
+    }
+  };
+
   const handleDeleteAppointment = async (item: Appointment) => {
     if (!window.confirm("Eliminar esta cita?")) return;
     await deleteAppointmentAndLock(db, {
@@ -267,6 +330,7 @@ export default function AdminDashboard() {
       time: item.time,
       barberId: item.barberId,
     });
+    await notifyCancellationByEmail(item);
     setAppointments((prev) => prev.filter((entry) => entry.id !== item.id));
     setSelectedAppointmentIds((prev) => prev.filter((id) => id !== item.id));
   };
@@ -286,6 +350,7 @@ export default function AdminDashboard() {
           time: appointment.time,
           barberId: appointment.barberId,
         });
+        await notifyCancellationByEmail(appointment);
       }
 
       setAppointments((prev) => prev.filter((appointment) => !selectedAppointmentIds.includes(appointment.id)));
@@ -338,6 +403,7 @@ export default function AdminDashboard() {
       setAppointments((prev) => sortAppointments([...prev, {
         id: appointmentId,
         lockId,
+        customerId: "manual",
         customerName,
         customerEmail: "Presencial / Telefono",
         barberId: barber.id,
@@ -509,20 +575,20 @@ export default function AdminDashboard() {
   if (!isAdmin) return null;
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6 text-white">
+    <main className="min-h-screen bg-barbas-black p-3 sm:p-6 text-white">
       <div className="max-w-6xl mx-auto space-y-6">
-        <header className="flex justify-between items-center border-b border-white/10 pb-4">
-          <h1 className="text-3xl font-bold">Administrador</h1>
-          <div className="flex gap-2">
+        <header className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center border-b border-white/10 pb-4">
+          <h1 className="text-2xl sm:text-3xl font-bold">Administrador</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto">
             <button onClick={() => setIsModalOpen(true)} className="bg-barbas-gold text-barbas-black px-3 py-2 rounded-lg font-bold">Nueva cita</button>
             <button onClick={async () => { await signOut(auth); router.push("/"); }} className="bg-red-500/20 text-red-400 px-3 py-2 rounded-lg">Cerrar sesion</button>
           </div>
         </header>
 
         <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
-          <div className="flex items-center justify-between mb-3 gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3">
             <h2 className="text-xl font-bold">Citas</h2>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <label className="text-xs flex items-center gap-1 text-gray-300">
                 <input
                   type="checkbox"
@@ -540,7 +606,7 @@ export default function AdminDashboard() {
               <button
                 onClick={handleDeleteSelectedAppointments}
                 disabled={selectedAppointmentIds.length === 0 || isSaving}
-                className="px-3 py-2 rounded-lg bg-red-500/20 text-red-300 disabled:opacity-50"
+                className="w-full sm:w-auto px-3 py-2 rounded-lg bg-red-500/20 text-red-300 disabled:opacity-50"
               >
                 Eliminar seleccionadas ({selectedAppointmentIds.length})
               </button>
@@ -548,21 +614,46 @@ export default function AdminDashboard() {
           </div>
           <div className="space-y-2">
             {appointments.map((item) => (
-              <div key={item.id} className="border border-white/10 rounded-lg p-3 flex justify-between items-center">
-                <div className="flex items-start gap-3">
+              <div key={item.id} className="border border-white/10 rounded-lg p-3 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex items-start gap-3 min-w-0">
                   <input
                     type="checkbox"
                     checked={selectedAppointmentIds.includes(item.id)}
                     onChange={(event) => toggleAppointmentSelection(item.id, event.target.checked)}
                     className="mt-1"
                   />
-                  <div>
-                    <p className="font-semibold">{item.date} {item.time} - {item.customerName}</p>
-                    <p className="text-sm text-gray-400">{item.barberName} | {item.serviceName} | {item.price} EUR</p>
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center">
+                    {item.customerPhotoURL ? (
+                      <img src={item.customerPhotoURL} alt={item.customerName} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-[10px] text-gray-300 font-semibold">
+                        {item.customerName.slice(0, 2).toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold break-words">{item.date} {item.time} - {item.customerName}</p>
+                    <p className="text-sm text-gray-400 break-words">{item.barberName} | {item.serviceName} | {item.price} EUR</p>
+                    <p className="text-xs text-gray-500 break-all">{item.customerEmail || "Sin correo"}</p>
                   </div>
                 </div>
-                <div>
-                  <button onClick={() => handleDeleteAppointment(item)} className="text-red-400">Eliminar</button>
+                <div className="flex items-center justify-end gap-3 flex-wrap">
+                  {getWhatsAppLink(item.customerPhone) ? (
+                    <a
+                      href={getWhatsAppLink(item.customerPhone)}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Contactar por WhatsApp"
+                      className="w-8 h-8 rounded-full bg-green-500 hover:bg-green-400 text-white flex items-center justify-center shrink-0"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M12 2a10 10 0 00-8.66 15l-1.2 4.4 4.5-1.18A10 10 0 1012 2zm0 18a8 8 0 01-4.07-1.12l-.3-.18-2.67.7.72-2.6-.2-.32A8 8 0 1112 20zm4.43-5.94c-.24-.12-1.4-.7-1.62-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1-.38-1.9-1.2-.7-.62-1.16-1.4-1.3-1.64-.14-.24-.02-.36.1-.48.1-.1.24-.26.36-.38.12-.12.16-.2.24-.34.08-.14.04-.26-.02-.38-.06-.12-.54-1.3-.74-1.78-.2-.48-.4-.42-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.68 2.56 4.08 3.58.57.24 1 .38 1.34.48.56.18 1.08.16 1.48.1.45-.06 1.4-.58 1.6-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z" />
+                      </svg>
+                    </a>
+                  ) : (
+                    <span className="text-[10px] text-gray-500">Sin WhatsApp</span>
+                  )}
+                  <button onClick={() => handleDeleteAppointment(item)} className="text-red-400 shrink-0">Eliminar</button>
                 </div>
               </div>
             ))}
@@ -573,10 +664,10 @@ export default function AdminDashboard() {
         <section className="grid md:grid-cols-2 gap-4">
           <div className="bg-barbas-dark p-4 rounded-xl border border-white/10">
             <h2 className="font-bold mb-2">Barberos</h2>
-            <div className="flex gap-2 mb-3">
-              <input value={newBarberName} onChange={(event) => setNewBarberName(event.target.value)} placeholder="Nombre" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
-              <input value={newBarberBio} onChange={(event) => setNewBarberBio(event.target.value)} placeholder="Bio" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
-              <button onClick={handleAddBarber} className="bg-barbas-gold text-black px-2 rounded">+</button>
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2 mb-3">
+              <input value={newBarberName} onChange={(event) => setNewBarberName(event.target.value)} placeholder="Nombre" className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <input value={newBarberBio} onChange={(event) => setNewBarberBio(event.target.value)} placeholder="Bio" className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <button onClick={handleAddBarber} className="bg-barbas-gold text-black px-2 py-1 rounded">+</button>
             </div>
             {barbers.map((item) => (
               <div key={item.id} className="border border-white/10 rounded-lg p-2 mb-2 space-y-2">
@@ -588,13 +679,13 @@ export default function AdminDashboard() {
                       <span className="text-xs text-gray-400">Sin foto</span>
                     )}
                   </div>
-                  <div className="flex-1 grid grid-cols-2 gap-2">
+                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <input value={item.name} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, name: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
                     <input value={item.bio} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, bio: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
                   </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                  <input type="file" accept="image/*" onChange={(event) => { const file = event.target.files?.[0]; if (file) void handleBarberPhotoUpload(item.id, file); }} className="text-xs text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:bg-barbas-gold file:text-barbas-black file:font-semibold" />
+                <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+                  <input type="file" accept="image/*" onChange={(event) => { const file = event.target.files?.[0]; if (file) void handleBarberPhotoUpload(item.id, file); }} className="text-xs text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:bg-barbas-gold file:text-barbas-black file:font-semibold w-full" />
                   <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={item.active} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, active: event.target.checked } : row))} />Activo</label>
                   <button onClick={() => handleSaveBarber(item)} className="text-emerald-400 text-sm">Guardar</button>
                   <button onClick={() => handleDeleteBarber(item.id)} className="text-red-400 text-sm">Borrar</button>
@@ -605,18 +696,22 @@ export default function AdminDashboard() {
 
           <div className="bg-barbas-dark p-4 rounded-xl border border-white/10">
             <h2 className="font-bold mb-2">Servicios</h2>
-            <div className="flex gap-2 mb-3">
-              <input value={newServiceName} onChange={(event) => setNewServiceName(event.target.value)} placeholder="Servicio" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
-              <input type="number" value={newServicePrice} onChange={(event) => setNewServicePrice(event.target.value)} placeholder="Precio" className="w-24 bg-black/30 border border-gray-600 rounded px-2 py-1" />
-              <button onClick={handleAddService} className="bg-barbas-gold text-black px-2 rounded">+</button>
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2 mb-3">
+              <input value={newServiceName} onChange={(event) => setNewServiceName(event.target.value)} placeholder="Servicio" className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <input type="number" value={newServicePrice} onChange={(event) => setNewServicePrice(event.target.value)} placeholder="Precio" className="w-full sm:w-24 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <button onClick={handleAddService} className="bg-barbas-gold text-black px-2 py-1 rounded">+</button>
             </div>
             {services.map((item) => (
-              <div key={item.id} className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-2 mb-2">
-                <input value={item.name} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, name: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
-                <input type="number" value={item.price} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, price: Number(event.target.value) } : row))} className="w-20 bg-black/30 border border-gray-600 rounded px-2 py-1" />
-                <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={item.active} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, active: event.target.checked } : row))} />Activo</label>
-                <button onClick={() => handleSaveService(item)} className="text-emerald-400 text-sm">Guardar</button>
-                <button onClick={() => handleDeleteService(item.id)} className="text-red-400 text-sm">Borrar</button>
+              <div key={item.id} className="border border-white/10 rounded-lg p-2 mb-2">
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 mb-2">
+                  <input value={item.name} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, name: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                  <input type="number" value={item.price} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, price: Number(event.target.value) } : row))} className="w-full sm:w-24 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={item.active} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, active: event.target.checked } : row))} />Activo</label>
+                  <button onClick={() => handleSaveService(item)} className="text-emerald-400 text-sm">Guardar</button>
+                  <button onClick={() => handleDeleteService(item.id)} className="text-red-400 text-sm">Borrar</button>
+                </div>
               </div>
             ))}
           </div>
@@ -624,7 +719,7 @@ export default function AdminDashboard() {
 
         <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
           <h2 className="font-bold mb-2">Horario laboral (slots de 1 hora)</h2>
-          <div className="flex gap-2 items-end">
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-end">
             <div>
               <label className="text-xs text-gray-400">Apertura</label>
               <select value={hoursDraft.openHour} onChange={(event) => setHoursDraft((prev) => ({ ...prev, openHour: Number(event.target.value) }))} className="bg-black/30 border border-gray-600 rounded px-2 py-1 block">
@@ -637,9 +732,9 @@ export default function AdminDashboard() {
                 {hourOptions.filter((hour) => hour > hoursDraft.openHour).map((hour) => <option key={hour} value={hour}>{String(hour).padStart(2, "0")}:00</option>)}
               </select>
             </div>
-            <button onClick={handleSaveHours} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold">Guardar horario</button>
+            <button onClick={handleSaveHours} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold w-full sm:w-auto">Guardar horario</button>
           </div>
-          <p className="text-xs text-gray-400 mt-2">Slots: {buildTimeSlots({ ...hoursDraft, slotMinutes: 60 }).join(", ")}</p>
+          <p className="text-xs text-gray-400 mt-2 break-words">Slots: {buildTimeSlots({ ...hoursDraft, slotMinutes: 60 }).join(", ")}</p>
         </section>
 
         <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
@@ -664,11 +759,11 @@ export default function AdminDashboard() {
                 />
                 Cerrar barberia todo el dia
               </label>
-              <div className="flex gap-2">
-                <button onClick={handleSaveClosure} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onClick={handleSaveClosure} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold w-full">
                   Guardar cierre
                 </button>
-                <button onClick={() => void handleDeleteClosure(closureDate)} className="bg-red-500/20 text-red-300 px-3 py-2 rounded">
+                <button onClick={() => void handleDeleteClosure(closureDate)} className="bg-red-500/20 text-red-300 px-3 py-2 rounded w-full">
                   Limpiar dia
                 </button>
               </div>
@@ -676,7 +771,7 @@ export default function AdminDashboard() {
 
             <div>
               <p className="text-sm text-gray-300 mb-2">Selecciona horas sin servicio para el dia:</p>
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                 {manualSlots.map((slot) => (
                   <label key={slot} className={`text-xs border rounded px-2 py-1 text-center cursor-pointer ${closureBlockedTimes.includes(slot) ? "bg-barbas-gold text-black border-barbas-gold" : "border-gray-600 text-gray-200"}`}>
                     <input
@@ -699,11 +794,11 @@ export default function AdminDashboard() {
             <div className="space-y-1">
               {closures.length === 0 && <p className="text-xs text-gray-400">No hay cierres configurados.</p>}
               {closures.map((closure) => (
-                <div key={closure.date} className="flex items-center justify-between text-xs border border-white/10 rounded px-2 py-1">
-                  <span>
+                <div key={closure.date} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs border border-white/10 rounded px-2 py-1">
+                  <span className="break-words">
                     {closure.date} - {closure.closedAllDay ? "Cerrado todo el dia" : `Bloques: ${closure.blockedTimes.join(", ") || "ninguno"}`}
                   </span>
-                  <button onClick={() => void handleDeleteClosure(closure.date)} className="text-red-300">
+                  <button onClick={() => void handleDeleteClosure(closure.date)} className="text-red-300 self-start sm:self-auto">
                     Eliminar
                   </button>
                 </div>
@@ -715,12 +810,12 @@ export default function AdminDashboard() {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <form onSubmit={handleManualBooking} className="w-full max-w-md bg-barbas-dark border border-white/10 rounded-xl p-4 space-y-3">
+          <form onSubmit={handleManualBooking} className="w-full max-w-md bg-barbas-dark border border-white/10 rounded-xl p-4 space-y-3 max-h-[90vh] overflow-y-auto">
             <h3 className="text-xl font-bold">Nueva cita manual</h3>
             <input value={newCustomerName} onChange={(event) => setNewCustomerName(event.target.value)} placeholder="Cliente" className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2" required />
             <select value={newBarberId} onChange={(event) => setNewBarberId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeBarbers.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
             <select value={newServiceId} onChange={(event) => setNewServiceId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeServices.map((item) => <option key={item.id} value={item.id}>{item.name} - {item.price} EUR</option>)}</select>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input type="date" value={newDate} onChange={(event) => setNewDate(event.target.value)} min={getToday()} className="bg-black/30 border border-gray-600 rounded px-3 py-2" required />
               <select value={newTime} onChange={(event) => setNewTime(event.target.value)} disabled={!newDate || loadingManualSlots} className="bg-black/30 border border-gray-600 rounded px-3 py-2">
                 {manualSlots.map((slot) => <option key={slot} value={slot} disabled={bookedManualTimes.includes(slot)}>{bookedManualTimes.includes(slot) ? `${slot} (Ocupado)` : slot}</option>)}
@@ -729,7 +824,7 @@ export default function AdminDashboard() {
             {newDate && bookedManualTimes.length >= manualSlots.length && (
               <p className="text-xs text-red-300">No hay horarios disponibles para esta fecha.</p>
             )}
-            <div className="flex gap-2 justify-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:justify-end">
               <button type="button" onClick={() => setIsModalOpen(false)} className="px-3 py-2 rounded border border-white/20">Cancelar</button>
               <button type="submit" disabled={isSaving || loadingManualSlots || !newTime || bookedManualTimes.includes(newTime)} className="px-3 py-2 rounded bg-barbas-gold text-black font-bold disabled:opacity-50">{isSaving ? "Guardando..." : "Confirmar"}</button>
             </div>

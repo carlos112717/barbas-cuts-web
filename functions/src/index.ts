@@ -1,27 +1,29 @@
-import { onSchedule } from "firebase-functions/v2/scheduler";
 import * as admin from "firebase-admin";
+import { onSchedule } from "firebase-functions/v2/scheduler";
+import { buildReminderEmail } from "./emailTemplates.js";
 
-// Encendemos los privilegios de administrador para el robot
 admin.initializeApp();
 const db = admin.firestore();
 
-// Este robot se despierta cada 30 minutos
-export const enviarRecordatorios = onSchedule("every 30 minutes", async () => {
-  // Configuramos la zona horaria de España
-  const timeZone = 'Europe/Madrid';
-  
-  // 1. Calculamos qué hora será exactamente dentro de 6 horas
-  const targetDate = new Date(Date.now() + 6 * 60 * 60 * 1000);
-  
-  // Extraemos la fecha en formato "YYYY-MM-DD" y la hora en "HH:mm"
-  const formatterDate = new Intl.DateTimeFormat('en-CA', { timeZone }); 
-  const formatterTime = new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit' });
+const isValidEmail = (email: unknown) => {
+  if (typeof email !== "string") return false;
+  const trimmed = email.trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+};
 
-  const dateString = formatterDate.format(targetDate);
-  let timeString = formatterTime.format(targetDate); // Ej: "15:14"
+const computeReminderSlot = (now: Date, timeZone: string) => {
+  const targetDate = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+  const dateFormatter = new Intl.DateTimeFormat("en-CA", { timeZone });
+  const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-  // 2. Redondeamos la hora para que coincida con tus turnos (00 o 30)
-  const [hourStr, minuteStr] = timeString.split(":");
+  const date = dateFormatter.format(targetDate);
+  const rawTime = timeFormatter.format(targetDate);
+  const [hourStr, minuteStr] = rawTime.split(":");
+
   const minutes = parseInt(minuteStr, 10);
   let roundedMinutes = "00";
   let finalHour = parseInt(hourStr, 10);
@@ -32,60 +34,70 @@ export const enviarRecordatorios = onSchedule("every 30 minutes", async () => {
     roundedMinutes = "00";
     finalHour += 1;
   }
-  
-  // Si la hora pasa de 24, se ajusta a formato correcto (ej: 09:30)
-  timeString = `${finalHour.toString().padStart(2, '0')}:${roundedMinutes}`;
 
-  console.log(`🤖 Buscando citas para el: ${dateString} a las ${timeString}`);
+  const time = `${finalHour.toString().padStart(2, "0")}:${roundedMinutes}`;
+  return { date, time };
+};
+
+export const enviarRecordatorios = onSchedule("every 30 minutes", async () => {
+  const timeZone = "Europe/Madrid";
+  const { date, time } = computeReminderSlot(new Date(), timeZone);
+
+  console.log(`Buscando recordatorios para ${date} a las ${time}`);
 
   try {
-    // 3. Buscamos en la base de datos las citas de esa fecha y hora exacta
-    const snapshot = await db.collection("appointments")
-      .where("date", "==", dateString)
-      .where("time", "==", timeString)
+    const snapshot = await db
+      .collection("appointments")
+      .where("date", "==", date)
+      .where("time", "==", time)
       .where("status", "==", "confirmed")
       .get();
 
     if (snapshot.empty) {
-      console.log("No hay citas programadas para dentro de 6 horas.");
+      console.log("No hay citas para recordar en este ciclo.");
       return;
     }
 
-    // 4. Por cada cita encontrada, creamos el correo de recordatorio
     const batch = db.batch();
-    
-    snapshot.docs.forEach((doc) => {
-      const appointment = doc.data();
-      
-      // Ignoramos a los clientes que el admin agendó en persona (no tienen email real)
-      if (appointment.customerId === "manual") return;
+    let queued = 0;
 
-      const mailRef = db.collection("mail").doc(); 
-      batch.set(mailRef, {
-        to: appointment.customerEmail,
-        message: {
-          subject: "⏰ Recordatorio: Tu cita en Barbas Cut's es en 6 horas",
-          html: `
-            <div style="font-family: sans-serif; color: #121212; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #D4AF37; border-radius: 10px;">
-              <h1 style="color: #D4AF37;">¡Hola ${appointment.customerName}!</h1>
-              <p>Este es un recordatorio automático. Tu cita para un nuevo estilo está a solo 6 horas de distancia.</p>
-              <ul style="list-style: none; padding: 0;">
-                <li>✂️ <strong>Servicio:</strong> ${appointment.serviceName}</li>
-                <li>👨‍🎨 <strong>Barbero:</strong> ${appointment.barberName}</li>
-                <li>⏰ <strong>Hora:</strong> ${appointment.time}</li>
-              </ul>
-              <p>¡Te esperamos con las tijeras listas!</p>
-              <p><small style="color: #666;">Si surge algún imprevisto, recuerda que el tiempo límite para cancelar es de 8 horas antes de tu turno.</small></p>
-            </div>
-          `
-        }
+    snapshot.docs.forEach((docSnap) => {
+      const appointment = docSnap.data();
+      if (appointment.customerId === "manual") return;
+      if (!isValidEmail(appointment.customerEmail)) return;
+
+      const reminderEmail = buildReminderEmail({
+        customerName:
+          typeof appointment.customerName === "string"
+            ? appointment.customerName
+            : "cliente",
+        barberName:
+          typeof appointment.barberName === "string"
+            ? appointment.barberName
+            : "barbero",
+        serviceName:
+          typeof appointment.serviceName === "string"
+            ? appointment.serviceName
+            : "servicio",
+        date: typeof appointment.date === "string" ? appointment.date : date,
+        time: typeof appointment.time === "string" ? appointment.time : time,
       });
+
+      const mailRef = db.collection("mail").doc();
+      batch.set(mailRef, {
+        to: appointment.customerEmail.trim(),
+        message: reminderEmail,
+      });
+      queued += 1;
     });
 
-    // Guardamos todos los correos en la base de datos de un solo golpe
-    await batch.commit();
-    console.log(`✅ Se enviaron ${snapshot.size} recordatorios al motor de correos.`);
+    if (queued === 0) {
+      console.log("No hubo correos validos para enviar en este ciclo.");
+      return;
+    }
 
+    await batch.commit();
+    console.log(`Recordatorios enviados al motor de correo: ${queued}.`);
   } catch (error) {
     console.error("Error enviando recordatorios:", error);
   }

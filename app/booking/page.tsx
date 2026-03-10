@@ -6,6 +6,7 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../../lib/firebase";
 import { createAppointmentWithLock, getBookedTimesForBarber } from "../../lib/appointments";
+import { buildBookingConfirmationEmail } from "../../lib/emailTemplates";
 import {
   buildTimeSlots,
   DEFAULT_BUSINESS_HOURS,
@@ -313,24 +314,18 @@ export default function BookingScreen() {
         status: "confirmed",
       });
 
+      const confirmationEmail = buildBookingConfirmationEmail({
+        customerName: currentUserName,
+        barberName: selectedBarber.name,
+        serviceName: selectedService.name,
+        date: selectedDate,
+        time: selectedTime,
+        price: selectedService.price,
+      });
+
       await addDoc(collection(db, "mail"), {
         to: customerEmail,
-        message: {
-          subject: "Confirmacion de tu cita en Barbas Cut's",
-          html: `
-            <div style="font-family: sans-serif; color: #121212; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #D4AF37; border-radius: 10px;">
-              <h1 style="color: #D4AF37;">Hola ${currentUserName}!</h1>
-              <p>Tu reserva ha sido confirmada.</p>
-              <ul style="list-style: none; padding: 0;">
-                <li><strong>Servicio:</strong> ${selectedService.name}</li>
-                <li><strong>Barbero:</strong> ${selectedBarber.name}</li>
-                <li><strong>Fecha:</strong> ${selectedDate}</li>
-                <li><strong>Hora:</strong> ${selectedTime}</li>
-                <li><strong>Precio:</strong> ${selectedService.price} EUR</li>
-              </ul>
-            </div>
-          `,
-        },
+        message: confirmationEmail,
       });
 
       setBookedTimes((prev) => (prev.includes(selectedTime) ? prev : [...prev, selectedTime]));

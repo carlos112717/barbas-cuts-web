@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -16,6 +17,7 @@ import {
   normalizeBusinessHours,
   type BusinessHours,
 } from "./scheduling";
+import { buildCancellationEmail } from "./emailTemplates";
 
 export interface AppointmentInput {
   customerId: string;
@@ -136,6 +138,43 @@ interface DeleteAppointmentInput {
   time?: string;
   barberId?: string;
 }
+
+interface CancellationEmailInput {
+  customerEmail: string;
+  customerName: string;
+  barberName: string;
+  serviceName: string;
+  date: string;
+  time: string;
+  canceledBy: "admin" | "customer";
+}
+
+const isValidEmail = (email: string) => {
+  const trimmed = email.trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+};
+
+export const queueAppointmentCancellationEmail = async (
+  db: Firestore,
+  input: CancellationEmailInput
+) => {
+  if (!isValidEmail(input.customerEmail)) return false;
+  const cancellationEmail = buildCancellationEmail({
+    customerName: input.customerName,
+    barberName: input.barberName,
+    serviceName: input.serviceName,
+    date: input.date,
+    time: input.time,
+    canceledBy: input.canceledBy,
+  });
+
+  await addDoc(collection(db, "mail"), {
+    to: input.customerEmail.trim(),
+    message: cancellationEmail,
+  });
+
+  return true;
+};
 
 export const deleteAppointmentAndLock = async (db: Firestore, input: DeleteAppointmentInput) => {
   const batch = writeBatch(db);
