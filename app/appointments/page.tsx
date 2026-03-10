@@ -2,24 +2,26 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../../lib/firebase";
+import { deleteAppointmentAndLock } from "../../lib/appointments";
 
 // --- INTERFAZ ESTRICTA ---
 interface Appointment {
   id: string;
+  barberId?: string;
   barberName: string;
   serviceName: string;
   price: number;
   date: string;
   time: string;
   status: string;
+  lockId?: string;
 }
 
 export default function AppointmentsScreen() {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [cancelingId, setCancelingId] = useState<string | null>(null);
@@ -28,7 +30,6 @@ export default function AppointmentsScreen() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
         fetchAppointments(currentUser.uid);
       } else {
         router.push("/");
@@ -90,7 +91,13 @@ export default function AppointmentsScreen() {
     if (window.confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
       setCancelingId(appointment.id);
       try {
-        await deleteDoc(doc(db, "appointments", appointment.id));
+        await deleteAppointmentAndLock(db, {
+          appointmentId: appointment.id,
+          lockId: appointment.lockId,
+          date: appointment.date,
+          time: appointment.time,
+          barberId: appointment.barberId,
+        });
         setAppointments((prev) => prev.filter((app) => app.id !== appointment.id));
         alert("Cita cancelada correctamente.");
       } catch (error) {

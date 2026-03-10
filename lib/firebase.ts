@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 // 1. Añadimos 'Analytics' a la importación
 import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
 
@@ -18,6 +19,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 // 2. Cambiamos 'any' por su tipo real (puede ser Analytics o indefinido al cargar)
 export let analytics: Analytics | undefined;

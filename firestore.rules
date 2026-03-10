@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function currentUserPath() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        (
+          request.auth.token.admin == true ||
+          (exists(currentUserPath()) && get(currentUserPath()).data.role == "admin")
+        );
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function keepsRole() {
+      return !("role" in request.resource.data) || request.resource.data.role == resource.data.role;
+    }
+
+    function validSelfCreate(userId) {
+      return isSelf(userId) &&
+        (
+          !("role" in request.resource.data) ||
+          request.resource.data.role == "client"
+        );
+    }
+
+    function appointmentPath(appointmentId) {
+      return /databases/$(database)/documents/appointments/$(appointmentId);
+    }
+
+    function appointmentLockPath(lockId) {
+      return /databases/$(database)/documents/appointmentLocks/$(lockId);
+    }
+
+    function clientCanCreateOwnAppointmentWithLock(appointmentId) {
+      return signedIn() &&
+        request.resource.data.customerId == request.auth.uid &&
+        request.resource.data.lockId is string &&
+        existsAfter(appointmentLockPath(request.resource.data.lockId)) &&
+        getAfter(appointmentLockPath(request.resource.data.lockId)).data.appointmentId == appointmentId &&
+        getAfter(appointmentLockPath(request.resource.data.lockId)).data.customerId == request.auth.uid &&
+        getAfter(appointmentLockPath(request.resource.data.lockId)).data.barberId == request.resource.data.barberId &&
+        getAfter(appointmentLockPath(request.resource.data.lockId)).data.date == request.resource.data.date &&
+        getAfter(appointmentLockPath(request.resource.data.lockId)).data.time == request.resource.data.time;
+    }
+
+    function clientCanCreateOwnAppointmentLock(lockId) {
+      return signedIn() &&
+        request.resource.data.customerId == request.auth.uid &&
+        request.resource.data.appointmentId is string &&
+        existsAfter(appointmentPath(request.resource.data.appointmentId)) &&
+        getAfter(appointmentPath(request.resource.data.appointmentId)).data.customerId == request.auth.uid &&
+        getAfter(appointmentPath(request.resource.data.appointmentId)).data.lockId == lockId &&
+        getAfter(appointmentPath(request.resource.data.appointmentId)).data.barberId == request.resource.data.barberId &&
+        getAfter(appointmentPath(request.resource.data.appointmentId)).data.date == request.resource.data.date &&
+        getAfter(appointmentPath(request.resource.data.appointmentId)).data.time == request.resource.data.time;
+    }
+
+    function clientOwnsLockForDelete() {
+      return signedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        (
+          resource.data.appointmentId is string &&
+          exists(appointmentPath(resource.data.appointmentId)) &&
+          get(appointmentPath(resource.data.appointmentId)).data.customerId == request.auth.uid
+        )
+      );
+    }
+
+    // Admin tiene acceso total al proyecto
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow create: if validSelfCreate(userId);
+      allow read: if isSelf(userId) || isAdmin();
+      allow update: if (isSelf(userId) && keepsRole()) || isAdmin();
+      allow delete: if false;
+    }
+
+    match /barbers/{barberId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /services/{serviceId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /closures/{closureId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /appointments/{appointmentId} {
+      allow create: if isAdmin() || clientCanCreateOwnAppointmentWithLock(appointmentId);
+      allow read: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);
+      allow update, delete: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);
+    }
+
+    match /appointmentLocks/{lockId} {
+      allow read: if signedIn();
+      allow create: if isAdmin() || clientCanCreateOwnAppointmentLock(lockId);
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || clientOwnsLockForDelete();
+    }
+
+    match /mail/{mailId} {
+      allow create: if signedIn();
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

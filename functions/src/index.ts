@@ -6,7 +6,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // Este robot se despierta cada 30 minutos
-export const enviarRecordatorios = onSchedule("every 30 minutes", async (event) => {
+export const enviarRecordatorios = onSchedule("every 30 minutes", async () => {
   // Configuramos la zona horaria de España
   const timeZone = 'Europe/Madrid';
   
@@ -22,9 +22,9 @@ export const enviarRecordatorios = onSchedule("every 30 minutes", async (event) 
 
   // 2. Redondeamos la hora para que coincida con tus turnos (00 o 30)
   const [hourStr, minuteStr] = timeString.split(":");
-  const minutes = parseInt(minuteStr);
+  const minutes = parseInt(minuteStr, 10);
   let roundedMinutes = "00";
-  let finalHour = parseInt(hourStr);
+  let finalHour = parseInt(hourStr, 10);
 
   if (minutes >= 15 && minutes < 45) {
     roundedMinutes = "30";

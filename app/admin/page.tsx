@@ -1,157 +1,330 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, getDocs, doc, getDoc, deleteDoc, query, orderBy, addDoc } from "firebase/firestore";
-import { auth, db } from "../../lib/firebase";
+import { FirebaseError } from "firebase/app";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "../../lib/firebase";
+import { createAppointmentWithLock, deleteAppointmentAndLock, getBookedTimesForBarber } from "../../lib/appointments";
+import { buildTimeSlots, DEFAULT_BUSINESS_HOURS, normalizeBusinessHours, type BusinessHours } from "../../lib/scheduling";
 
-// --- INTERFACES ---
 interface Appointment {
-  id: string; // ID real de Firestore
+  id: string;
   customerName: string;
   customerEmail: string;
+  barberId: string;
   barberName: string;
+  serviceId: string;
   serviceName: string;
   price: number;
   date: string;
   time: string;
-  status: string;
+  lockId?: string;
 }
 
-interface Barber { id: string; name: string; }
-interface Service { id: string; name: string; price: number; }
+interface Barber {
+  id: string;
+  name: string;
+  bio: string;
+  active: boolean;
+  photoURL?: string;
+}
 
-// --- DATOS DE REFERENCIA (Dummy) ---
-const DUMMY_BARBERS: Barber[] = [
-  { id: "1", name: "Carlos El Bravo" },
-  { id: "2", name: "Dra. Cortes" },
-  { id: "3", name: "Juan Fade" },
-];
+interface Service {
+  id: string;
+  name: string;
+  price: number;
+  durationMinutes: number;
+  active: boolean;
+}
 
-const DUMMY_SERVICES: Service[] = [
-  { id: "1", name: "Corte Clásico", price: 15 },
-  { id: "2", name: "Barba y Toalla Caliente", price: 12 },
-  { id: "3", name: "Servicio Completo VIP", price: 25 },
-];
+interface ClosureDay {
+  date: string;
+  closedAllDay: boolean;
+  blockedTimes: string[];
+}
 
-const TIME_SLOTS = ["09:00", "09:30", "10:00", "10:30", "11:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+const hourOptions = Array.from({ length: 18 }, (_, index) => index + 6);
+
+const getToday = () => {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+};
+
+const sortAppointments = (items: Appointment[]) => {
+  return [...items].sort((a, b) => new Date(`${a.date}T${a.time}:00`).getTime() - new Date(`${b.date}T${b.time}:00`).getTime());
+};
 
 export default function AdminDashboard() {
   const router = useRouter();
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Estados para el Modal de Cita Manual
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [barbers, setBarbers] = useState<Barber[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [closures, setClosures] = useState<ClosureDay[]>([]);
+  const [businessHours, setBusinessHours] = useState<BusinessHours>(DEFAULT_BUSINESS_HOURS);
+  const [hoursDraft, setHoursDraft] = useState<BusinessHours>(DEFAULT_BUSINESS_HOURS);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
-  const [newBarberId, setNewBarberId] = useState(DUMMY_BARBERS[0].id);
-  const [newServiceId, setNewServiceId] = useState(DUMMY_SERVICES[0].id);
+  const [newBarberId, setNewBarberId] = useState("");
+  const [newServiceId, setNewServiceId] = useState("");
   const [newDate, setNewDate] = useState("");
-  const [newTime, setNewTime] = useState(TIME_SLOTS[0]);
+  const [newTime, setNewTime] = useState("");
+  const [bookedManualTimes, setBookedManualTimes] = useState<string[]>([]);
+  const [loadingManualSlots, setLoadingManualSlots] = useState(false);
+  const [selectedAppointmentIds, setSelectedAppointmentIds] = useState<string[]>([]);
+
+  const [newBarberName, setNewBarberName] = useState("");
+  const [newBarberBio, setNewBarberBio] = useState("");
+  const [newServiceName, setNewServiceName] = useState("");
+  const [newServicePrice, setNewServicePrice] = useState("15");
+  const [closureDate, setClosureDate] = useState(getToday());
+  const [closureClosedAllDay, setClosureClosedAllDay] = useState(false);
+  const [closureBlockedTimes, setClosureBlockedTimes] = useState<string[]>([]);
+
   const [isSaving, setIsSaving] = useState(false);
+
+  const activeBarbers = useMemo(() => barbers.filter((item) => item.active), [barbers]);
+  const activeServices = useMemo(() => services.filter((item) => item.active), [services]);
+  const manualSlots = useMemo(() => buildTimeSlots({ ...businessHours, slotMinutes: 60 }), [businessHours]);
+  const allAppointmentsSelected = appointments.length > 0 && selectedAppointmentIds.length === appointments.length;
+  const closuresByDate = useMemo(() => {
+    const map = new Map<string, ClosureDay>();
+    closures.forEach((closure) => map.set(closure.date, closure));
+    return map;
+  }, [closures]);
+
+  const getBlockedTimesForDate = useCallback((date: string, slots: string[]) => {
+    const closure = closuresByDate.get(date);
+    if (!closure) return new Set<string>();
+    if (closure.closedAllDay) return new Set(slots);
+    return new Set(closure.blockedTimes);
+  }, [closuresByDate]);
+
+  const loadData = async () => {
+    const [appointmentsSnap, barbersSnap, servicesSnap, closuresSnap, settingsSnap] = await Promise.all([
+      getDocs(collection(db, "appointments")),
+      getDocs(collection(db, "barbers")),
+      getDocs(collection(db, "services")),
+      getDocs(collection(db, "closures")),
+      getDoc(doc(db, "settings", "businessHours")),
+    ]);
+
+    const mappedAppointments: Appointment[] = appointmentsSnap.docs.map((docSnap) => {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        customerName: typeof data.customerName === "string" ? data.customerName : "Cliente",
+        customerEmail: typeof data.customerEmail === "string" ? data.customerEmail : "",
+        barberId: typeof data.barberId === "string" ? data.barberId : "",
+        barberName: typeof data.barberName === "string" ? data.barberName : "",
+        serviceId: typeof data.serviceId === "string" ? data.serviceId : "",
+        serviceName: typeof data.serviceName === "string" ? data.serviceName : "",
+        price: typeof data.price === "number" ? data.price : 0,
+        date: typeof data.date === "string" ? data.date : "",
+        time: typeof data.time === "string" ? data.time : "",
+        lockId: typeof data.lockId === "string" ? data.lockId : undefined,
+      };
+    });
+
+    const mappedBarbers: Barber[] = barbersSnap.docs.map((docSnap) => {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        name: String(data.name ?? "Barbero"),
+        bio: String(data.bio ?? ""),
+        active: data.active !== false,
+        photoURL: typeof data.photoURL === "string" ? data.photoURL : "",
+      };
+    });
+
+    const mappedServices: Service[] = servicesSnap.docs.map((docSnap) => {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        name: String(data.name ?? "Servicio"),
+        price: typeof data.price === "number" ? data.price : 0,
+        durationMinutes: typeof data.durationMinutes === "number" ? data.durationMinutes : 60,
+        active: data.active !== false,
+      };
+    });
+
+    const mappedClosures: ClosureDay[] = closuresSnap.docs
+      .map((docSnap) => {
+        const data = docSnap.data();
+        return {
+          date: typeof data.date === "string" ? data.date : docSnap.id,
+          closedAllDay: data.closedAllDay === true,
+          blockedTimes: Array.isArray(data.blockedTimes)
+            ? data.blockedTimes.filter((slot) => typeof slot === "string")
+            : [],
+        };
+      })
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const normalizedHours = normalizeBusinessHours(settingsSnap.exists() ? (settingsSnap.data() as Partial<BusinessHours>) : undefined);
+
+    setAppointments(sortAppointments(mappedAppointments));
+    setBarbers(mappedBarbers.sort((a, b) => a.name.localeCompare(b.name)));
+    setServices(mappedServices.sort((a, b) => a.name.localeCompare(b.name)));
+    setClosures(mappedClosures);
+    setBusinessHours({ ...normalizedHours, slotMinutes: 60 });
+    setHoursDraft({ ...normalizedHours, slotMinutes: 60 });
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        try {
-          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-          if (userDoc.exists() && userDoc.data().role === "admin") {
-            setIsAdmin(true);
-            fetchAllAppointments();
-          } else {
-            router.push("/home");
-          }
-        } catch (error) {
-          console.error("Error verificando rol:", error);
-          router.push("/home");
-        }
-      } else {
+      if (!currentUser) {
         router.push("/");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (!userDoc.exists() || userDoc.data().role !== "admin") {
+          router.push("/home");
+          setLoading(false);
+          return;
+        }
+
+        setIsAdmin(true);
+        await loadData();
+      } catch (error) {
+        console.error(error);
+        router.push("/home");
+      } finally {
+        setLoading(false);
       }
     });
 
     return () => unsubscribe();
   }, [router]);
 
-  // OBTENER CITAS CORREGIDO: Mapeo seguro del ID
-  const fetchAllAppointments = async () => {
-    try {
-      const q = query(collection(db, "appointments"), orderBy("date", "desc"));
-      const querySnapshot = await getDocs(q);
-      
-      const apps: Appointment[] = [];
-      querySnapshot.forEach((document) => {
-        // CORRECCIÓN CLAVE: Extraemos el 'document.id' real de Firestore y 
-        // luego volcamos el resto de los datos (...document.data())
-        apps.push({ 
-          id: document.id, 
-          customerName: document.data().customerName || "Cliente Desconocido", // Respaldo extra
-          customerEmail: document.data().customerEmail || "",
-          barberName: document.data().barberName || "",
-          serviceName: document.data().serviceName || "",
-          price: document.data().price || 0,
-          date: document.data().date || "",
-          time: document.data().time || "",
-          status: document.data().status || "pending"
-        });
-      });
-      
-      apps.sort((a, b) => {
-        if (a.date === b.date) return a.time.localeCompare(b.time);
-        return 0;
-      });
+  useEffect(() => {
+    if (!isModalOpen) return;
+    if (!newBarberId) setNewBarberId(activeBarbers[0]?.id ?? "");
+    if (!newServiceId) setNewServiceId(activeServices[0]?.id ?? "");
+    if (!newTime) setNewTime(manualSlots[0] ?? "");
+  }, [isModalOpen, activeBarbers, activeServices, newBarberId, newServiceId, newTime, manualSlots]);
 
-      setAppointments(apps);
-    } catch (error) {
-      console.error("Error al obtener todas las citas:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // CANCELAR CORREGIDO: Verificación de ID vacío
-  const handleCancelAppointment = async (id: string) => {
-    if (!id || id === "") {
-      alert("⚠️ Esta cita tiene un ID corrupto y no se puede borrar automáticamente. Por favor, elimínala manualmente desde la consola de Firebase.");
+  useEffect(() => {
+    const closure = closuresByDate.get(closureDate);
+    if (!closure) {
+      setClosureClosedAllDay(false);
+      setClosureBlockedTimes([]);
       return;
     }
 
-    if (window.confirm("¿Estás seguro de cancelar esta cita del cliente?")) {
-      try {
-        // CORRECCIÓN: Usamos la sintaxis modular JS SDK estándar
-        await deleteDoc(doc(db, "appointments", id));
-        setAppointments(appointments.filter(app => app.id !== id));
-        alert("Cita eliminada correctamente.");
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          alert(`No se pudo eliminar. Firebase dice: ${error.message}`);
-        } else {
-          alert("Hubo un error desconocido al intentar eliminar.");
-        }
-      }
-    }
-  };
+    setClosureClosedAllDay(closure.closedAllDay);
+    setClosureBlockedTimes(closure.blockedTimes.filter((slot) => manualSlots.includes(slot)));
+  }, [closureDate, closuresByDate, manualSlots]);
 
-  const handleManualBooking = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSaving(true);
-    
-    try {
-      const barber = DUMMY_BARBERS.find(b => b.id === newBarberId);
-      const service = DUMMY_SERVICES.find(s => s.id === newServiceId);
-      
-      if (!barber || !service || !newDate || !newTime || !newCustomerName) {
-        alert("Por favor completa todos los campos.");
-        setIsSaving(false);
+  useEffect(() => {
+    let mounted = true;
+
+    const run = async () => {
+      if (!isModalOpen || !newDate || !newBarberId) {
+        setBookedManualTimes([]);
         return;
       }
 
-      const appointmentData = {
+      setLoadingManualSlots(true);
+      try {
+        const occupied = await getBookedTimesForBarber(db, newDate, newBarberId);
+        const blockedByClosure = getBlockedTimesForDate(newDate, manualSlots);
+        const unavailable = new Set<string>([...occupied, ...blockedByClosure]);
+        if (!mounted) return;
+        setBookedManualTimes(Array.from(unavailable));
+        setNewTime((prev) => (prev && !unavailable.has(prev) ? prev : manualSlots.find((slot) => !unavailable.has(slot)) ?? ""));
+      } catch (error) {
+        if (!mounted) return;
+        console.error("Error loading manual slot availability:", error);
+        setBookedManualTimes([]);
+      } finally {
+        if (mounted) setLoadingManualSlots(false);
+      }
+    };
+
+    run();
+    return () => {
+      mounted = false;
+    };
+  }, [getBlockedTimesForDate, isModalOpen, newDate, newBarberId, manualSlots]);
+
+  const handleDeleteAppointment = async (item: Appointment) => {
+    if (!window.confirm("Eliminar esta cita?")) return;
+    await deleteAppointmentAndLock(db, {
+      appointmentId: item.id,
+      lockId: item.lockId,
+      date: item.date,
+      time: item.time,
+      barberId: item.barberId,
+    });
+    setAppointments((prev) => prev.filter((entry) => entry.id !== item.id));
+    setSelectedAppointmentIds((prev) => prev.filter((id) => id !== item.id));
+  };
+
+  const handleDeleteSelectedAppointments = async () => {
+    if (selectedAppointmentIds.length === 0) return;
+    if (!window.confirm(`Eliminar ${selectedAppointmentIds.length} citas seleccionadas?`)) return;
+
+    setIsSaving(true);
+    try {
+      const selectedAppointments = appointments.filter((appointment) => selectedAppointmentIds.includes(appointment.id));
+      for (const appointment of selectedAppointments) {
+        await deleteAppointmentAndLock(db, {
+          appointmentId: appointment.id,
+          lockId: appointment.lockId,
+          date: appointment.date,
+          time: appointment.time,
+          barberId: appointment.barberId,
+        });
+      }
+
+      setAppointments((prev) => prev.filter((appointment) => !selectedAppointmentIds.includes(appointment.id)));
+      setSelectedAppointmentIds([]);
+    } catch (error) {
+      console.error("Error deleting selected appointments:", error);
+      alert("No se pudieron eliminar todas las citas seleccionadas.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const toggleAppointmentSelection = (appointmentId: string, checked: boolean) => {
+    setSelectedAppointmentIds((prev) => {
+      if (checked) {
+        if (prev.includes(appointmentId)) return prev;
+        return [...prev, appointmentId];
+      }
+      return prev.filter((id) => id !== appointmentId);
+    });
+  };
+
+  const handleManualBooking = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const barber = activeBarbers.find((item) => item.id === newBarberId);
+    const service = activeServices.find((item) => item.id === newServiceId);
+    const customerName = newCustomerName.trim();
+    if (!barber || !service || !customerName || !newDate || !newTime) return;
+    if (bookedManualTimes.includes(newTime)) {
+      alert("Ese horario no esta disponible.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const { appointmentId, lockId } = await createAppointmentWithLock(db, {
         customerId: "manual",
-        customerName: newCustomerName,
-        customerEmail: "Presencial / Teléfono",
+        customerName,
+        customerEmail: "Presencial / Telefono",
         barberId: barber.id,
         barberName: barber.name,
         serviceId: service.id,
@@ -160,163 +333,409 @@ export default function AdminDashboard() {
         date: newDate,
         time: newTime,
         status: "confirmed",
-        createdAt: new Date().toISOString()
-      };
+      });
 
-      const docRef = await addDoc(collection(db, "appointments"), appointmentData);
-      
-      // Añadimos la nueva cita con su ID real de Firestore generado por addDoc
-      const newAppointmentWithId = { id: docRef.id, ...appointmentData } as Appointment;
-      setAppointments([newAppointmentWithId, ...appointments]);
-      
+      setAppointments((prev) => sortAppointments([...prev, {
+        id: appointmentId,
+        lockId,
+        customerName,
+        customerEmail: "Presencial / Telefono",
+        barberId: barber.id,
+        barberName: barber.name,
+        serviceId: service.id,
+        serviceName: service.name,
+        price: service.price,
+        date: newDate,
+        time: newTime,
+      }]));
+
       setNewCustomerName("");
       setNewDate("");
       setIsModalOpen(false);
-      alert("Cita manual agendada con éxito.");
-
     } catch (error) {
-      console.error("Error creando cita manual:", error);
-      alert("Hubo un error al guardar la cita.");
+      if (error instanceof Error && error.message === "SLOT_TAKEN") {
+        alert("Ese horario ya esta ocupado.");
+      } else if (error instanceof Error && error.message === "SLOT_CLOSED") {
+        alert("Ese horario esta bloqueado por cierre o fuera del horario laboral.");
+      } else {
+        alert("No se pudo crear la cita.");
+      }
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    router.push("/");
+  const handleAddBarber = async () => {
+    const name = newBarberName.trim();
+    if (!name) return;
+    const docRef = await addDoc(collection(db, "barbers"), { name, bio: newBarberBio.trim(), active: true, photoURL: "", createdAt: new Date().toISOString() });
+    setBarbers((prev) => [...prev, { id: docRef.id, name, bio: newBarberBio.trim(), active: true, photoURL: "" }].sort((a, b) => a.name.localeCompare(b.name)));
+    setNewBarberName("");
+    setNewBarberBio("");
+  };
+
+  const handleBarberPhotoUpload = async (barberId: string, file: File) => {
+    if (!file.type.startsWith("image/")) {
+      alert("Selecciona una imagen valida.");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("La imagen no puede superar 5MB.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const photoRef = ref(storage, `barbers/${barberId}/profile/avatar`);
+      await uploadBytes(photoRef, file, { contentType: file.type });
+      const photoURL = await getDownloadURL(photoRef);
+
+      await setDoc(doc(db, "barbers", barberId), { photoURL, updatedAt: new Date().toISOString() }, { merge: true });
+      setBarbers((prev) => prev.map((barber) => (barber.id === barberId ? { ...barber, photoURL } : barber)));
+    } catch (error) {
+      console.error("Error uploading barber photo:", error);
+      if (error instanceof FirebaseError) {
+        alert(`No se pudo subir la foto del barbero (${error.code}).`);
+      } else {
+        alert("No se pudo subir la foto del barbero.");
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleAddService = async () => {
+    const name = newServiceName.trim();
+    const price = Number(newServicePrice);
+    if (!name || Number.isNaN(price)) return;
+    const docRef = await addDoc(collection(db, "services"), { name, price, durationMinutes: 60, active: true, createdAt: new Date().toISOString() });
+    setServices((prev) => [...prev, { id: docRef.id, name, price, durationMinutes: 60, active: true }].sort((a, b) => a.name.localeCompare(b.name)));
+    setNewServiceName("");
+    setNewServicePrice("15");
+  };
+
+  const handleSaveBarber = async (barber: Barber) => {
+    await setDoc(doc(db, "barbers", barber.id), { name: barber.name.trim(), bio: barber.bio.trim(), active: barber.active, photoURL: barber.photoURL || "", updatedAt: new Date().toISOString() }, { merge: true });
+  };
+
+  const handleSaveService = async (service: Service) => {
+    await setDoc(doc(db, "services", service.id), { name: service.name.trim(), price: service.price, durationMinutes: 60, active: service.active, updatedAt: new Date().toISOString() }, { merge: true });
+  };
+
+  const handleDeleteBarber = async (id: string) => {
+    await deleteDoc(doc(db, "barbers", id));
+    setBarbers((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleDeleteService = async (id: string) => {
+    await deleteDoc(doc(db, "services", id));
+    setServices((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleSaveHours = async () => {
+    if (hoursDraft.closeHour <= hoursDraft.openHour) return;
+    const normalized = normalizeBusinessHours({ ...hoursDraft, slotMinutes: 60 });
+    const value = { ...normalized, slotMinutes: 60 };
+    await setDoc(doc(db, "settings", "businessHours"), value, { merge: true });
+    setBusinessHours(value);
+    setHoursDraft(value);
+  };
+
+  const toggleClosureBlockedTime = (time: string, enabled: boolean) => {
+    setClosureBlockedTimes((prev) => {
+      if (enabled) {
+        if (prev.includes(time)) return prev;
+        return [...prev, time];
+      }
+      return prev.filter((slot) => slot !== time);
+    });
+  };
+
+  const handleSaveClosure = async () => {
+    if (!closureDate) return;
+
+    const cleanedBlockedTimes = closureClosedAllDay
+      ? []
+      : closureBlockedTimes.filter((slot) => manualSlots.includes(slot)).sort();
+
+    try {
+      if (!closureClosedAllDay && cleanedBlockedTimes.length === 0) {
+        await deleteDoc(doc(db, "closures", closureDate));
+        setClosures((prev) => prev.filter((closure) => closure.date !== closureDate));
+        return;
+      }
+
+      const closureData: ClosureDay = {
+        date: closureDate,
+        closedAllDay: closureClosedAllDay,
+        blockedTimes: cleanedBlockedTimes,
+      };
+
+      await setDoc(
+        doc(db, "closures", closureDate),
+        {
+          ...closureData,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+
+      setClosures((prev) => {
+        const withoutCurrent = prev.filter((closure) => closure.date !== closureDate);
+        return [...withoutCurrent, closureData].sort((a, b) => a.date.localeCompare(b.date));
+      });
+    } catch (error) {
+      console.error("Error saving closure:", error);
+      alert("No se pudo guardar la configuracion del cierre.");
+    }
+  };
+
+  const handleDeleteClosure = async (date: string) => {
+    try {
+      await deleteDoc(doc(db, "closures", date));
+      setClosures((prev) => prev.filter((closure) => closure.date !== date));
+      if (closureDate === date) {
+        setClosureClosedAllDay(false);
+        setClosureBlockedTimes([]);
+      }
+    } catch (error) {
+      console.error("Error deleting closure:", error);
+      alert("No se pudo eliminar la configuracion del dia.");
+    }
   };
 
   if (loading) return <div className="min-h-screen bg-barbas-black flex items-center justify-center"><div className="w-12 h-12 border-4 border-barbas-gold border-t-transparent rounded-full animate-spin"></div></div>;
-  if (!isAdmin) return null; 
-
-  const getTodayString = () => {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  };
+  if (!isAdmin) return null;
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6 relative">
-      <div className="max-w-4xl mx-auto">
-        
-        <header className="flex justify-between items-center mb-8 mt-4 border-b border-white/10 pb-4">
-          <div>
-            <p className="text-barbas-gold text-sm font-bold tracking-widest uppercase">Panel de Control</p>
-            <h1 className="text-white text-3xl font-bold">Administrador</h1>
+    <main className="min-h-screen bg-barbas-black p-6 text-white">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <header className="flex justify-between items-center border-b border-white/10 pb-4">
+          <h1 className="text-3xl font-bold">Administrador</h1>
+          <div className="flex gap-2">
+            <button onClick={() => setIsModalOpen(true)} className="bg-barbas-gold text-barbas-black px-3 py-2 rounded-lg font-bold">Nueva cita</button>
+            <button onClick={async () => { await signOut(auth); router.push("/"); }} className="bg-red-500/20 text-red-400 px-3 py-2 rounded-lg">Cerrar sesion</button>
           </div>
-          <button onClick={handleLogout} className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg transition-colors font-semibold">
-            Cerrar Sesión
-          </button>
         </header>
 
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-white">Agenda General</h2>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="bg-barbas-gold text-barbas-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors flex items-center"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" /></svg>
-            Nueva Cita Manual
-          </button>
-        </div>
-
-        <div className="bg-barbas-dark rounded-xl border border-white/5 overflow-hidden">
-          {appointments.length === 0 ? (
-            <div className="p-8 text-center text-gray-400">No hay citas registradas en el sistema.</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-gray-300">
-                <thead className="bg-black/50 text-barbas-gold uppercase text-xs">
-                  <tr>
-                    <th className="px-6 py-4">Fecha / Hora</th>
-                    <th className="px-6 py-4">Cliente</th>
-                    <th className="px-6 py-4">Servicio</th>
-                    <th className="px-6 py-4">Barbero</th>
-                    <th className="px-6 py-4 text-right">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {appointments.map((app) => (
-                    <tr key={app.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4 font-medium text-white whitespace-nowrap">
-                        {app.date} <br/><span className="text-gray-400">{app.time}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        {/* Muestra el nombre real guardado en la cita */}
-                        <p className="font-bold text-white">{app.customerName}</p>
-                        <p className="text-xs text-gray-500">{app.customerEmail}</p>
-                      </td>
-                      <td className="px-6 py-4">{app.serviceName} <br/><span className="text-barbas-gold">{app.price}€</span></td>
-                      <td className="px-6 py-4">{app.barberName}</td>
-                      <td className="px-6 py-4 text-right">
-                        {/* Botón protegido: Si el ID está vacío, se informa */}
-                        <button onClick={() => handleCancelAppointment(app.id)} className="text-red-400 hover:text-red-300 font-medium">
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+          <div className="flex items-center justify-between mb-3 gap-3">
+            <h2 className="text-xl font-bold">Citas</h2>
+            <div className="flex items-center gap-2">
+              <label className="text-xs flex items-center gap-1 text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={allAppointmentsSelected}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      setSelectedAppointmentIds(appointments.map((appointment) => appointment.id));
+                    } else {
+                      setSelectedAppointmentIds([]);
+                    }
+                  }}
+                />
+                Seleccionar todas
+              </label>
+              <button
+                onClick={handleDeleteSelectedAppointments}
+                disabled={selectedAppointmentIds.length === 0 || isSaving}
+                className="px-3 py-2 rounded-lg bg-red-500/20 text-red-300 disabled:opacity-50"
+              >
+                Eliminar seleccionadas ({selectedAppointmentIds.length})
+              </button>
             </div>
-          )}
-        </div>
+          </div>
+          <div className="space-y-2">
+            {appointments.map((item) => (
+              <div key={item.id} className="border border-white/10 rounded-lg p-3 flex justify-between items-center">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={selectedAppointmentIds.includes(item.id)}
+                    onChange={(event) => toggleAppointmentSelection(item.id, event.target.checked)}
+                    className="mt-1"
+                  />
+                  <div>
+                    <p className="font-semibold">{item.date} {item.time} - {item.customerName}</p>
+                    <p className="text-sm text-gray-400">{item.barberName} | {item.serviceName} | {item.price} EUR</p>
+                  </div>
+                </div>
+                <div>
+                  <button onClick={() => handleDeleteAppointment(item)} className="text-red-400">Eliminar</button>
+                </div>
+              </div>
+            ))}
+            {appointments.length === 0 && <p className="text-gray-400">No hay citas.</p>}
+          </div>
+        </section>
 
+        <section className="grid md:grid-cols-2 gap-4">
+          <div className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+            <h2 className="font-bold mb-2">Barberos</h2>
+            <div className="flex gap-2 mb-3">
+              <input value={newBarberName} onChange={(event) => setNewBarberName(event.target.value)} placeholder="Nombre" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <input value={newBarberBio} onChange={(event) => setNewBarberBio(event.target.value)} placeholder="Bio" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <button onClick={handleAddBarber} className="bg-barbas-gold text-black px-2 rounded">+</button>
+            </div>
+            {barbers.map((item) => (
+              <div key={item.id} className="border border-white/10 rounded-lg p-2 mb-2 space-y-2">
+                <div className="flex gap-2 items-center">
+                  <div className="w-12 h-12 rounded-full bg-black/40 overflow-hidden border border-white/10 flex items-center justify-center">
+                    {item.photoURL ? (
+                      <img src={item.photoURL} alt={item.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs text-gray-400">Sin foto</span>
+                    )}
+                  </div>
+                  <div className="flex-1 grid grid-cols-2 gap-2">
+                    <input value={item.name} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, name: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                    <input value={item.bio} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, bio: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                  </div>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <input type="file" accept="image/*" onChange={(event) => { const file = event.target.files?.[0]; if (file) void handleBarberPhotoUpload(item.id, file); }} className="text-xs text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:bg-barbas-gold file:text-barbas-black file:font-semibold" />
+                  <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={item.active} onChange={(event) => setBarbers((prev) => prev.map((row) => row.id === item.id ? { ...row, active: event.target.checked } : row))} />Activo</label>
+                  <button onClick={() => handleSaveBarber(item)} className="text-emerald-400 text-sm">Guardar</button>
+                  <button onClick={() => handleDeleteBarber(item.id)} className="text-red-400 text-sm">Borrar</button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+            <h2 className="font-bold mb-2">Servicios</h2>
+            <div className="flex gap-2 mb-3">
+              <input value={newServiceName} onChange={(event) => setNewServiceName(event.target.value)} placeholder="Servicio" className="flex-1 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <input type="number" value={newServicePrice} onChange={(event) => setNewServicePrice(event.target.value)} placeholder="Precio" className="w-24 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+              <button onClick={handleAddService} className="bg-barbas-gold text-black px-2 rounded">+</button>
+            </div>
+            {services.map((item) => (
+              <div key={item.id} className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-2 mb-2">
+                <input value={item.name} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, name: event.target.value } : row))} className="bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                <input type="number" value={item.price} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, price: Number(event.target.value) } : row))} className="w-20 bg-black/30 border border-gray-600 rounded px-2 py-1" />
+                <label className="text-xs flex items-center gap-1"><input type="checkbox" checked={item.active} onChange={(event) => setServices((prev) => prev.map((row) => row.id === item.id ? { ...row, active: event.target.checked } : row))} />Activo</label>
+                <button onClick={() => handleSaveService(item)} className="text-emerald-400 text-sm">Guardar</button>
+                <button onClick={() => handleDeleteService(item.id)} className="text-red-400 text-sm">Borrar</button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+          <h2 className="font-bold mb-2">Horario laboral (slots de 1 hora)</h2>
+          <div className="flex gap-2 items-end">
+            <div>
+              <label className="text-xs text-gray-400">Apertura</label>
+              <select value={hoursDraft.openHour} onChange={(event) => setHoursDraft((prev) => ({ ...prev, openHour: Number(event.target.value) }))} className="bg-black/30 border border-gray-600 rounded px-2 py-1 block">
+                {hourOptions.map((hour) => <option key={hour} value={hour}>{String(hour).padStart(2, "0")}:00</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-gray-400">Cierre</label>
+              <select value={hoursDraft.closeHour} onChange={(event) => setHoursDraft((prev) => ({ ...prev, closeHour: Number(event.target.value) }))} className="bg-black/30 border border-gray-600 rounded px-2 py-1 block">
+                {hourOptions.filter((hour) => hour > hoursDraft.openHour).map((hour) => <option key={hour} value={hour}>{String(hour).padStart(2, "0")}:00</option>)}
+              </select>
+            </div>
+            <button onClick={handleSaveHours} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold">Guardar horario</button>
+          </div>
+          <p className="text-xs text-gray-400 mt-2">Slots: {buildTimeSlots({ ...hoursDraft, slotMinutes: 60 }).join(", ")}</p>
+        </section>
+
+        <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+          <h2 className="font-bold mb-3">Cierres y franjas sin servicio</h2>
+          <div className="grid md:grid-cols-[220px_1fr] gap-4">
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs text-gray-400 block mb-1">Dia</label>
+                <input
+                  type="date"
+                  value={closureDate}
+                  min={getToday()}
+                  onChange={(event) => setClosureDate(event.target.value)}
+                  className="w-full bg-black/30 border border-gray-600 rounded px-2 py-1 [color-scheme:dark]"
+                />
+              </div>
+              <label className="text-sm flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={closureClosedAllDay}
+                  onChange={(event) => setClosureClosedAllDay(event.target.checked)}
+                />
+                Cerrar barberia todo el dia
+              </label>
+              <div className="flex gap-2">
+                <button onClick={handleSaveClosure} className="bg-barbas-gold text-black px-3 py-2 rounded font-bold">
+                  Guardar cierre
+                </button>
+                <button onClick={() => void handleDeleteClosure(closureDate)} className="bg-red-500/20 text-red-300 px-3 py-2 rounded">
+                  Limpiar dia
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm text-gray-300 mb-2">Selecciona horas sin servicio para el dia:</p>
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+                {manualSlots.map((slot) => (
+                  <label key={slot} className={`text-xs border rounded px-2 py-1 text-center cursor-pointer ${closureBlockedTimes.includes(slot) ? "bg-barbas-gold text-black border-barbas-gold" : "border-gray-600 text-gray-200"}`}>
+                    <input
+                      type="checkbox"
+                      className="hidden"
+                      disabled={closureClosedAllDay}
+                      checked={closureBlockedTimes.includes(slot)}
+                      onChange={(event) => toggleClosureBlockedTime(slot, event.target.checked)}
+                    />
+                    {slot}
+                  </label>
+                ))}
+              </div>
+              {closureClosedAllDay && <p className="text-xs text-gray-400 mt-2">Dia marcado como cerrado completo.</p>}
+            </div>
+          </div>
+
+          <div className="mt-4 border-t border-white/10 pt-3">
+            <p className="text-sm font-semibold mb-2">Dias configurados</p>
+            <div className="space-y-1">
+              {closures.length === 0 && <p className="text-xs text-gray-400">No hay cierres configurados.</p>}
+              {closures.map((closure) => (
+                <div key={closure.date} className="flex items-center justify-between text-xs border border-white/10 rounded px-2 py-1">
+                  <span>
+                    {closure.date} - {closure.closedAllDay ? "Cerrado todo el dia" : `Bloques: ${closure.blockedTimes.join(", ") || "ninguno"}`}
+                  </span>
+                  <button onClick={() => void handleDeleteClosure(closure.date)} className="text-red-300">
+                    Eliminar
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
 
-      {/* --- MODAL DE NUEVA CITA MANUAL*/}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-          <div className="bg-barbas-dark p-6 rounded-2xl w-full max-w-md border border-barbas-gold/30 shadow-2xl relative">
-            
-            <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-
-            <h2 className="text-2xl font-bold text-barbas-gold mb-6">Agendar Cita Manual</h2>
-
-            <form onSubmit={handleManualBooking} className="flex flex-col gap-4">
-              <div>
-                <label className="text-gray-400 text-sm mb-1 block">Nombre del Cliente</label>
-                <input type="text" value={newCustomerName} onChange={(e) => setNewCustomerName(e.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-barbas-gold" placeholder="Ej. Carlos Pérez" required />
-              </div>
-
-              <div>
-                <label className="text-gray-400 text-sm mb-1 block">Barbero</label>
-                <select value={newBarberId} onChange={(e) => setNewBarberId(e.target.value)} className="w-full bg-barbas-black border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-barbas-gold">
-                  {DUMMY_BARBERS.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-gray-400 text-sm mb-1 block">Servicio</label>
-                <select value={newServiceId} onChange={(e) => setNewServiceId(e.target.value)} className="w-full bg-barbas-black border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-barbas-gold">
-                  {DUMMY_SERVICES.map(s => <option key={s.id} value={s.id}>{s.name} - {s.price}€</option>)}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-gray-400 text-sm mb-1 block">Fecha</label>
-                  <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={getTodayString()} className="w-full bg-transparent border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-barbas-gold [color-scheme:dark]" required />
-                </div>
-                <div>
-                  <label className="text-gray-400 text-sm mb-1 block">Hora</label>
-                  <select value={newTime} onChange={(e) => setNewTime(e.target.value)} className="w-full bg-barbas-black border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-barbas-gold">
-                    {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              <button type="submit" disabled={isSaving} className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-4 hover:bg-yellow-500 transition-colors disabled:opacity-50">
-                {isSaving ? "GUARDANDO..." : "CONFIRMAR CITA"}
-              </button>
-            </form>
-
-          </div>
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <form onSubmit={handleManualBooking} className="w-full max-w-md bg-barbas-dark border border-white/10 rounded-xl p-4 space-y-3">
+            <h3 className="text-xl font-bold">Nueva cita manual</h3>
+            <input value={newCustomerName} onChange={(event) => setNewCustomerName(event.target.value)} placeholder="Cliente" className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2" required />
+            <select value={newBarberId} onChange={(event) => setNewBarberId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeBarbers.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
+            <select value={newServiceId} onChange={(event) => setNewServiceId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeServices.map((item) => <option key={item.id} value={item.id}>{item.name} - {item.price} EUR</option>)}</select>
+            <div className="grid grid-cols-2 gap-2">
+              <input type="date" value={newDate} onChange={(event) => setNewDate(event.target.value)} min={getToday()} className="bg-black/30 border border-gray-600 rounded px-3 py-2" required />
+              <select value={newTime} onChange={(event) => setNewTime(event.target.value)} disabled={!newDate || loadingManualSlots} className="bg-black/30 border border-gray-600 rounded px-3 py-2">
+                {manualSlots.map((slot) => <option key={slot} value={slot} disabled={bookedManualTimes.includes(slot)}>{bookedManualTimes.includes(slot) ? `${slot} (Ocupado)` : slot}</option>)}
+              </select>
+            </div>
+            {newDate && bookedManualTimes.length >= manualSlots.length && (
+              <p className="text-xs text-red-300">No hay horarios disponibles para esta fecha.</p>
+            )}
+            <div className="flex gap-2 justify-end">
+              <button type="button" onClick={() => setIsModalOpen(false)} className="px-3 py-2 rounded border border-white/20">Cancelar</button>
+              <button type="submit" disabled={isSaving || loadingManualSlots || !newTime || bookedManualTimes.includes(newTime)} className="px-3 py-2 rounded bg-barbas-gold text-black font-bold disabled:opacity-50">{isSaving ? "Guardando..." : "Confirmar"}</button>
+            </div>
+          </form>
         </div>
       )}
-
     </main>
   );
 }
