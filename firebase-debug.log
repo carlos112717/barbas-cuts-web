@@ -1,0 +1,193 @@
+[debug] [2026-03-10T15:49:29.332Z] ----------------------------------------------------------------------
+[debug] [2026-03-10T15:49:29.336Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\caauc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore:rules,storage
+[debug] [2026-03-10T15:49:29.336Z] CLI Version:   15.9.0
+[debug] [2026-03-10T15:49:29.336Z] Platform:      win32
+[debug] [2026-03-10T15:49:29.336Z] Node Version:  v22.19.0
+[debug] [2026-03-10T15:49:29.337Z] Time:          Tue Mar 10 2026 16:49:29 GMT+0100 (hora estándar de Europa central)
+[debug] [2026-03-10T15:49:29.337Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-10T15:49:29.339Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-03-10T15:49:31.754Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-10T15:49:31.755Z] > authorizing via signed-in user (caauco0728@gmail.com)
+[debug] [2026-03-10T15:49:31.755Z] [iam] checking project latinbarberapp for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2026-03-10T15:49:31.756Z] Checked if tokens are valid: false, expires at: 1772815833489
+[debug] [2026-03-10T15:49:31.756Z] Checked if tokens are valid: false, expires at: 1772815833489
+[debug] [2026-03-10T15:49:31.756Z] > refreshing access token with scopes: []
+[debug] [2026-03-10T15:49:31.758Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-03-10T15:49:31.758Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-10T15:49:31.931Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-03-10T15:49:31.931Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-03-10T15:49:31.943Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions [none]
+[debug] [2026-03-10T15:49:31.943Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:49:31.943Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-03-10T15:49:32.019Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-03-10T15:49:32.019Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-03-10T15:49:32.673Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions 200
+[debug] [2026-03-10T15:49:32.673Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'latinbarberapp'...
+[info] 
+[info] i  deploying storage, firestore 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2026-03-10T15:49:32.676Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:32.676Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:32.676Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com [none]
+[debug] [2026-03-10T15:49:32.676Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:49:33.536Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com 200
+[debug] [2026-03-10T15:49:33.536Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com [omitted]
+[warn] !  storage: missing required API firebasestorage.googleapis.com. Enabling now... 
+[debug] [2026-03-10T15:49:33.536Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:33.536Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:33.536Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com:enable [none]
+[debug] [2026-03-10T15:49:33.537Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com:enable  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:49:34.631Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com:enable 200
+[debug] [2026-03-10T15:49:34.631Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firebasestorage.googleapis.com:enable [omitted]
+[debug] [2026-03-10T15:49:44.647Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:44.647Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:49:44.647Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket [none]
+[debug] [2026-03-10T15:49:45.301Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket 404
+[debug] [2026-03-10T15:49:45.301Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket {"error":{"code":404,"message":"Requested entity was not found.","status":"NOT_FOUND"}}
+[error] 
+[error] Error: Firebase Storage has not been set up on project 'latinbarberapp'. Go to https://console.firebase.google.com/project/latinbarberapp/storage and click 'Get Started' to set up Firebase Storage.
+[debug] [2026-03-10T15:50:12.800Z] ----------------------------------------------------------------------
+[debug] [2026-03-10T15:50:12.802Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\caauc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore:rules
+[debug] [2026-03-10T15:50:12.803Z] CLI Version:   15.9.0
+[debug] [2026-03-10T15:50:12.803Z] Platform:      win32
+[debug] [2026-03-10T15:50:12.803Z] Node Version:  v22.19.0
+[debug] [2026-03-10T15:50:12.803Z] Time:          Tue Mar 10 2026 16:50:12 GMT+0100 (hora estándar de Europa central)
+[debug] [2026-03-10T15:50:12.803Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-10T15:50:14.381Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-10T15:50:14.382Z] > authorizing via signed-in user (caauco0728@gmail.com)
+[debug] [2026-03-10T15:50:14.382Z] [iam] checking project latinbarberapp for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2026-03-10T15:50:14.384Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:14.384Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:14.385Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions [none]
+[debug] [2026-03-10T15:50:14.385Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:50:14.385Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2026-03-10T15:50:15.118Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions 200
+[debug] [2026-03-10T15:50:15.118Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'latinbarberapp'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-03-10T15:50:15.121Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:15.121Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:15.121Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firestore.googleapis.com [none]
+[debug] [2026-03-10T15:50:15.121Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firestore.googleapis.com  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:50:16.015Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firestore.googleapis.com 200
+[debug] [2026-03-10T15:50:16.015Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/latinbarberapp/services/firestore.googleapis.com [omitted]
+[info] +  firestore: required API firestore.googleapis.com is enabled 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-03-10T15:50:16.021Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:16.021Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:16.021Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/latinbarberapp/databases/(default) [none]
+[debug] [2026-03-10T15:50:16.844Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/latinbarberapp/databases/(default) 200
+[debug] [2026-03-10T15:50:16.844Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/latinbarberapp/databases/(default) {"name":"projects/latinbarberapp/databases/(default)","uid":"35177071-3746-438c-b9b5-a6933b894ed2","createTime":"2025-11-22T20:59:31.079445Z","updateTime":"2025-11-22T20:59:31.079445Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"604800s","earliestVersionTime":"2026-03-05T15:51:00Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_ENABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"IKuZrs7XlZMDMPeDxaKgiZMD"}
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2026-03-10T15:50:16.845Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:16.846Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:16.846Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test [none]
+[debug] [2026-03-10T15:50:16.846Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test [omitted]
+[debug] [2026-03-10T15:50:17.657Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test 200
+[debug] [2026-03-10T15:50:17.657Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test {}
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2026-03-10T15:50:17.658Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:17.658Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:17.658Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases pageSize=10&pageToken=
+[debug] [2026-03-10T15:50:18.330Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases 200
+[debug] [2026-03-10T15:50:18.330Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases {"releases":[{"name":"projects/latinbarberapp/releases/cloud.firestore","rulesetName":"projects/latinbarberapp/rulesets/2c263e02-2992-46a0-b47e-c29478fb51d7","createTime":"2025-11-22T20:59:33.681357Z","updateTime":"2026-03-10T15:02:38.999069Z"}]}
+[debug] [2026-03-10T15:50:18.331Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:18.331Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:18.331Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/2c263e02-2992-46a0-b47e-c29478fb51d7 [none]
+[debug] [2026-03-10T15:50:18.980Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/2c263e02-2992-46a0-b47e-c29478fb51d7 200
+[debug] [2026-03-10T15:50:18.981Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/2c263e02-2992-46a0-b47e-c29478fb51d7 [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2026-03-10T15:50:18.982Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:18.982Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:18.982Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets [none]
+[debug] [2026-03-10T15:50:18.982Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets [omitted]
+[debug] [2026-03-10T15:50:19.844Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets 200
+[debug] [2026-03-10T15:50:19.845Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets {"name":"projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d","source":{"files":[{"content":"rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    function currentUserPath() {\n      return /databases/$(database)/documents/users/$(request.auth.uid);\n    }\n\n    function signedIn() {\n      return request.auth != null;\n    }\n\n    function isAdmin() {\n      return signedIn() &&\n        (\n          request.auth.token.admin == true ||\n          (exists(currentUserPath()) && get(currentUserPath()).data.role == \"admin\")\n        );\n    }\n\n    function isSelf(userId) {\n      return signedIn() && request.auth.uid == userId;\n    }\n\n    function keepsRole() {\n      return !(\"role\" in request.resource.data) || request.resource.data.role == resource.data.role;\n    }\n\n    function validSelfCreate(userId) {\n      return isSelf(userId) &&\n        (\n          !(\"role\" in request.resource.data) ||\n          request.resource.data.role == \"client\"\n        );\n    }\n\n    function appointmentPath(appointmentId) {\n      return /databases/$(database)/documents/appointments/$(appointmentId);\n    }\n\n    function appointmentLockPath(lockId) {\n      return /databases/$(database)/documents/appointmentLocks/$(lockId);\n    }\n\n    function clientCanCreateOwnAppointmentWithLock(appointmentId) {\n      return signedIn() &&\n        request.resource.data.customerId == request.auth.uid &&\n        request.resource.data.lockId is string &&\n        existsAfter(appointmentLockPath(request.resource.data.lockId)) &&\n        getAfter(appointmentLockPath(request.resource.data.lockId)).data.appointmentId == appointmentId &&\n        getAfter(appointmentLockPath(request.resource.data.lockId)).data.customerId == request.auth.uid &&\n        getAfter(appointmentLockPath(request.resource.data.lockId)).data.barberId == request.resource.data.barberId &&\n        getAfter(appointmentLockPath(request.resource.data.lockId)).data.date == request.resource.data.date &&\n        getAfter(appointmentLockPath(request.resource.data.lockId)).data.time == request.resource.data.time;\n    }\n\n    function clientCanCreateOwnAppointmentLock(lockId) {\n      return signedIn() &&\n        request.resource.data.customerId == request.auth.uid &&\n        request.resource.data.appointmentId is string &&\n        existsAfter(appointmentPath(request.resource.data.appointmentId)) &&\n        getAfter(appointmentPath(request.resource.data.appointmentId)).data.customerId == request.auth.uid &&\n        getAfter(appointmentPath(request.resource.data.appointmentId)).data.lockId == lockId &&\n        getAfter(appointmentPath(request.resource.data.appointmentId)).data.barberId == request.resource.data.barberId &&\n        getAfter(appointmentPath(request.resource.data.appointmentId)).data.date == request.resource.data.date &&\n        getAfter(appointmentPath(request.resource.data.appointmentId)).data.time == request.resource.data.time;\n    }\n\n    function clientOwnsLockForDelete() {\n      return signedIn() && (\n        resource.data.customerId == request.auth.uid ||\n        (\n          resource.data.appointmentId is string &&\n          exists(appointmentPath(resource.data.appointmentId)) &&\n          get(appointmentPath(resource.data.appointmentId)).data.customerId == request.auth.uid\n        )\n      );\n    }\n\n    // Admin tiene acceso total al proyecto\n    match /{document=**} {\n      allow read, write: if isAdmin();\n    }\n\n    match /users/{userId} {\n      allow create: if validSelfCreate(userId);\n      allow read: if isSelf(userId) || isAdmin();\n      allow update: if (isSelf(userId) && keepsRole()) || isAdmin();\n      allow delete: if false;\n    }\n\n    match /barbers/{barberId} {\n      allow read: if signedIn();\n      allow write: if isAdmin();\n    }\n\n    match /services/{serviceId} {\n      allow read: if signedIn();\n      allow write: if isAdmin();\n    }\n\n    match /settings/{settingId} {\n      allow read: if signedIn();\n      allow write: if isAdmin();\n    }\n\n    match /closures/{closureId} {\n      allow read: if signedIn();\n      allow write: if isAdmin();\n    }\n\n    match /appointments/{appointmentId} {\n      allow create: if isAdmin() || clientCanCreateOwnAppointmentWithLock(appointmentId);\n      allow read: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);\n      allow update, delete: if isAdmin() || (signedIn() && resource.data.customerId == request.auth.uid);\n    }\n\n    match /appointmentLocks/{lockId} {\n      allow read: if signedIn();\n      allow create: if isAdmin() || clientCanCreateOwnAppointmentLock(lockId);\n      allow update: if isAdmin();\n      allow delete: if isAdmin() || clientOwnsLockForDelete();\n    }\n\n    match /mail/{mailId} {\n      allow create: if signedIn();\n      allow read, update, delete: if isAdmin();\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2026-03-10T15:50:19.670863Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2026-03-10T15:50:19.845Z] [rules] created ruleset projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d
+[debug] [2026-03-10T15:50:19.845Z] [rules] releasing cloud.firestore/(default) with ruleset projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d
+[debug] [2026-03-10T15:50:19.846Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:19.846Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:50:19.846Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/cloud.firestore/(default) [none]
+[debug] [2026-03-10T15:50:19.846Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/cloud.firestore/(default) {"release":{"name":"projects/latinbarberapp/releases/cloud.firestore/(default)","rulesetName":"projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d"}}
+[debug] [2026-03-10T15:50:20.250Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/cloud.firestore/(default) 200
+[debug] [2026-03-10T15:50:20.250Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/cloud.firestore/(default) {"name":"projects/latinbarberapp/releases/cloud.firestore","rulesetName":"projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d","createTime":"2025-11-22T20:59:33.681357Z","updateTime":"2026-03-10T15:50:20.069542Z"}
+[debug] [2026-03-10T15:50:20.250Z] [rules] updated release projects/latinbarberapp/releases/cloud.firestore
+[info] +  firestore: released rules firestore.rules to cloud.firestore 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/latinbarberapp/overview
+[debug] [2026-03-10T15:58:00.817Z] ----------------------------------------------------------------------
+[debug] [2026-03-10T15:58:00.820Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\caauc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only storage
+[debug] [2026-03-10T15:58:00.820Z] CLI Version:   15.9.0
+[debug] [2026-03-10T15:58:00.820Z] Platform:      win32
+[debug] [2026-03-10T15:58:00.821Z] Node Version:  v22.19.0
+[debug] [2026-03-10T15:58:00.821Z] Time:          Tue Mar 10 2026 16:58:00 GMT+0100 (hora estándar de Europa central)
+[debug] [2026-03-10T15:58:00.821Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-10T15:58:02.517Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-10T15:58:02.518Z] > authorizing via signed-in user (caauco0728@gmail.com)
+[debug] [2026-03-10T15:58:02.519Z] [iam] checking project latinbarberapp for permissions ["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2026-03-10T15:58:02.520Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:02.520Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:02.521Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions [none]
+[debug] [2026-03-10T15:58:02.521Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions  x-goog-user-project=latinbarberapp
+[debug] [2026-03-10T15:58:02.521Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2026-03-10T15:58:03.270Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions 200
+[debug] [2026-03-10T15:58:03.270Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/latinbarberapp:testIamPermissions {"permissions":["firebase.projects.get","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[info] 
+[info] === Deploying to 'latinbarberapp'...
+[info] 
+[info] i  deploying storage 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2026-03-10T15:58:03.273Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:03.273Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:03.273Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket [none]
+[debug] [2026-03-10T15:58:03.779Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket 200
+[debug] [2026-03-10T15:58:03.779Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/latinbarberapp/defaultBucket {"name":"projects/latinbarberapp/defaultBucket","location":"US-CENTRAL1","bucket":{"name":"projects/latinbarberapp/buckets/latinbarberapp.firebasestorage.app"},"storageClass":"REGIONAL"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2026-03-10T15:58:03.781Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:03.781Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:03.781Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test [none]
+[debug] [2026-03-10T15:58:03.781Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test [omitted]
+[debug] [2026-03-10T15:58:04.544Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test 200
+[debug] [2026-03-10T15:58:04.544Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp:test {}
+[info] +  firebase.storage: rules file storage.rules compiled successfully 
+[debug] [2026-03-10T15:58:04.545Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:04.546Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:04.546Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases pageSize=10&pageToken=
+[debug] [2026-03-10T15:58:04.833Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases 200
+[debug] [2026-03-10T15:58:04.833Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases {"releases":[{"name":"projects/latinbarberapp/releases/cloud.firestore","rulesetName":"projects/latinbarberapp/rulesets/10af23a1-af53-42a5-b5fb-385a089e0c7d","createTime":"2025-11-22T20:59:33.681357Z","updateTime":"2026-03-10T15:50:20.069542Z"},{"name":"projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app","rulesetName":"projects/latinbarberapp/rulesets/5fc56315-44e0-41e4-b951-c14fe144fd93","createTime":"2026-03-10T15:55:54.170817Z","updateTime":"2026-03-10T15:55:54.170817Z"}]}
+[debug] [2026-03-10T15:58:04.842Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:04.843Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:04.843Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/5fc56315-44e0-41e4-b951-c14fe144fd93 [none]
+[debug] [2026-03-10T15:58:05.518Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/5fc56315-44e0-41e4-b951-c14fe144fd93 200
+[debug] [2026-03-10T15:58:05.518Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets/5fc56315-44e0-41e4-b951-c14fe144fd93 [omitted]
+[info] i  storage: uploading rules storage.rules... 
+[debug] [2026-03-10T15:58:05.519Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:05.519Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:05.519Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets [none]
+[debug] [2026-03-10T15:58:05.519Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets [omitted]
+[debug] [2026-03-10T15:58:05.844Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets 200
+[debug] [2026-03-10T15:58:05.844Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/latinbarberapp/rulesets {"name":"projects/latinbarberapp/rulesets/bda5640d-0715-4529-8088-6d07182287b8","source":{"files":[{"content":"rules_version = '2';\nservice firebase.storage {\n  match /b/{bucket}/o {\n    function currentUserPath() {\n      return /databases/(default)/documents/users/$(request.auth.uid);\n    }\n\n    function signedIn() {\n      return request.auth != null;\n    }\n\n    function isAdmin() {\n      return signedIn() &&\n        (\n          request.auth.token.admin == true ||\n          (firestore.exists(currentUserPath()) && firestore.get(currentUserPath()).data.role == \"admin\")\n        );\n    }\n\n    function validImageUpload() {\n      return request.resource != null &&\n        request.resource.contentType.matches(\"image/.*\") &&\n        request.resource.size < 5 * 1024 * 1024;\n    }\n\n    match /users/{userId}/profile/{allPaths=**} {\n      allow read: if signedIn();\n      allow write: if signedIn() && request.auth.uid == userId && validImageUpload();\n    }\n\n    match /barbers/{barberId}/{allPaths=**} {\n      allow read: if signedIn();\n      allow write: if isAdmin() && validImageUpload();\n    }\n\n    match /{allPaths=**} {\n      allow read, write: if false;\n    }\n  }\n}\n","name":"storage.rules"}]},"createTime":"2026-03-10T15:58:05.671039Z","metadata":{"services":["firebase.storage"]}}
+[debug] [2026-03-10T15:58:05.844Z] [rules] created ruleset projects/latinbarberapp/rulesets/bda5640d-0715-4529-8088-6d07182287b8
+[debug] [2026-03-10T15:58:05.845Z] [rules] releasing firebase.storage/latinbarberapp.firebasestorage.app with ruleset projects/latinbarberapp/rulesets/bda5640d-0715-4529-8088-6d07182287b8
+[debug] [2026-03-10T15:58:05.845Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:05.845Z] Checked if tokens are valid: true, expires at: 1773161370931
+[debug] [2026-03-10T15:58:05.845Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app [none]
+[debug] [2026-03-10T15:58:05.846Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app {"release":{"name":"projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app","rulesetName":"projects/latinbarberapp/rulesets/bda5640d-0715-4529-8088-6d07182287b8"}}
+[debug] [2026-03-10T15:58:06.657Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app 200
+[debug] [2026-03-10T15:58:06.657Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app {"name":"projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app","rulesetName":"projects/latinbarberapp/rulesets/bda5640d-0715-4529-8088-6d07182287b8","createTime":"2026-03-10T15:55:54.170817Z","updateTime":"2026-03-10T15:58:06.483949Z"}
+[debug] [2026-03-10T15:58:06.657Z] [rules] updated release projects/latinbarberapp/releases/firebase.storage/latinbarberapp.firebasestorage.app
+[info] +  storage: released rules storage.rules to firebase.storage 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/latinbarberapp/overview

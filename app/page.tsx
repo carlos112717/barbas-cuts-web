@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore"; // Importamos getDoc
 import { FirebaseError } from "firebase/app";
@@ -71,14 +72,16 @@ export default function AuthScreen() {
       <div className="w-full max-w-md bg-barbas-dark p-8 rounded-2xl shadow-xl border border-barbas-gold/20">
         
         <div className="flex flex-col items-center mb-8">
-          <div className="w-20 h-20 mb-4 bg-barbas-gold rounded-full flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-barbas-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
-            </svg>
+          <div className="w-36 h-36 mb-4">
+            <Image
+              src="/LOGO_BARBER.png"
+              alt="Barbas Cut's"
+              width={144}
+              height={144}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
-          <h1 className="text-3xl font-bold text-barbas-gold tracking-widest uppercase">
-            Barbas Cut&apos;s
-          </h1>
         </div>
 
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
