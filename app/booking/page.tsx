@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
@@ -355,13 +356,13 @@ export default function BookingScreen() {
   }
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6 text-white flex flex-col items-center">
+    <main className="min-h-screen bg-barbas-black p-4 sm:p-6 text-white flex flex-col items-center overflow-x-hidden">
       <div className="w-full max-w-md flex flex-col h-full min-h-[90vh]">
-        <header className={`flex items-center mb-8 mt-2 ${step >= 4 ? "hidden" : ""}`}>
-          <button onClick={handleBack} className="text-barbas-gold p-2 hover:bg-white/10 rounded-full mr-3 transition-colors">
+        <header className={`flex items-center gap-2 mb-6 mt-2 ${step >= 4 ? "hidden" : ""}`}>
+          <button onClick={handleBack} className="text-barbas-gold w-11 h-11 flex items-center justify-center hover:bg-white/10 rounded-full mr-1 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
-          <h1 className="text-xl font-bold">
+          <h1 className="text-lg sm:text-xl font-bold">
             {step === 1 && "Elige a tu barbero"}
             {step === 2 && "Elige el servicio"}
             {step === 3 && "Fecha y hora"}
@@ -382,11 +383,11 @@ export default function BookingScreen() {
                     setSelectedBarberId(barber.id);
                     setStep(2);
                   }}
-                  className="bg-barbas-dark border border-white/5 hover:border-barbas-gold rounded-xl p-4 flex items-center text-left transition-colors"
+                  className="bg-barbas-dark border border-white/5 hover:border-barbas-gold rounded-xl p-4 flex items-center text-left transition-colors min-h-[88px]"
                 >
-                  <div className="w-12 h-12 bg-gray-600 rounded-full mr-4 flex-shrink-0 overflow-hidden flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-600 rounded-full mr-4 flex-shrink-0 overflow-hidden flex items-center justify-center relative">
                     {barber.photoURL ? (
-                      <img src={barber.photoURL} alt={barber.name} className="w-full h-full object-cover" />
+                      <Image src={barber.photoURL} alt={barber.name} fill sizes="48px" className="w-full h-full object-cover" />
                     ) : null}
                   </div>
                   <div>
@@ -409,13 +410,13 @@ export default function BookingScreen() {
                     setSelectedServiceId(service.id);
                     setStep(3);
                   }}
-                  className="bg-barbas-dark border border-white/5 hover:border-barbas-gold rounded-xl p-4 flex justify-between items-center text-left transition-colors"
+                  className="bg-barbas-dark border border-white/5 hover:border-barbas-gold rounded-xl p-4 flex flex-col sm:flex-row gap-2 sm:gap-3 justify-between items-start sm:items-center text-left transition-colors"
                 >
                   <div>
                     <h2 className="font-bold text-lg">{service.name}</h2>
                     <p className="text-gray-400 text-sm">{service.durationMinutes} minutos</p>
                   </div>
-                  <span className="text-barbas-gold font-bold text-xl">{service.price} EUR</span>
+                  <span className="text-barbas-gold font-bold text-xl sm:text-right">{service.price} EUR</span>
                 </button>
               ))
             )}
@@ -437,7 +438,7 @@ export default function BookingScreen() {
                   setSelectedTime("");
                 }}
                 min={getTodayString()}
-                className="w-full bg-barbas-dark border border-gray-600 rounded-lg p-3 text-white focus:outline-none focus:border-barbas-gold appearance-none [color-scheme:dark]"
+                className="w-full bg-barbas-dark border border-gray-600 rounded-lg p-3 text-white focus:outline-none focus:border-barbas-gold appearance-none scheme-dark"
               />
             </div>
 
@@ -446,7 +447,7 @@ export default function BookingScreen() {
                 <label className="text-gray-400 text-sm mb-2 block">Horarios disponibles</label>
                 {(loadingSlots || loadingClosure) && <p className="text-gray-400 text-sm text-center mt-4">Cargando disponibilidad...</p>}
 
-                <div className="flex items-center gap-4 text-xs text-gray-300 mb-3">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300 mb-3">
                   <span className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded border border-barbas-gold"></span>
                     Disponible
@@ -466,7 +467,7 @@ export default function BookingScreen() {
                 {slotStates.length === 0 ? (
                   <p className="text-red-400 text-sm text-center mt-4 border border-red-500/30 p-3 rounded-lg bg-red-950/20">No hay horarios cargados.</p>
                 ) : (
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {slotStates.map(({ slot, isUnavailable }) => {
                       const isSelected = selectedTime === slot;
                       return (
@@ -477,7 +478,7 @@ export default function BookingScreen() {
                             if (!isUnavailable) setSelectedTime(slot);
                           }}
                           disabled={isUnavailable}
-                          className={`py-2 rounded-lg font-bold border transition-colors ${
+                          className={`py-2 rounded-lg font-bold border transition-colors min-h-11 ${
                             isUnavailable
                               ? "bg-barbas-gold text-barbas-black border-barbas-gold cursor-not-allowed opacity-80"
                               : isSelected
@@ -498,13 +499,13 @@ export default function BookingScreen() {
             )}
           </div>
 
-          <div className={step === 4 ? "flex flex-col items-center justify-center h-full text-center mt-20" : "hidden"}>
+          <div className={step === 4 ? "flex flex-col items-center justify-center h-full text-center mt-10 sm:mt-20" : "hidden"}>
             <div className="w-24 h-24 bg-barbas-gold rounded-full flex items-center justify-center mb-6 shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-barbas-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
             </div>
-            <h1 className="text-3xl font-bold text-barbas-gold mb-2">Reserva confirmada</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-barbas-gold mb-2">Reserva confirmada</h1>
             <p className="text-gray-400 mb-8">Te esperamos el {selectedDate} a las {selectedTime}.</p>
-            <button onClick={() => router.push("/home")} className="bg-barbas-gold text-barbas-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors w-full shadow-md">VOLVER AL INICIO</button>
+            <button onClick={() => router.push("/home")} className="bg-barbas-gold text-barbas-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition-colors w-full shadow-md min-h-11">VOLVER AL INICIO</button>
           </div>
         </div>
 
@@ -512,7 +513,7 @@ export default function BookingScreen() {
           <button
             onClick={handleConfirmBooking}
             disabled={!selectedDate || !selectedTime || isSaving || loadingSlots || loadingClosure || !selectedBarber || !selectedService}
-            className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-4 rounded-xl hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-4 rounded-xl hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg min-h-[48px]"
           >
             {isSaving ? "CONFIRMANDO..." : "CONFIRMAR RESERVA"}
           </button>
@@ -521,3 +522,4 @@ export default function BookingScreen() {
     </main>
   );
 }
+

@@ -11,38 +11,38 @@ import {
   staticFiles,
   validateConfig,
   writeBuildResult
-} from "../../chunks/chunk-E6ZQVOZ6.js";
+} from "../../chunks/chunk-4QETQOUQ.js";
 import {
   require_semver
 } from "../../chunks/chunk-IB5L4LKZ.js";
 import {
   pullCommandLogic
-} from "../../chunks/chunk-OG6DJHIZ.js";
+} from "../../chunks/chunk-GEYBIZGF.js";
 import {
   pickOverrides,
   readProjectSettings
-} from "../../chunks/chunk-SIXBAQRA.js";
+} from "../../chunks/chunk-IGWOW3XS.js";
 import {
   require_dist
-} from "../../chunks/chunk-Q7PNQO77.js";
+} from "../../chunks/chunk-XGUZYJXE.js";
 import "../../chunks/chunk-QXRJ52T4.js";
-import "../../chunks/chunk-YHX5HRA5.js";
-import "../../chunks/chunk-BSGCBDUW.js";
-import "../../chunks/chunk-WS74BBTC.js";
-import "../../chunks/chunk-OAI7OWE5.js";
-import "../../chunks/chunk-HN6HFP24.js";
+import "../../chunks/chunk-CUUJWNAY.js";
+import "../../chunks/chunk-F2FJ3QZG.js";
+import "../../chunks/chunk-LF56WF3E.js";
+import "../../chunks/chunk-HXZPHN34.js";
+import "../../chunks/chunk-VKQV2LPP.js";
 import {
   DEFAULT_VERCEL_CONFIG_FILENAME,
   compileVercelConfig,
   findSourceVercelConfigFile,
   require_main
-} from "../../chunks/chunk-DTOQNQUH.js";
+} from "../../chunks/chunk-NN6I6YMJ.js";
 import {
   buildCommand
-} from "../../chunks/chunk-5QC74A5F.js";
+} from "../../chunks/chunk-43L4BNYM.js";
 import {
   help
-} from "../../chunks/chunk-UZO6X2EJ.js";
+} from "../../chunks/chunk-DOBFJJLK.js";
 import {
   VERCEL_DIR,
   getProjectLink,
@@ -54,15 +54,16 @@ import {
   require_lib,
   require_minimatch2 as require_minimatch,
   resolveProjectCwd
-} from "../../chunks/chunk-D6EWLYB6.js";
+} from "../../chunks/chunk-4MTNDNUR.js";
 import {
   TelemetryClient
 } from "../../chunks/chunk-XB2KZC2B.js";
 import {
   stamp_default
-} from "../../chunks/chunk-CO5D46AG.js";
+} from "../../chunks/chunk-SOTR4CXR.js";
 import "../../chunks/chunk-LWBSOTJP.js";
 import "../../chunks/chunk-7EHTK7LP.js";
+import "../../chunks/chunk-GGP5R3FU.js";
 import {
   CantParseJSONFile,
   cmd,
@@ -731,6 +732,12 @@ async function doBuild(client, project, buildsJson, cwd, outputDir, span, standa
       }
     }
     zeroConfigRoutes.push(...detectedBuilders.redirectRoutes || []);
+    const detectedHostRewriteRoutes = detectedBuilders.hostRewriteRoutes;
+    zeroConfigRoutes = (0, import_routing_utils2.appendRoutesToPhase)({
+      routes: zeroConfigRoutes,
+      newRoutes: detectedHostRewriteRoutes ?? null,
+      phase: null
+    });
     zeroConfigRoutes.push(
       ...(0, import_routing_utils2.appendRoutesToPhase)({
         routes: [],

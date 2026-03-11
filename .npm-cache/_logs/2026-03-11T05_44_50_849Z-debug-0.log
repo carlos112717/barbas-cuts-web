@@ -1,0 +1,1865 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\caauc\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.6.2
+2 info using node@v22.19.0
+3 silly config load:file:C:\Users\caauc\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\caauc\barbas-cuts-web\.npmrc
+5 silly config load:file:C:\Users\caauc\.npmrc
+6 silly config load:file:C:\Users\caauc\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm exec vercel --prod --yes
+8 verbose argv "exec" "--" "vercel" "--prod" "--yes"
+9 verbose logfile logs-max:10 dir:c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_44_50_849Z-
+10 verbose logfile c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_44_50_849Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files
+13 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+14 http fetch GET 200 https://registry.npmjs.org/vercel 298ms (cache updated)
+15 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+16 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+17 warn exec The following package was not found and will be installed: vercel@50.31.1
+18 silly idealTree buildDeps
+19 silly fetch manifest vercel@50.31.1
+20 silly packumentCache full:https://registry.npmjs.org/vercel cache-miss
+21 http fetch GET 200 https://registry.npmjs.org/vercel 570ms (cache miss)
+22 silly packumentCache full:https://registry.npmjs.org/vercel set size:undefined disposed:false
+23 silly placeDep ROOT vercel@50.31.1 REPLACE for:  want: 50.31.1
+24 silly fetch manifest esbuild@0.27.0
+25 silly packumentCache full:https://registry.npmjs.org/esbuild cache-miss
+26 silly fetch manifest @vercel/go@3.4.4
+27 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgo cache-miss
+28 silly fetch manifest @vercel/h3@0.1.57
+29 silly packumentCache full:https://registry.npmjs.org/@vercel%2fh3 cache-miss
+30 silly fetch manifest @vercel/koa@0.1.31
+31 silly packumentCache full:https://registry.npmjs.org/@vercel%2fkoa cache-miss
+32 silly fetch manifest @vercel/hono@0.2.51
+33 silly packumentCache full:https://registry.npmjs.org/@vercel%2fhono cache-miss
+34 silly fetch manifest @vercel/next@4.16.1
+35 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnext cache-miss
+36 silly fetch manifest @vercel/node@5.6.15
+37 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnode cache-miss
+38 silly fetch manifest @vercel/elysia@0.1.48
+39 silly packumentCache full:https://registry.npmjs.org/@vercel%2felysia cache-miss
+40 silly fetch manifest @vercel/nestjs@0.2.52
+41 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnestjs cache-miss
+42 silly fetch manifest @vercel/python@6.22.0
+43 silly packumentCache full:https://registry.npmjs.org/@vercel%2fpython cache-miss
+44 silly fetch manifest @vercel/express@0.1.57
+45 silly packumentCache full:https://registry.npmjs.org/@vercel%2fexpress cache-miss
+46 http fetch GET 200 https://registry.npmjs.org/@vercel%2felysia 487ms (cache updated)
+47 silly packumentCache full:https://registry.npmjs.org/@vercel%2felysia set size:undefined disposed:false
+48 silly fetch manifest @vercel/fastify@0.1.51
+49 silly packumentCache full:https://registry.npmjs.org/@vercel%2ffastify cache-miss
+50 http fetch GET 200 https://registry.npmjs.org/@vercel%2fexpress 499ms (cache updated)
+51 silly packumentCache full:https://registry.npmjs.org/@vercel%2fexpress set size:undefined disposed:false
+52 silly fetch manifest @vercel/redwood@2.4.10
+53 silly packumentCache full:https://registry.npmjs.org/@vercel%2fredwood cache-miss
+54 http fetch GET 200 https://registry.npmjs.org/@vercel%2fgo 521ms (cache updated)
+55 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgo set size:undefined disposed:false
+56 silly fetch manifest @vercel/backends@0.0.45
+57 silly packumentCache full:https://registry.npmjs.org/@vercel%2fbackends cache-miss
+58 http fetch GET 200 https://registry.npmjs.org/esbuild 544ms (cache revalidated)
+59 silly packumentCache full:https://registry.npmjs.org/esbuild set size:1242223 disposed:false
+60 silly fetch manifest @vercel/hydrogen@1.3.6
+61 silly packumentCache full:https://registry.npmjs.org/@vercel%2fhydrogen cache-miss
+62 http fetch GET 200 https://registry.npmjs.org/@vercel%2fh3 778ms (cache updated)
+63 silly packumentCache full:https://registry.npmjs.org/@vercel%2fh3 set size:undefined disposed:false
+64 silly fetch manifest @vercel/build-utils@13.8.0
+65 silly packumentCache full:https://registry.npmjs.org/@vercel%2fbuild-utils cache-miss
+66 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnestjs 796ms (cache updated)
+67 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnestjs set size:undefined disposed:false
+68 silly fetch manifest @vercel/detect-agent@1.2.0
+69 silly packumentCache full:https://registry.npmjs.org/@vercel%2fdetect-agent cache-miss
+70 http fetch GET 200 https://registry.npmjs.org/@vercel%2fkoa 806ms (cache updated)
+71 silly packumentCache full:https://registry.npmjs.org/@vercel%2fkoa set size:undefined disposed:false
+72 silly fetch manifest @vercel/static-build@2.9.0
+73 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-build cache-miss
+74 http fetch GET 200 https://registry.npmjs.org/@vercel%2fhono 812ms (cache updated)
+75 silly packumentCache full:https://registry.npmjs.org/@vercel%2fhono set size:undefined disposed:false
+76 silly fetch manifest @vercel/remix-builder@5.7.0
+77 silly packumentCache full:https://registry.npmjs.org/@vercel%2fremix-builder cache-miss
+78 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnode 837ms (cache updated)
+79 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnode set size:undefined disposed:false
+80 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnext 895ms (cache updated)
+81 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnext set size:undefined disposed:false
+82 http fetch GET 200 https://registry.npmjs.org/@vercel%2fbackends 393ms (cache updated)
+83 silly packumentCache full:https://registry.npmjs.org/@vercel%2fbackends set size:undefined disposed:false
+84 http fetch GET 200 https://registry.npmjs.org/@vercel%2ffastify 446ms (cache updated)
+85 silly packumentCache full:https://registry.npmjs.org/@vercel%2ffastify set size:undefined disposed:false
+86 http fetch GET 200 https://registry.npmjs.org/@vercel%2fpython 1171ms (cache updated)
+87 silly packumentCache full:https://registry.npmjs.org/@vercel%2fpython set size:undefined disposed:false
+88 http fetch GET 200 https://registry.npmjs.org/@vercel%2fdetect-agent 419ms (cache updated)
+89 silly packumentCache full:https://registry.npmjs.org/@vercel%2fdetect-agent set size:undefined disposed:false
+90 http fetch GET 200 https://registry.npmjs.org/@vercel%2fredwood 809ms (cache updated)
+91 silly packumentCache full:https://registry.npmjs.org/@vercel%2fredwood set size:undefined disposed:false
+92 http fetch GET 200 https://registry.npmjs.org/@vercel%2fremix-builder 718ms (cache updated)
+93 silly packumentCache full:https://registry.npmjs.org/@vercel%2fremix-builder set size:undefined disposed:false
+94 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-build 771ms (cache updated)
+95 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-build set size:undefined disposed:false
+96 http fetch GET 200 https://registry.npmjs.org/@vercel%2fbuild-utils 817ms (cache updated)
+97 silly packumentCache full:https://registry.npmjs.org/@vercel%2fbuild-utils set size:undefined disposed:false
+98 http fetch GET 200 https://registry.npmjs.org/@vercel%2fhydrogen 1080ms (cache updated)
+99 silly packumentCache full:https://registry.npmjs.org/@vercel%2fhydrogen set size:undefined disposed:false
+100 silly fetch manifest typescript@^4.0.0 || ^5.0.0
+101 silly packumentCache full:https://registry.npmjs.org/typescript cache-miss
+102 http fetch GET 200 https://registry.npmjs.org/typescript 192ms (cache revalidated)
+103 silly packumentCache full:https://registry.npmjs.org/typescript set size:15340015 disposed:false
+104 silly placeDep ROOT @vercel/backends@0.0.45 OK for: vercel@50.31.1 want: 0.0.45
+105 silly placeDep ROOT typescript@5.9.3 OK for: @vercel/backends@0.0.45 want: ^4.0.0 || ^5.0.0
+106 silly placeDep ROOT @vercel/build-utils@13.8.0 OK for: vercel@50.31.1 want: 13.8.0
+107 silly placeDep ROOT @vercel/detect-agent@1.2.0 OK for: vercel@50.31.1 want: 1.2.0
+108 silly placeDep ROOT @vercel/elysia@0.1.48 OK for: vercel@50.31.1 want: 0.1.48
+109 silly placeDep ROOT @vercel/express@0.1.57 OK for: vercel@50.31.1 want: 0.1.57
+110 silly placeDep ROOT @vercel/fastify@0.1.51 OK for: vercel@50.31.1 want: 0.1.51
+111 silly placeDep ROOT @vercel/go@3.4.4 OK for: vercel@50.31.1 want: 3.4.4
+112 silly placeDep ROOT @vercel/h3@0.1.57 OK for: vercel@50.31.1 want: 0.1.57
+113 silly placeDep ROOT @vercel/hono@0.2.51 OK for: vercel@50.31.1 want: 0.2.51
+114 silly placeDep ROOT @vercel/hydrogen@1.3.6 OK for: vercel@50.31.1 want: 1.3.6
+115 silly placeDep ROOT @vercel/koa@0.1.31 OK for: vercel@50.31.1 want: 0.1.31
+116 silly placeDep ROOT @vercel/nestjs@0.2.52 OK for: vercel@50.31.1 want: 0.2.52
+117 silly placeDep ROOT @vercel/next@4.16.1 OK for: vercel@50.31.1 want: 4.16.1
+118 silly placeDep ROOT @vercel/node@5.6.15 OK for: vercel@50.31.1 want: 5.6.15
+119 silly placeDep ROOT @vercel/python@6.22.0 OK for: vercel@50.31.1 want: 6.22.0
+120 silly placeDep ROOT @vercel/redwood@2.4.10 OK for: vercel@50.31.1 want: 2.4.10
+121 silly placeDep ROOT @vercel/remix-builder@5.7.0 OK for: vercel@50.31.1 want: 5.7.0
+122 silly placeDep ROOT @vercel/static-build@2.9.0 OK for: vercel@50.31.1 want: 2.9.0
+123 silly placeDep ROOT esbuild@0.27.0 OK for: vercel@50.31.1 want: 0.27.0
+124 silly fetch manifest tsx@4.21.0
+125 silly packumentCache full:https://registry.npmjs.org/tsx cache-miss
+126 silly fetch manifest zod@3.22.4
+127 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+128 silly fetch manifest srvx@0.8.9
+129 silly packumentCache full:https://registry.npmjs.org/srvx cache-miss
+130 silly fetch manifest execa@3.2.0
+131 silly packumentCache full:https://registry.npmjs.org/execa cache-miss
+132 silly fetch manifest fs-extra@11.1.0
+133 silly packumentCache full:https://registry.npmjs.org/fs-extra cache-miss
+134 silly fetch manifest rolldown@1.0.0-rc.1
+135 silly packumentCache full:https://registry.npmjs.org/rolldown cache-miss
+136 silly fetch manifest @vercel/nft@1.3.0
+137 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft cache-miss
+138 silly fetch manifest oxc-transform@0.111.0
+139 silly packumentCache full:https://registry.npmjs.org/oxc-transform cache-miss
+140 silly fetch manifest path-to-regexp@8.3.0
+141 silly packumentCache full:https://registry.npmjs.org/path-to-regexp cache-miss
+142 silly fetch manifest resolve.exports@2.0.3
+143 silly packumentCache full:https://registry.npmjs.org/resolve.exports cache-miss
+144 silly fetch manifest @vercel/python-analysis@0.9.1
+145 silly packumentCache full:https://registry.npmjs.org/@vercel%2fpython-analysis cache-miss
+146 http fetch GET 200 https://registry.npmjs.org/rolldown 56ms (cache revalidated)
+147 silly packumentCache full:https://registry.npmjs.org/rolldown set size:3629937 disposed:false
+148 silly fetch manifest @vercel/static-config@3.2.0
+149 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+150 http fetch GET 200 https://registry.npmjs.org/tsx 80ms (cache revalidated)
+151 silly packumentCache full:https://registry.npmjs.org/tsx set size:289592 disposed:false
+152 silly fetch manifest zod@3.22.4
+153 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+154 http fetch GET 200 https://registry.npmjs.org/zod 86ms (cache revalidated)
+155 silly packumentCache full:https://registry.npmjs.org/zod set size:3489329 disposed:false
+156 silly fetch manifest fs-extra@11.1.0
+157 silly packumentCache full:https://registry.npmjs.org/fs-extra cache-miss
+158 http fetch GET 200 https://registry.npmjs.org/resolve.exports 104ms (cache revalidated)
+159 silly packumentCache full:https://registry.npmjs.org/resolve.exports set size:49558 disposed:false
+160 silly fetch manifest ts-morph@12.0.0
+161 silly packumentCache full:https://registry.npmjs.org/ts-morph cache-miss
+162 http fetch GET 200 https://registry.npmjs.org/fs-extra 109ms (cache revalidated)
+163 silly packumentCache full:https://registry.npmjs.org/fs-extra set size:232595 disposed:false
+164 silly fetch manifest @vercel/nft@1.1.1
+165 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft cache-miss
+166 http fetch GET 200 https://registry.npmjs.org/execa 112ms (cache revalidated)
+167 silly packumentCache full:https://registry.npmjs.org/execa set size:181234 disposed:false
+168 silly fetch manifest @vercel/cervel@0.0.32
+169 silly packumentCache full:https://registry.npmjs.org/@vercel%2fcervel cache-miss
+170 http fetch GET 200 https://registry.npmjs.org/path-to-regexp 113ms (cache revalidated)
+171 silly packumentCache full:https://registry.npmjs.org/path-to-regexp set size:207142 disposed:false
+172 silly fetch manifest @vercel/static-config@3.2.0
+173 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+174 http cache https://registry.npmjs.org/fs-extra 24ms (cache hit)
+175 silly packumentCache full:https://registry.npmjs.org/fs-extra set size:232595 disposed:false
+176 silly packumentCache full:https://registry.npmjs.org/fs-extra dispose
+177 silly fetch manifest @vercel/static-config@3.2.0
+178 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+179 http cache https://registry.npmjs.org/zod 49ms (cache hit)
+180 silly packumentCache full:https://registry.npmjs.org/zod set size:3489329 disposed:false
+181 silly fetch manifest @vercel/static-config@3.2.0
+182 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+183 http fetch GET 200 https://registry.npmjs.org/ts-morph 52ms (cache revalidated)
+184 silly packumentCache full:https://registry.npmjs.org/ts-morph set size:536115 disposed:false
+185 silly fetch manifest @vercel/nft@1.1.1
+186 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft cache-miss
+187 http fetch GET 200 https://registry.npmjs.org/oxc-transform 205ms (cache revalidated)
+188 silly packumentCache full:https://registry.npmjs.org/oxc-transform set size:407933 disposed:false
+189 silly fetch manifest @vercel/static-config@3.2.0
+190 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+191 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnft 264ms (cache revalidated)
+192 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft set size:567227 disposed:false
+193 silly fetch manifest @vercel/static-config@3.2.0
+194 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+195 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnft 324ms (cache revalidated)
+196 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft set size:567227 disposed:false
+197 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft dispose
+198 silly fetch manifest @vercel/static-config@3.2.0
+199 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+200 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnft 444ms (cache revalidated)
+201 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft set size:567227 disposed:true
+202 silly packumentCache full:https://registry.npmjs.org/@vercel%2fnft dispose
+203 silly fetch manifest @vercel/static-config@3.2.0
+204 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+205 http fetch GET 200 https://registry.npmjs.org/@vercel%2fpython-analysis 448ms (cache updated)
+206 silly packumentCache full:https://registry.npmjs.org/@vercel%2fpython-analysis set size:undefined disposed:false
+207 silly fetch manifest etag@1.8.1
+208 silly packumentCache full:https://registry.npmjs.org/etag cache-miss
+209 http fetch GET 200 https://registry.npmjs.org/etag 71ms (cache revalidated)
+210 silly packumentCache full:https://registry.npmjs.org/etag set size:30032 disposed:false
+211 silly fetch manifest undici@5.28.4
+212 silly packumentCache full:https://registry.npmjs.org/undici cache-miss
+213 http fetch GET 200 https://registry.npmjs.org/srvx 531ms (cache revalidated)
+214 silly packumentCache full:https://registry.npmjs.org/srvx set size:221599 disposed:false
+215 silly fetch manifest node-fetch@2.6.9
+216 silly packumentCache full:https://registry.npmjs.org/node-fetch cache-miss
+217 http fetch GET 200 https://registry.npmjs.org/undici 36ms (cache revalidated)
+218 silly packumentCache full:https://registry.npmjs.org/undici set size:1271191 disposed:false
+219 silly fetch manifest @types/node@20.11.0
+220 silly packumentCache full:https://registry.npmjs.org/@types%2fnode cache-miss
+221 http fetch GET 200 https://registry.npmjs.org/node-fetch 38ms (cache revalidated)
+222 silly packumentCache full:https://registry.npmjs.org/node-fetch set size:896010 disposed:false
+223 silly fetch manifest async-listen@3.0.0
+224 silly packumentCache full:https://registry.npmjs.org/async-listen cache-miss
+225 http fetch GET 200 https://registry.npmjs.org/@types%2fnode 75ms (cache revalidated)
+226 silly packumentCache full:https://registry.npmjs.org/@types%2fnode set size:10936308 disposed:false
+227 silly fetch manifest edge-runtime@2.5.9
+228 silly packumentCache full:https://registry.npmjs.org/edge-runtime cache-miss
+229 http fetch GET 200 https://registry.npmjs.org/async-listen 206ms (cache revalidated)
+230 silly packumentCache full:https://registry.npmjs.org/async-listen set size:27933 disposed:false
+231 silly fetch manifest path-to-regexp@6.1.0
+232 silly packumentCache full:https://registry.npmjs.org/path-to-regexp cache-hit
+233 silly fetch manifest es-module-lexer@1.4.1
+234 silly packumentCache full:https://registry.npmjs.org/es-module-lexer cache-miss
+235 http fetch GET 200 https://registry.npmjs.org/es-module-lexer 35ms (cache revalidated)
+236 silly packumentCache full:https://registry.npmjs.org/es-module-lexer set size:203341 disposed:false
+237 silly fetch manifest @edge-runtime/vm@3.2.0
+238 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fvm cache-miss
+239 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 758ms (cache updated)
+240 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+241 silly fetch manifest cjs-module-lexer@1.2.3
+242 silly packumentCache full:https://registry.npmjs.org/cjs-module-lexer cache-miss
+243 http fetch GET 200 https://registry.npmjs.org/cjs-module-lexer 34ms (cache revalidated)
+244 silly packumentCache full:https://registry.npmjs.org/cjs-module-lexer set size:147092 disposed:false
+245 silly fetch manifest @vercel/error-utils@2.0.3
+246 silly packumentCache full:https://registry.npmjs.org/@vercel%2ferror-utils cache-miss
+247 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fvm 75ms (cache revalidated)
+248 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fvm set size:269934 disposed:false
+249 silly fetch manifest path-to-regexp-updated@npm:path-to-regexp@6.3.0
+250 silly packumentCache full:https://registry.npmjs.org/path-to-regexp cache-hit
+251 silly fetch manifest @edge-runtime/node-utils@2.3.0
+252 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fnode-utils cache-miss
+253 http fetch GET 200 https://registry.npmjs.org/edge-runtime 215ms (cache revalidated)
+254 silly packumentCache full:https://registry.npmjs.org/edge-runtime set size:342321 disposed:false
+255 silly fetch manifest @edge-runtime/primitives@4.1.0
+256 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fprimitives cache-miss
+257 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 547ms (cache updated)
+258 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+259 silly fetch manifest semver@6.3.1
+260 silly packumentCache full:https://registry.npmjs.org/semver cache-miss
+261 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 591ms (cache updated)
+262 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+263 silly fetch manifest @vercel/error-utils@2.0.3
+264 silly packumentCache full:https://registry.npmjs.org/@vercel%2ferror-utils cache-miss
+265 http fetch GET 200 https://registry.npmjs.org/semver 38ms (cache revalidated)
+266 silly packumentCache full:https://registry.npmjs.org/semver set size:229678 disposed:false
+267 silly fetch manifest @vercel/gatsby-plugin-vercel-builder@2.1.0
+268 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder cache-miss
+269 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 1026ms (cache updated)
+270 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+271 silly fetch manifest @vercel/gatsby-plugin-vercel-analytics@1.0.11
+272 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-analytics cache-miss
+273 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 1048ms (cache updated)
+274 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+275 silly fetch manifest @esbuild/aix-ppc64@0.27.0
+276 silly packumentCache full:https://registry.npmjs.org/@esbuild%2faix-ppc64 cache-miss
+277 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 749ms (cache updated)
+278 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+279 silly fetch manifest @esbuild/linux-arm@0.27.0
+280 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-arm cache-miss
+281 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 1042ms (cache updated)
+282 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+283 silly fetch manifest @esbuild/linux-x64@0.27.0
+284 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-x64 cache-miss
+285 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 1021ms (cache updated)
+286 silly packumentCache full:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+287 silly fetch manifest @esbuild/sunos-x64@0.27.0
+288 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fsunos-x64 cache-miss
+289 http fetch GET 200 https://registry.npmjs.org/@vercel%2fcervel 1130ms (cache updated)
+290 silly packumentCache full:https://registry.npmjs.org/@vercel%2fcervel set size:undefined disposed:false
+291 silly fetch manifest @esbuild/win32-x64@0.27.0
+292 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-x64 cache-miss
+293 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-x64 62ms (cache revalidated)
+294 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-x64 set size:187244 disposed:false
+295 silly fetch manifest @esbuild/darwin-x64@0.27.0
+296 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fdarwin-x64 cache-miss
+297 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fwin32-x64 80ms (cache revalidated)
+298 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-x64 set size:187476 disposed:false
+299 silly fetch manifest @esbuild/linux-ia32@0.27.0
+300 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-ia32 cache-miss
+301 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fdarwin-x64 79ms (cache revalidated)
+302 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fdarwin-x64 set size:187924 disposed:false
+303 silly fetch manifest @esbuild/netbsd-x64@0.27.0
+304 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fnetbsd-x64 cache-miss
+305 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fprimitives 425ms (cache revalidated)
+306 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fprimitives set size:307646 disposed:false
+307 silly fetch manifest @esbuild/win32-ia32@0.27.0
+308 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-ia32 cache-miss
+309 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fnetbsd-x64 49ms (cache revalidated)
+310 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fnetbsd-x64 set size:185730 disposed:false
+311 silly fetch manifest @esbuild/android-arm@0.27.0
+312 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-arm cache-miss
+313 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-arm 213ms (cache revalidated)
+314 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-arm set size:186917 disposed:false
+315 silly fetch manifest @esbuild/android-x64@0.27.0
+316 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-x64 cache-miss
+317 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-ia32 85ms (cache revalidated)
+318 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-ia32 set size:187877 disposed:false
+319 silly fetch manifest @esbuild/freebsd-x64@0.27.0
+320 silly packumentCache full:https://registry.npmjs.org/@esbuild%2ffreebsd-x64 cache-miss
+321 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fwin32-ia32 74ms (cache revalidated)
+322 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-ia32 set size:188094 disposed:false
+323 silly fetch manifest @esbuild/linux-arm64@0.27.0
+324 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-arm64 cache-miss
+325 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fandroid-arm 50ms (cache revalidated)
+326 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-arm set size:213504 disposed:false
+327 silly fetch manifest @esbuild/linux-ppc64@0.27.0
+328 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-ppc64 cache-miss
+329 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fsunos-x64 212ms (cache revalidated)
+330 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fsunos-x64 set size:187474 disposed:false
+331 silly fetch manifest @esbuild/linux-s390x@0.27.0
+332 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-s390x cache-miss
+333 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fandroid-x64 52ms (cache revalidated)
+334 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-x64 set size:187307 disposed:false
+335 silly fetch manifest @esbuild/openbsd-x64@0.27.0
+336 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenbsd-x64 cache-miss
+337 http fetch GET 200 https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder 431ms (cache updated)
+338 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder set size:undefined disposed:false
+339 silly fetch manifest @esbuild/win32-arm64@0.27.0
+340 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-arm64 cache-miss
+341 http fetch GET 200 https://registry.npmjs.org/@esbuild%2ffreebsd-x64 61ms (cache revalidated)
+342 silly packumentCache full:https://registry.npmjs.org/@esbuild%2ffreebsd-x64 set size:188756 disposed:false
+343 silly fetch manifest @esbuild/darwin-arm64@0.27.0
+344 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fdarwin-arm64 cache-miss
+345 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-arm64 48ms (cache revalidated)
+346 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-arm64 set size:188948 disposed:false
+347 silly fetch manifest @esbuild/netbsd-arm64@0.27.0
+348 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fnetbsd-arm64 cache-miss
+349 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-ppc64 46ms (cache revalidated)
+350 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-ppc64 set size:190895 disposed:false
+351 silly fetch manifest @esbuild/android-arm64@0.27.0
+352 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-arm64 cache-miss
+353 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-s390x 53ms (cache revalidated)
+354 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-s390x set size:190391 disposed:false
+355 silly fetch manifest @esbuild/freebsd-arm64@0.27.0
+356 silly packumentCache full:https://registry.npmjs.org/@esbuild%2ffreebsd-arm64 cache-miss
+357 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fopenbsd-x64 49ms (cache revalidated)
+358 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenbsd-x64 set size:188762 disposed:false
+359 silly fetch manifest @esbuild/linux-loong64@0.27.0
+360 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-loong64 cache-miss
+361 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fwin32-arm64 53ms (cache revalidated)
+362 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fwin32-arm64 set size:189169 disposed:false
+363 silly fetch manifest @esbuild/linux-riscv64@0.27.0
+364 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-riscv64 cache-miss
+365 http fetch GET 200 https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-analytics 383ms (cache revalidated)
+366 silly packumentCache full:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-analytics set size:43718 disposed:false
+367 silly fetch manifest @esbuild/openbsd-arm64@0.27.0
+368 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenbsd-arm64 cache-miss
+369 http fetch GET 200 https://registry.npmjs.org/@esbuild%2ffreebsd-arm64 45ms (cache revalidated)
+370 silly packumentCache full:https://registry.npmjs.org/@esbuild%2ffreebsd-arm64 set size:190447 disposed:false
+371 silly fetch manifest @esbuild/linux-mips64el@0.27.0
+372 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-mips64el cache-miss
+373 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-loong64 49ms (cache revalidated)
+374 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-loong64 set size:243782 disposed:false
+375 silly fetch manifest @esbuild/openharmony-arm64@0.27.0
+376 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenharmony-arm64 cache-miss
+377 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-riscv64 47ms (cache revalidated)
+378 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-riscv64 set size:190569 disposed:false
+379 http fetch GET 200 https://registry.npmjs.org/@vercel%2ferror-utils 707ms (cache revalidated)
+380 silly packumentCache full:https://registry.npmjs.org/@vercel%2ferror-utils set size:43669 disposed:false
+381 http fetch GET 200 https://registry.npmjs.org/@vercel%2ferror-utils 548ms (cache revalidated)
+382 silly packumentCache full:https://registry.npmjs.org/@vercel%2ferror-utils set size:43669 disposed:false
+383 silly packumentCache full:https://registry.npmjs.org/@vercel%2ferror-utils dispose
+384 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fnode-utils 688ms (cache revalidated)
+385 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fnode-utils set size:45504 disposed:false
+386 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fopenbsd-arm64 69ms (cache revalidated)
+387 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenbsd-arm64 set size:37704 disposed:false
+388 http fetch GET 200 https://registry.npmjs.org/@esbuild%2flinux-mips64el 78ms (cache revalidated)
+389 silly packumentCache full:https://registry.npmjs.org/@esbuild%2flinux-mips64el set size:192558 disposed:false
+390 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fopenharmony-arm64 75ms (cache revalidated)
+391 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fopenharmony-arm64 set size:21007 disposed:false
+392 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fandroid-arm64 209ms (cache revalidated)
+393 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fandroid-arm64 set size:192279 disposed:false
+394 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fdarwin-arm64 216ms (cache revalidated)
+395 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fdarwin-arm64 set size:189596 disposed:false
+396 http fetch GET 200 https://registry.npmjs.org/@esbuild%2fnetbsd-arm64 231ms (cache revalidated)
+397 silly packumentCache full:https://registry.npmjs.org/@esbuild%2fnetbsd-arm64 set size:32428 disposed:false
+398 http fetch GET 200 https://registry.npmjs.org/@esbuild%2faix-ppc64 957ms (cache revalidated)
+399 silly packumentCache full:https://registry.npmjs.org/@esbuild%2faix-ppc64 set size:56029 disposed:false
+400 silly placeDep ROOT @vercel/nft@1.3.0 OK for: @vercel/backends@0.0.45 want: 1.3.0
+401 silly placeDep ROOT execa@3.2.0 OK for: @vercel/backends@0.0.45 want: 3.2.0
+402 silly placeDep ROOT fs-extra@11.1.0 OK for: @vercel/backends@0.0.45 want: 11.1.0
+403 silly placeDep ROOT oxc-transform@0.111.0 OK for: @vercel/backends@0.0.45 want: 0.111.0
+404 silly placeDep ROOT path-to-regexp@8.3.0 OK for: @vercel/backends@0.0.45 want: 8.3.0
+405 silly placeDep ROOT resolve.exports@2.0.3 OK for: @vercel/backends@0.0.45 want: 2.0.3
+406 silly placeDep ROOT rolldown@1.0.0-rc.1 OK for: @vercel/backends@0.0.45 want: 1.0.0-rc.1
+407 silly placeDep ROOT srvx@0.8.9 OK for: @vercel/backends@0.0.45 want: 0.8.9
+408 silly placeDep ROOT tsx@4.21.0 OK for: @vercel/backends@0.0.45 want: 4.21.0
+409 silly placeDep ROOT zod@3.22.4 OK for: @vercel/backends@0.0.45 want: 3.22.4
+410 silly fetch manifest glob@^13.0.0
+411 silly packumentCache full:https://registry.npmjs.org/glob cache-miss
+412 silly fetch manifest acorn@^8.6.0
+413 silly packumentCache full:https://registry.npmjs.org/acorn cache-miss
+414 silly fetch manifest bindings@^1.4.0
+415 silly packumentCache full:https://registry.npmjs.org/bindings cache-miss
+416 silly fetch manifest picomatch@^4.0.2
+417 silly packumentCache full:https://registry.npmjs.org/picomatch cache-miss
+418 silly fetch manifest async-sema@^3.1.1
+419 silly packumentCache full:https://registry.npmjs.org/async-sema cache-miss
+420 silly fetch manifest graceful-fs@^4.2.9
+421 silly packumentCache full:https://registry.npmjs.org/graceful-fs cache-miss
+422 silly fetch manifest resolve-from@^5.0.0
+423 silly packumentCache full:https://registry.npmjs.org/resolve-from cache-miss
+424 silly fetch manifest estree-walker@2.0.2
+425 silly packumentCache full:https://registry.npmjs.org/estree-walker cache-miss
+426 silly fetch manifest node-gyp-build@^4.2.2
+427 silly packumentCache full:https://registry.npmjs.org/node-gyp-build cache-miss
+428 silly fetch manifest @rollup/pluginutils@^5.1.3
+429 silly packumentCache full:https://registry.npmjs.org/@rollup%2fpluginutils cache-miss
+430 silly fetch manifest @mapbox/node-pre-gyp@^2.0.0
+431 silly packumentCache full:https://registry.npmjs.org/@mapbox%2fnode-pre-gyp cache-miss
+432 http fetch GET 200 https://registry.npmjs.org/glob 44ms (cache revalidated)
+433 silly packumentCache full:https://registry.npmjs.org/glob set size:469465 disposed:false
+434 silly fetch manifest acorn-import-attributes@^1.9.5
+435 silly packumentCache full:https://registry.npmjs.org/acorn-import-attributes cache-miss
+436 http fetch GET 200 https://registry.npmjs.org/picomatch 48ms (cache revalidated)
+437 silly packumentCache full:https://registry.npmjs.org/picomatch set size:118818 disposed:false
+438 silly fetch manifest p-finally@^2.0.0
+439 silly packumentCache full:https://registry.npmjs.org/p-finally cache-miss
+440 http fetch GET 200 https://registry.npmjs.org/graceful-fs 51ms (cache revalidated)
+441 silly packumentCache full:https://registry.npmjs.org/graceful-fs set size:124285 disposed:false
+442 silly fetch manifest get-stream@^5.0.0
+443 silly packumentCache full:https://registry.npmjs.org/get-stream cache-miss
+444 http fetch GET 200 https://registry.npmjs.org/acorn 55ms (cache revalidated)
+445 silly packumentCache full:https://registry.npmjs.org/acorn set size:379626 disposed:false
+446 silly fetch manifest signal-exit@^3.0.2
+447 silly packumentCache full:https://registry.npmjs.org/signal-exit cache-miss
+448 http fetch GET 200 https://registry.npmjs.org/node-gyp-build 59ms (cache revalidated)
+449 silly packumentCache full:https://registry.npmjs.org/node-gyp-build set size:84545 disposed:false
+450 silly fetch manifest human-signals@^1.1.1
+451 silly packumentCache full:https://registry.npmjs.org/human-signals cache-miss
+452 http fetch GET 200 https://registry.npmjs.org/@mapbox%2fnode-pre-gyp 73ms (cache revalidated)
+453 silly packumentCache full:https://registry.npmjs.org/@mapbox%2fnode-pre-gyp set size:134009 disposed:false
+454 silly fetch manifest jsonfile@^6.0.1
+455 silly packumentCache full:https://registry.npmjs.org/jsonfile cache-miss
+456 http fetch GET 200 https://registry.npmjs.org/p-finally 42ms (cache revalidated)
+457 silly packumentCache full:https://registry.npmjs.org/p-finally set size:11668 disposed:false
+458 silly fetch manifest graceful-fs@^4.2.0
+459 silly packumentCache full:https://registry.npmjs.org/graceful-fs cache-hit
+460 silly fetch manifest universalify@^2.0.0
+461 silly packumentCache full:https://registry.npmjs.org/universalify cache-miss
+462 http fetch GET 200 https://registry.npmjs.org/acorn-import-attributes 46ms (cache revalidated)
+463 silly packumentCache full:https://registry.npmjs.org/acorn-import-attributes set size:16911 disposed:false
+464 silly fetch manifest @oxc-transform/binding-darwin-x64@0.111.0
+465 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-x64 cache-miss
+466 http fetch GET 200 https://registry.npmjs.org/signal-exit 37ms (cache revalidated)
+467 silly packumentCache full:https://registry.npmjs.org/signal-exit set size:53489 disposed:false
+468 silly fetch manifest @oxc-transform/binding-freebsd-x64@0.111.0
+469 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-freebsd-x64 cache-miss
+470 http fetch GET 200 https://registry.npmjs.org/get-stream 47ms (cache revalidated)
+471 silly packumentCache full:https://registry.npmjs.org/get-stream set size:57536 disposed:false
+472 silly fetch manifest @oxc-transform/binding-wasm32-wasi@0.111.0
+473 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-wasm32-wasi cache-miss
+474 http fetch GET 200 https://registry.npmjs.org/human-signals 41ms (cache revalidated)
+475 silly packumentCache full:https://registry.npmjs.org/human-signals set size:47322 disposed:false
+476 silly fetch manifest @oxc-transform/binding-darwin-arm64@0.111.0
+477 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-arm64 cache-miss
+478 http fetch GET 200 https://registry.npmjs.org/universalify 38ms (cache revalidated)
+479 silly packumentCache full:https://registry.npmjs.org/universalify set size:19431 disposed:false
+480 silly fetch manifest @oxc-transform/binding-android-arm64@0.111.0
+481 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm64 cache-miss
+482 http fetch GET 200 https://registry.npmjs.org/bindings 196ms (cache revalidated)
+483 silly packumentCache full:https://registry.npmjs.org/bindings set size:31303 disposed:false
+484 silly fetch manifest @oxc-transform/binding-linux-x64-gnu@0.111.0
+485 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-gnu cache-miss
+486 http fetch GET 200 https://registry.npmjs.org/resolve-from 206ms (cache revalidated)
+487 silly packumentCache full:https://registry.npmjs.org/resolve-from set size:12911 disposed:false
+488 silly fetch manifest @oxc-transform/binding-linux-x64-musl@0.111.0
+489 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-musl cache-miss
+490 http fetch GET 200 https://registry.npmjs.org/estree-walker 213ms (cache revalidated)
+491 silly packumentCache full:https://registry.npmjs.org/estree-walker set size:60887 disposed:false
+492 silly fetch manifest @oxc-transform/binding-win32-x64-msvc@0.111.0
+493 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-x64-msvc cache-miss
+494 http fetch GET 200 https://registry.npmjs.org/@rollup%2fpluginutils 366ms (cache revalidated)
+495 silly packumentCache full:https://registry.npmjs.org/@rollup%2fpluginutils set size:118597 disposed:false
+496 silly fetch manifest @oxc-transform/binding-linux-arm64-gnu@0.111.0
+497 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-gnu cache-miss
+498 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-wasm32-wasi 395ms (cache revalidated)
+499 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-wasm32-wasi set size:144973 disposed:false
+500 silly fetch manifest @oxc-transform/binding-linux-ppc64-gnu@0.111.0
+501 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-ppc64-gnu cache-miss
+502 http fetch GET 200 https://registry.npmjs.org/async-sema 551ms (cache revalidated)
+503 silly packumentCache full:https://registry.npmjs.org/async-sema set size:46655 disposed:false
+504 silly fetch manifest @oxc-transform/binding-linux-s390x-gnu@0.111.0
+505 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-s390x-gnu cache-miss
+506 http fetch GET 200 https://registry.npmjs.org/jsonfile 503ms (cache revalidated)
+507 silly packumentCache full:https://registry.npmjs.org/jsonfile set size:51505 disposed:false
+508 silly fetch manifest @oxc-transform/binding-win32-ia32-msvc@0.111.0
+509 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-ia32-msvc cache-miss
+510 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-win32-x64-msvc 388ms (cache revalidated)
+511 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-x64-msvc set size:246644 disposed:false
+512 silly fetch manifest @oxc-transform/binding-android-arm-eabi@0.111.0
+513 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm-eabi cache-miss
+514 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-musl 408ms (cache revalidated)
+515 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-musl set size:248656 disposed:false
+516 silly fetch manifest @oxc-transform/binding-linux-arm64-musl@0.111.0
+517 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-musl cache-miss
+518 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm64 689ms (cache revalidated)
+519 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm64 set size:96599 disposed:false
+520 silly fetch manifest @oxc-transform/binding-win32-arm64-msvc@0.111.0
+521 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-arm64-msvc cache-miss
+522 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-arm64 725ms (cache revalidated)
+523 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-arm64 set size:246644 disposed:false
+524 silly fetch manifest @oxc-transform/binding-linux-riscv64-gnu@0.111.0
+525 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-gnu cache-miss
+526 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-freebsd-x64 1013ms (cache revalidated)
+527 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-freebsd-x64 set size:106489 disposed:false
+528 silly fetch manifest @oxc-transform/binding-openharmony-arm64@0.111.0
+529 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-openharmony-arm64 cache-miss
+530 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-gnu 751ms (cache revalidated)
+531 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-gnu set size:252061 disposed:false
+532 silly fetch manifest @oxc-transform/binding-linux-riscv64-musl@0.111.0
+533 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-musl cache-miss
+534 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-x64 1029ms (cache revalidated)
+535 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-darwin-x64 set size:242416 disposed:false
+536 silly fetch manifest @oxc-transform/binding-linux-arm-gnueabihf@0.111.0
+537 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-gnueabihf cache-miss
+538 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-gnu 1060ms (cache revalidated)
+539 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-x64-gnu set size:247769 disposed:false
+540 silly fetch manifest @oxc-transform/binding-linux-arm-musleabihf@0.111.0
+541 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-musleabihf cache-miss
+542 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-s390x-gnu 720ms (cache revalidated)
+543 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-s390x-gnu set size:109099 disposed:false
+544 silly fetch manifest @oxc-project/types@=0.110.0
+545 silly packumentCache full:https://registry.npmjs.org/@oxc-project%2ftypes cache-miss
+546 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-win32-ia32-msvc 702ms (cache revalidated)
+547 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-ia32-msvc set size:24426 disposed:false
+548 silly fetch manifest @rolldown/pluginutils@1.0.0-rc.1
+549 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fpluginutils cache-miss
+550 http fetch GET 200 https://registry.npmjs.org/@oxc-project%2ftypes 70ms (cache revalidated)
+551 silly packumentCache full:https://registry.npmjs.org/@oxc-project%2ftypes set size:199170 disposed:false
+552 silly fetch manifest @rolldown/binding-darwin-x64@1.0.0-rc.1
+553 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-darwin-x64 cache-miss
+554 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-musl 728ms (cache revalidated)
+555 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm64-musl set size:252948 disposed:false
+556 silly fetch manifest @rolldown/binding-freebsd-x64@1.0.0-rc.1
+557 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-freebsd-x64 cache-miss
+558 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm-eabi 754ms (cache revalidated)
+559 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-android-arm-eabi set size:24525 disposed:false
+560 silly fetch manifest @rolldown/binding-wasm32-wasi@1.0.0-rc.1
+561 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-wasm32-wasi cache-miss
+562 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-freebsd-x64 47ms (cache revalidated)
+563 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-freebsd-x64 set size:1014045 disposed:false
+564 silly fetch manifest @rolldown/binding-darwin-arm64@1.0.0-rc.1
+565 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-darwin-arm64 cache-miss
+566 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-wasm32-wasi 50ms (cache revalidated)
+567 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-wasm32-wasi set size:1320751 disposed:false
+568 silly fetch manifest @rolldown/binding-android-arm64@1.0.0-rc.1
+569 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-android-arm64 cache-miss
+570 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-darwin-x64 75ms (cache revalidated)
+571 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-darwin-x64 set size:1334513 disposed:false
+572 silly fetch manifest @rolldown/binding-linux-x64-gnu@1.0.0-rc.1
+573 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-gnu cache-miss
+574 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-darwin-arm64 54ms (cache revalidated)
+575 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-darwin-arm64 set size:1345903 disposed:false
+576 silly fetch manifest @rolldown/binding-linux-x64-musl@1.0.0-rc.1
+577 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-musl cache-miss
+578 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-android-arm64 57ms (cache revalidated)
+579 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-android-arm64 set size:120237 disposed:false
+580 silly fetch manifest @rolldown/binding-win32-x64-msvc@1.0.0-rc.1
+581 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-win32-x64-msvc cache-miss
+582 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-ppc64-gnu 985ms (cache revalidated)
+583 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-ppc64-gnu set size:24646 disposed:false
+584 silly fetch manifest @rolldown/binding-linux-arm64-gnu@1.0.0-rc.1
+585 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-gnu cache-miss
+586 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-musl 384ms (cache revalidated)
+587 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-musl set size:24920 disposed:false
+588 silly fetch manifest @rolldown/binding-linux-arm64-musl@1.0.0-rc.1
+589 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-musl cache-miss
+590 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-openharmony-arm64 402ms (cache revalidated)
+591 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-openharmony-arm64 set size:33967 disposed:false
+592 silly fetch manifest @rolldown/binding-win32-arm64-msvc@1.0.0-rc.1
+593 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-win32-arm64-msvc cache-miss
+594 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fpluginutils 241ms (cache revalidated)
+595 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fpluginutils set size:266905 disposed:false
+596 silly fetch manifest @rolldown/binding-openharmony-arm64@1.0.0-rc.1
+597 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-openharmony-arm64 cache-miss
+598 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-musl 77ms (cache revalidated)
+599 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-musl set size:1363706 disposed:false
+600 silly fetch manifest @rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.1
+601 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm-gnueabihf cache-miss
+602 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-win32-x64-msvc 81ms (cache revalidated)
+603 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-win32-x64-msvc set size:1352023 disposed:false
+604 silly fetch manifest cookie-es@^2.0.0
+605 silly packumentCache full:https://registry.npmjs.org/cookie-es cache-miss
+606 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-win32-arm64-msvc 742ms (cache revalidated)
+607 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-win32-arm64-msvc set size:250938 disposed:false
+608 silly fetch manifest get-tsconfig@^4.7.5
+609 silly packumentCache full:https://registry.npmjs.org/get-tsconfig cache-miss
+610 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-musl 69ms (cache revalidated)
+611 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-musl set size:1375094 disposed:false
+612 silly fetch manifest fsevents@~2.3.3
+613 silly packumentCache full:https://registry.npmjs.org/fsevents cache-miss
+614 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-win32-arm64-msvc 84ms (cache revalidated)
+615 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-win32-arm64-msvc set size:1365793 disposed:false
+616 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-openharmony-arm64 79ms (cache revalidated)
+617 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-openharmony-arm64 set size:81471 disposed:false
+618 http fetch GET 200 https://registry.npmjs.org/cookie-es 47ms (cache revalidated)
+619 silly packumentCache full:https://registry.npmjs.org/cookie-es set size:19705 disposed:false
+620 http fetch GET 200 https://registry.npmjs.org/fsevents 38ms (cache revalidated)
+621 silly packumentCache full:https://registry.npmjs.org/fsevents set size:182472 disposed:false
+622 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-linux-arm-gnueabihf 79ms (cache revalidated)
+623 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm-gnueabihf set size:1379962 disposed:false
+624 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-gnu 797ms (cache revalidated)
+625 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-riscv64-gnu set size:110022 disposed:false
+626 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-gnu 253ms (cache revalidated)
+627 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-x64-gnu set size:1359156 disposed:false
+628 http fetch GET 200 https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-gnu 245ms (cache revalidated)
+629 silly packumentCache full:https://registry.npmjs.org/@rolldown%2fbinding-linux-arm64-gnu set size:1370592 disposed:false
+630 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-gnueabihf 719ms (cache revalidated)
+631 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-gnueabihf set size:143998 disposed:false
+632 http fetch GET 200 https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-musleabihf 764ms (cache revalidated)
+633 silly packumentCache full:https://registry.npmjs.org/@oxc-transform%2fbinding-linux-arm-musleabihf set size:100500 disposed:false
+634 http fetch GET 200 https://registry.npmjs.org/get-tsconfig 509ms (cache revalidated)
+635 silly packumentCache full:https://registry.npmjs.org/get-tsconfig set size:112628 disposed:false
+636 silly placeDep ROOT @vercel/python-analysis@0.9.1 OK for: @vercel/build-utils@13.8.0 want: 0.9.1
+637 silly fetch manifest js-yaml@4.1.1
+638 silly packumentCache full:https://registry.npmjs.org/js-yaml cache-miss
+639 silly fetch manifest fs-extra@11.1.1
+640 silly packumentCache full:https://registry.npmjs.org/fs-extra cache-hit
+641 silly fetch manifest minimatch@10.1.1
+642 silly packumentCache full:https://registry.npmjs.org/minimatch cache-miss
+643 silly fetch manifest smol-toml@1.5.2
+644 silly packumentCache full:https://registry.npmjs.org/smol-toml cache-miss
+645 silly fetch manifest @renovatebot/pep440@4.2.1
+646 silly packumentCache full:https://registry.npmjs.org/@renovatebot%2fpep440 cache-miss
+647 silly fetch manifest pip-requirements-js@1.0.3
+648 silly packumentCache full:https://registry.npmjs.org/pip-requirements-js cache-miss
+649 silly fetch manifest @bytecodealliance/preview2-shim@0.17.6
+650 silly packumentCache full:https://registry.npmjs.org/@bytecodealliance%2fpreview2-shim cache-miss
+651 http fetch GET 200 https://registry.npmjs.org/minimatch 39ms (cache revalidated)
+652 silly packumentCache full:https://registry.npmjs.org/minimatch set size:352359 disposed:false
+653 http fetch GET 200 https://registry.npmjs.org/js-yaml 43ms (cache revalidated)
+654 silly packumentCache full:https://registry.npmjs.org/js-yaml set size:152232 disposed:false
+655 http fetch GET 200 https://registry.npmjs.org/@renovatebot%2fpep440 409ms (cache revalidated)
+656 silly packumentCache full:https://registry.npmjs.org/@renovatebot%2fpep440 set size:153303 disposed:false
+657 http fetch GET 200 https://registry.npmjs.org/pip-requirements-js 508ms (cache revalidated)
+658 silly packumentCache full:https://registry.npmjs.org/pip-requirements-js set size:29283 disposed:false
+659 http fetch GET 200 https://registry.npmjs.org/smol-toml 530ms (cache revalidated)
+660 silly packumentCache full:https://registry.npmjs.org/smol-toml set size:64179 disposed:false
+661 http fetch GET 200 https://registry.npmjs.org/@bytecodealliance%2fpreview2-shim 1083ms (cache revalidated)
+662 silly packumentCache full:https://registry.npmjs.org/@bytecodealliance%2fpreview2-shim set size:100556 disposed:false
+663 silly placeDep ROOT @vercel/static-config@3.2.0 OK for: @vercel/elysia@0.1.48 want: 3.2.0
+664 silly fetch manifest ajv@8.6.3
+665 silly packumentCache full:https://registry.npmjs.org/ajv cache-miss
+666 silly fetch manifest json-schema-to-ts@1.6.4
+667 silly packumentCache full:https://registry.npmjs.org/json-schema-to-ts cache-miss
+668 http fetch GET 200 https://registry.npmjs.org/ajv 36ms (cache revalidated)
+669 silly packumentCache full:https://registry.npmjs.org/ajv set size:1120197 disposed:false
+670 http fetch GET 200 https://registry.npmjs.org/json-schema-to-ts 44ms (cache revalidated)
+671 silly packumentCache full:https://registry.npmjs.org/json-schema-to-ts set size:287972 disposed:false
+672 silly placeDep ROOT @vercel/cervel@0.0.32 OK for: @vercel/express@0.1.57 want: 0.0.32
+673 silly placeDep node_modules/@vercel/express @vercel/nft@1.1.1 OK for: @vercel/express@0.1.57 want: 1.1.1
+674 silly placeDep ROOT ts-morph@12.0.0 OK for: @vercel/express@0.1.57 want: 12.0.0
+675 silly fetch manifest @ts-morph/common@~0.11.0
+676 silly packumentCache full:https://registry.npmjs.org/@ts-morph%2fcommon cache-miss
+677 silly fetch manifest code-block-writer@^10.1.1
+678 silly packumentCache full:https://registry.npmjs.org/code-block-writer cache-miss
+679 http fetch GET 200 https://registry.npmjs.org/@ts-morph%2fcommon 79ms (cache revalidated)
+680 silly packumentCache full:https://registry.npmjs.org/@ts-morph%2fcommon set size:161186 disposed:false
+681 http fetch GET 200 https://registry.npmjs.org/code-block-writer 192ms (cache revalidated)
+682 silly packumentCache full:https://registry.npmjs.org/code-block-writer set size:203952 disposed:false
+683 silly placeDep node_modules/@vercel/hono @vercel/nft@1.1.1 OK for: @vercel/hono@0.2.51 want: 1.1.1
+684 silly placeDep node_modules/@vercel/next @vercel/nft@1.1.1 OK for: @vercel/next@4.16.1 want: 1.1.1
+685 silly fetch manifest rollup@^1.20.0||^2.0.0||^3.0.0||^4.0.0
+686 silly packumentCache full:https://registry.npmjs.org/rollup cache-miss
+687 http fetch GET 200 https://registry.npmjs.org/rollup 51ms (cache revalidated)
+688 silly packumentCache full:https://registry.npmjs.org/rollup set size:6122682 disposed:false
+689 silly placeDep ROOT @mapbox/node-pre-gyp@2.0.3 OK for: @vercel/nft@1.3.0 want: ^2.0.0
+690 silly placeDep ROOT @rollup/pluginutils@5.3.0 OK for: @vercel/nft@1.3.0 want: ^5.1.3
+691 silly placeDep ROOT acorn@8.16.0 OK for: @vercel/nft@1.3.0 want: ^8.6.0
+692 silly placeDep ROOT acorn-import-attributes@1.9.5 OK for: @vercel/nft@1.3.0 want: ^1.9.5
+693 silly placeDep ROOT async-sema@3.1.1 OK for: @vercel/nft@1.3.0 want: ^3.1.1
+694 silly placeDep ROOT bindings@1.5.0 OK for: @vercel/nft@1.3.0 want: ^1.4.0
+695 silly placeDep ROOT estree-walker@2.0.2 OK for: @vercel/nft@1.3.0 want: 2.0.2
+696 silly placeDep ROOT glob@13.0.6 OK for: @vercel/nft@1.3.0 want: ^13.0.0
+697 silly placeDep ROOT graceful-fs@4.2.11 OK for: @vercel/nft@1.3.0 want: ^4.2.9
+698 silly placeDep ROOT node-gyp-build@4.8.4 OK for: @vercel/nft@1.3.0 want: ^4.2.2
+699 silly placeDep ROOT picomatch@4.0.3 OK for: @vercel/nft@1.3.0 want: ^4.0.2
+700 silly placeDep ROOT resolve-from@5.0.0 OK for: @vercel/nft@1.3.0 want: ^5.0.0
+701 silly fetch manifest nopt@^8.0.0
+702 silly packumentCache full:https://registry.npmjs.org/nopt cache-miss
+703 silly fetch manifest consola@^3.2.3
+704 silly packumentCache full:https://registry.npmjs.org/consola cache-miss
+705 silly fetch manifest detect-libc@^2.0.0
+706 silly packumentCache full:https://registry.npmjs.org/detect-libc cache-miss
+707 silly fetch manifest @types/estree@^1.0.0
+708 silly packumentCache full:https://registry.npmjs.org/@types%2festree cache-miss
+709 silly fetch manifest estree-walker@^2.0.2
+710 silly packumentCache full:https://registry.npmjs.org/estree-walker cache-hit
+711 silly fetch manifest file-uri-to-path@1.0.0
+712 silly packumentCache full:https://registry.npmjs.org/file-uri-to-path cache-miss
+713 silly fetch manifest minimatch@^10.2.2
+714 silly packumentCache full:https://registry.npmjs.org/minimatch cache-hit
+715 silly fetch manifest path-scurry@^2.0.2
+716 silly packumentCache full:https://registry.npmjs.org/path-scurry cache-miss
+717 http fetch GET 200 https://registry.npmjs.org/detect-libc 44ms (cache revalidated)
+718 silly packumentCache full:https://registry.npmjs.org/detect-libc set size:47861 disposed:false
+719 http fetch GET 200 https://registry.npmjs.org/path-scurry 44ms (cache revalidated)
+720 silly packumentCache full:https://registry.npmjs.org/path-scurry set size:117612 disposed:false
+721 http fetch GET 200 https://registry.npmjs.org/consola 49ms (cache revalidated)
+722 silly packumentCache full:https://registry.npmjs.org/consola set size:324648 disposed:false
+723 http fetch GET 200 https://registry.npmjs.org/file-uri-to-path 50ms (cache revalidated)
+724 silly packumentCache full:https://registry.npmjs.org/file-uri-to-path set size:10154 disposed:false
+725 http fetch GET 200 https://registry.npmjs.org/@types%2festree 53ms (cache revalidated)
+726 silly packumentCache full:https://registry.npmjs.org/@types%2festree set size:74091 disposed:false
+727 http fetch GET 200 https://registry.npmjs.org/nopt 511ms (cache revalidated)
+728 silly packumentCache full:https://registry.npmjs.org/nopt set size:71592 disposed:false
+729 silly placeDep ROOT consola@3.4.2 OK for: @mapbox/node-pre-gyp@2.0.3 want: ^3.2.3
+730 silly placeDep ROOT detect-libc@2.1.2 OK for: @mapbox/node-pre-gyp@2.0.3 want: ^2.0.0
+731 silly placeDep ROOT nopt@8.1.0 OK for: @mapbox/node-pre-gyp@2.0.3 want: ^8.0.0
+732 silly fetch manifest abbrev@^3.0.0
+733 silly packumentCache full:https://registry.npmjs.org/abbrev cache-miss
+734 http fetch GET 200 https://registry.npmjs.org/abbrev 567ms (cache revalidated)
+735 silly packumentCache full:https://registry.npmjs.org/abbrev set size:21777 disposed:false
+736 silly placeDep ROOT @types/estree@1.0.8 OK for: @rollup/pluginutils@5.3.0 want: ^1.0.0
+737 silly fetch manifest encoding@^0.1.0
+738 silly packumentCache full:https://registry.npmjs.org/encoding cache-miss
+739 http fetch GET 200 https://registry.npmjs.org/encoding 42ms (cache revalidated)
+740 silly packumentCache full:https://registry.npmjs.org/encoding set size:17833 disposed:false
+741 silly placeDep ROOT @edge-runtime/node-utils@2.3.0 OK for: @vercel/node@5.6.15 want: 2.3.0
+742 silly placeDep ROOT @edge-runtime/primitives@4.1.0 OK for: @vercel/node@5.6.15 want: 4.1.0
+743 silly placeDep ROOT @edge-runtime/vm@3.2.0 OK for: @vercel/node@5.6.15 want: 3.2.0
+744 silly placeDep ROOT @types/node@20.11.0 OK for: @vercel/node@5.6.15 want: 20.11.0
+745 silly placeDep ROOT @vercel/error-utils@2.0.3 OK for: @vercel/node@5.6.15 want: 2.0.3
+746 silly placeDep node_modules/@vercel/node @vercel/nft@1.1.1 OK for: @vercel/node@5.6.15 want: 1.1.1
+747 silly placeDep node_modules/@vercel/node async-listen@3.0.0 OK for: @vercel/node@5.6.15 want: 3.0.0
+748 silly placeDep ROOT cjs-module-lexer@1.2.3 OK for: @vercel/node@5.6.15 want: 1.2.3
+749 silly placeDep ROOT edge-runtime@2.5.9 OK for: @vercel/node@5.6.15 want: 2.5.9
+750 silly placeDep ROOT es-module-lexer@1.4.1 OK for: @vercel/node@5.6.15 want: 1.4.1
+751 silly placeDep ROOT etag@1.8.1 OK for: @vercel/node@5.6.15 want: 1.8.1
+752 silly placeDep node_modules/@vercel/node node-fetch@2.6.9 OK for: @vercel/node@5.6.15 want: 2.6.9
+753 silly placeDep node_modules/@vercel/node path-to-regexp@6.1.0 OK for: @vercel/node@5.6.15 want: 6.1.0
+754 silly placeDep ROOT path-to-regexp-updated@6.3.0 OK for: @vercel/node@5.6.15 want: npm:path-to-regexp@6.3.0
+755 silly placeDep node_modules/@vercel/node undici@5.28.4 OK for: @vercel/node@5.6.15 want: 5.28.4
+756 silly fetch manifest undici-types@~5.26.4
+757 silly packumentCache full:https://registry.npmjs.org/undici-types cache-miss
+758 silly fetch manifest mri@1.2.0
+759 silly packumentCache full:https://registry.npmjs.org/mri cache-miss
+760 silly fetch manifest pretty-ms@7.0.1
+761 silly packumentCache full:https://registry.npmjs.org/pretty-ms cache-miss
+762 silly fetch manifest time-span@4.0.0
+763 silly packumentCache full:https://registry.npmjs.org/time-span cache-miss
+764 silly fetch manifest picocolors@1.0.0
+765 silly packumentCache full:https://registry.npmjs.org/picocolors cache-miss
+766 silly fetch manifest signal-exit@4.0.2
+767 silly packumentCache full:https://registry.npmjs.org/signal-exit cache-hit
+768 silly fetch manifest async-listen@3.0.1
+769 silly packumentCache full:https://registry.npmjs.org/async-listen cache-hit
+770 silly fetch manifest @edge-runtime/format@2.2.1
+771 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fformat cache-miss
+772 silly fetch manifest @edge-runtime/ponyfill@2.4.2
+773 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fponyfill cache-miss
+774 silly fetch manifest @fastify/busboy@^2.0.0
+775 silly packumentCache full:https://registry.npmjs.org/@fastify%2fbusboy cache-miss
+776 http fetch GET 200 https://registry.npmjs.org/mri 57ms (cache revalidated)
+777 silly packumentCache full:https://registry.npmjs.org/mri set size:28195 disposed:false
+778 http fetch GET 200 https://registry.npmjs.org/picocolors 62ms (cache revalidated)
+779 silly packumentCache full:https://registry.npmjs.org/picocolors set size:16648 disposed:false
+780 http fetch GET 200 https://registry.npmjs.org/undici-types 65ms (cache revalidated)
+781 silly packumentCache full:https://registry.npmjs.org/undici-types set size:171546 disposed:false
+782 http fetch GET 200 https://registry.npmjs.org/pretty-ms 67ms (cache revalidated)
+783 silly packumentCache full:https://registry.npmjs.org/pretty-ms set size:61783 disposed:false
+784 http fetch GET 200 https://registry.npmjs.org/time-span 69ms (cache revalidated)
+785 silly packumentCache full:https://registry.npmjs.org/time-span set size:18816 disposed:false
+786 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fformat 411ms (cache revalidated)
+787 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fformat set size:99857 disposed:false
+788 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fponyfill 412ms (cache revalidated)
+789 silly packumentCache full:https://registry.npmjs.org/@edge-runtime%2fponyfill set size:65733 disposed:false
+790 http fetch GET 200 https://registry.npmjs.org/@fastify%2fbusboy 422ms (cache revalidated)
+791 silly packumentCache full:https://registry.npmjs.org/@fastify%2fbusboy set size:62369 disposed:false
+792 silly placeDep ROOT undici-types@5.26.5 OK for: @types/node@20.11.0 want: ~5.26.4
+793 silly placeDep ROOT @bytecodealliance/preview2-shim@0.17.6 OK for: @vercel/python-analysis@0.9.1 want: 0.17.6
+794 silly placeDep ROOT @renovatebot/pep440@4.2.1 OK for: @vercel/python-analysis@0.9.1 want: 4.2.1
+795 silly placeDep node_modules/@vercel/python-analysis fs-extra@11.1.1 OK for: @vercel/python-analysis@0.9.1 want: 11.1.1
+796 silly placeDep ROOT js-yaml@4.1.1 OK for: @vercel/python-analysis@0.9.1 want: 4.1.1
+797 silly placeDep ROOT minimatch@10.1.1 OK for: @vercel/python-analysis@0.9.1 want: 10.1.1
+798 silly placeDep ROOT pip-requirements-js@1.0.3 OK for: @vercel/python-analysis@0.9.1 want: 1.0.3
+799 silly placeDep ROOT smol-toml@1.5.2 OK for: @vercel/python-analysis@0.9.1 want: 1.5.2
+800 silly fetch manifest argparse@^2.0.1
+801 silly packumentCache full:https://registry.npmjs.org/argparse cache-miss
+802 silly fetch manifest @isaacs/brace-expansion@^5.0.0
+803 silly packumentCache full:https://registry.npmjs.org/@isaacs%2fbrace-expansion cache-miss
+804 silly fetch manifest ohm-js@^17.1.0
+805 silly packumentCache full:https://registry.npmjs.org/ohm-js cache-miss
+806 http fetch GET 200 https://registry.npmjs.org/argparse 41ms (cache revalidated)
+807 silly packumentCache full:https://registry.npmjs.org/argparse set size:49266 disposed:false
+808 http fetch GET 200 https://registry.npmjs.org/ohm-js 43ms (cache revalidated)
+809 silly packumentCache full:https://registry.npmjs.org/ohm-js set size:366868 disposed:false
+810 http fetch GET 200 https://registry.npmjs.org/@isaacs%2fbrace-expansion 731ms (cache revalidated)
+811 silly packumentCache full:https://registry.npmjs.org/@isaacs%2fbrace-expansion set size:7366 disposed:false
+812 silly placeDep node_modules/@vercel/redwood @vercel/nft@1.1.1 OK for: @vercel/redwood@2.4.10 want: 1.1.1
+813 silly placeDep node_modules/@vercel/redwood semver@6.3.1 OK for: @vercel/redwood@2.4.10 want: 6.3.1
+814 silly placeDep node_modules/@vercel/remix-builder @vercel/nft@1.1.1 OK for: @vercel/remix-builder@5.7.0 want: 1.1.1
+815 silly placeDep node_modules/@vercel/remix-builder path-to-regexp@6.1.0 OK for: @vercel/remix-builder@5.7.0 want: 6.1.0
+816 silly placeDep ROOT @vercel/gatsby-plugin-vercel-analytics@1.0.11 OK for: @vercel/static-build@2.9.0 want: 1.0.11
+817 silly placeDep ROOT @vercel/gatsby-plugin-vercel-builder@2.1.0 OK for: @vercel/static-build@2.9.0 want: 2.1.0
+818 silly fetch manifest web-vitals@0.2.4
+819 silly packumentCache full:https://registry.npmjs.org/web-vitals cache-miss
+820 silly fetch manifest @sinclair/typebox@0.25.24
+821 silly packumentCache full:https://registry.npmjs.org/@sinclair%2ftypebox cache-miss
+822 http fetch GET 200 https://registry.npmjs.org/web-vitals 42ms (cache revalidated)
+823 silly packumentCache full:https://registry.npmjs.org/web-vitals set size:478277 disposed:false
+824 http fetch GET 200 https://registry.npmjs.org/@sinclair%2ftypebox 48ms (cache revalidated)
+825 silly packumentCache full:https://registry.npmjs.org/@sinclair%2ftypebox set size:1145528 disposed:false
+826 silly placeDep ROOT web-vitals@0.2.4 OK for: @vercel/gatsby-plugin-vercel-analytics@1.0.11 want: 0.2.4
+827 silly placeDep ROOT @sinclair/typebox@0.25.24 OK for: @vercel/gatsby-plugin-vercel-builder@2.1.0 want: 0.25.24
+828 silly placeDep ROOT ajv@8.6.3 OK for: @vercel/static-config@3.2.0 want: 8.6.3
+829 silly placeDep ROOT json-schema-to-ts@1.6.4 OK for: @vercel/static-config@3.2.0 want: 1.6.4
+830 silly fetch manifest uri-js@^4.2.2
+831 silly packumentCache full:https://registry.npmjs.org/uri-js cache-miss
+832 silly fetch manifest fast-deep-equal@^3.1.1
+833 silly packumentCache full:https://registry.npmjs.org/fast-deep-equal cache-miss
+834 silly fetch manifest require-from-string@^2.0.2
+835 silly packumentCache full:https://registry.npmjs.org/require-from-string cache-miss
+836 silly fetch manifest json-schema-traverse@^1.0.0
+837 silly packumentCache full:https://registry.npmjs.org/json-schema-traverse cache-miss
+838 silly fetch manifest ts-toolbelt@^6.15.5
+839 silly packumentCache full:https://registry.npmjs.org/ts-toolbelt cache-miss
+840 silly fetch manifest @types/json-schema@^7.0.6
+841 silly packumentCache full:https://registry.npmjs.org/@types%2fjson-schema cache-miss
+842 http fetch GET 200 https://registry.npmjs.org/uri-js 45ms (cache revalidated)
+843 silly packumentCache full:https://registry.npmjs.org/uri-js set size:42559 disposed:false
+844 http fetch GET 200 https://registry.npmjs.org/fast-deep-equal 46ms (cache revalidated)
+845 silly packumentCache full:https://registry.npmjs.org/fast-deep-equal set size:48634 disposed:false
+846 http fetch GET 200 https://registry.npmjs.org/require-from-string 49ms (cache revalidated)
+847 silly packumentCache full:https://registry.npmjs.org/require-from-string set size:15128 disposed:false
+848 http fetch GET 200 https://registry.npmjs.org/json-schema-traverse 50ms (cache revalidated)
+849 silly packumentCache full:https://registry.npmjs.org/json-schema-traverse set size:23537 disposed:false
+850 http fetch GET 200 https://registry.npmjs.org/ts-toolbelt 63ms (cache revalidated)
+851 silly packumentCache full:https://registry.npmjs.org/ts-toolbelt set size:10549005 disposed:false
+852 http fetch GET 200 https://registry.npmjs.org/@types%2fjson-schema 115ms (cache revalidated)
+853 silly packumentCache full:https://registry.npmjs.org/@types%2fjson-schema set size:44704 disposed:false
+854 silly placeDep ROOT fast-deep-equal@3.1.3 OK for: ajv@8.6.3 want: ^3.1.1
+855 silly placeDep ROOT json-schema-traverse@1.0.0 OK for: ajv@8.6.3 want: ^1.0.0
+856 silly placeDep ROOT require-from-string@2.0.2 OK for: ajv@8.6.3 want: ^2.0.2
+857 silly placeDep ROOT uri-js@4.4.1 OK for: ajv@8.6.3 want: ^4.2.2
+858 silly fetch manifest punycode@^2.1.0
+859 silly packumentCache full:https://registry.npmjs.org/punycode cache-miss
+860 http fetch GET 200 https://registry.npmjs.org/punycode 41ms (cache revalidated)
+861 silly packumentCache full:https://registry.npmjs.org/punycode set size:61302 disposed:false
+862 silly placeDep ROOT file-uri-to-path@1.0.0 OK for: bindings@1.5.0 want: 1.0.0
+863 silly placeDep ROOT @edge-runtime/format@2.2.1 OK for: edge-runtime@2.5.9 want: 2.2.1
+864 silly placeDep ROOT @edge-runtime/ponyfill@2.4.2 OK for: edge-runtime@2.5.9 want: 2.4.2
+865 silly placeDep node_modules/edge-runtime async-listen@3.0.1 OK for: edge-runtime@2.5.9 want: 3.0.1
+866 silly placeDep ROOT mri@1.2.0 OK for: edge-runtime@2.5.9 want: 1.2.0
+867 silly placeDep ROOT picocolors@1.0.0 OK for: edge-runtime@2.5.9 want: 1.0.0
+868 silly placeDep ROOT pretty-ms@7.0.1 OK for: edge-runtime@2.5.9 want: 7.0.1
+869 silly placeDep ROOT signal-exit@4.0.2 OK for: edge-runtime@2.5.9 want: 4.0.2
+870 silly placeDep ROOT time-span@4.0.0 OK for: edge-runtime@2.5.9 want: 4.0.0
+871 silly fetch manifest parse-ms@^2.1.0
+872 silly packumentCache full:https://registry.npmjs.org/parse-ms cache-miss
+873 silly fetch manifest convert-hrtime@^3.0.0
+874 silly packumentCache full:https://registry.npmjs.org/convert-hrtime cache-miss
+875 http fetch GET 200 https://registry.npmjs.org/parse-ms 37ms (cache revalidated)
+876 silly packumentCache full:https://registry.npmjs.org/parse-ms set size:18020 disposed:false
+877 http fetch GET 200 https://registry.npmjs.org/convert-hrtime 201ms (cache revalidated)
+878 silly packumentCache full:https://registry.npmjs.org/convert-hrtime set size:12856 disposed:false
+879 silly placeDep ROOT @esbuild/aix-ppc64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+880 silly placeDep ROOT @esbuild/android-arm@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+881 silly placeDep ROOT @esbuild/android-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+882 silly placeDep ROOT @esbuild/android-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+883 silly placeDep ROOT @esbuild/darwin-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+884 silly placeDep ROOT @esbuild/darwin-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+885 silly placeDep ROOT @esbuild/freebsd-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+886 silly placeDep ROOT @esbuild/freebsd-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+887 silly placeDep ROOT @esbuild/linux-arm@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+888 silly placeDep ROOT @esbuild/linux-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+889 silly placeDep ROOT @esbuild/linux-ia32@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+890 silly placeDep ROOT @esbuild/linux-loong64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+891 silly placeDep ROOT @esbuild/linux-mips64el@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+892 silly placeDep ROOT @esbuild/linux-ppc64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+893 silly placeDep ROOT @esbuild/linux-riscv64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+894 silly placeDep ROOT @esbuild/linux-s390x@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+895 silly placeDep ROOT @esbuild/linux-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+896 silly placeDep ROOT @esbuild/netbsd-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+897 silly placeDep ROOT @esbuild/netbsd-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+898 silly placeDep ROOT @esbuild/openbsd-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+899 silly placeDep ROOT @esbuild/openbsd-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+900 silly placeDep ROOT @esbuild/openharmony-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+901 silly placeDep ROOT @esbuild/sunos-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+902 silly placeDep ROOT @esbuild/win32-arm64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+903 silly placeDep ROOT @esbuild/win32-ia32@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+904 silly placeDep ROOT @esbuild/win32-x64@0.27.0 OK for: esbuild@0.27.0 want: 0.27.0
+905 silly placeDep ROOT get-stream@5.2.0 OK for: execa@3.2.0 want: ^5.0.0
+906 silly placeDep ROOT human-signals@1.1.1 OK for: execa@3.2.0 want: ^1.1.1
+907 silly placeDep ROOT p-finally@2.0.1 OK for: execa@3.2.0 want: ^2.0.0
+908 silly placeDep node_modules/execa signal-exit@3.0.7 OK for: execa@3.2.0 want: ^3.0.2
+909 silly fetch manifest pump@^3.0.0
+910 silly packumentCache full:https://registry.npmjs.org/pump cache-miss
+911 http fetch GET 200 https://registry.npmjs.org/pump 34ms (cache revalidated)
+912 silly packumentCache full:https://registry.npmjs.org/pump set size:41178 disposed:false
+913 silly placeDep ROOT jsonfile@6.2.0 OK for: fs-extra@11.1.0 want: ^6.0.1
+914 silly placeDep ROOT universalify@2.0.1 OK for: fs-extra@11.1.0 want: ^2.0.0
+915 silly placeDep ROOT pump@3.0.4 OK for: get-stream@5.2.0 want: ^3.0.0
+916 silly fetch manifest end-of-stream@^1.1.0
+917 silly packumentCache full:https://registry.npmjs.org/end-of-stream cache-miss
+918 silly fetch manifest once@^1.3.1
+919 silly packumentCache full:https://registry.npmjs.org/once cache-miss
+920 http fetch GET 200 https://registry.npmjs.org/once 36ms (cache revalidated)
+921 silly packumentCache full:https://registry.npmjs.org/once set size:11752 disposed:false
+922 http fetch GET 200 https://registry.npmjs.org/end-of-stream 37ms (cache revalidated)
+923 silly packumentCache full:https://registry.npmjs.org/end-of-stream set size:27842 disposed:false
+924 silly placeDep node_modules/glob minimatch@10.2.4 OK for: glob@13.0.6 want: ^10.2.2
+925 silly placeDep ROOT path-scurry@2.0.2 OK for: glob@13.0.6 want: ^2.0.2
+926 silly fetch manifest brace-expansion@^5.0.2
+927 silly packumentCache full:https://registry.npmjs.org/brace-expansion cache-miss
+928 silly fetch manifest lru-cache@^11.0.0
+929 silly packumentCache full:https://registry.npmjs.org/lru-cache cache-miss
+930 http fetch GET 200 https://registry.npmjs.org/brace-expansion 35ms (cache revalidated)
+931 silly packumentCache full:https://registry.npmjs.org/brace-expansion set size:55744 disposed:false
+932 http fetch GET 200 https://registry.npmjs.org/lru-cache 37ms (cache revalidated)
+933 silly packumentCache full:https://registry.npmjs.org/lru-cache set size:413591 disposed:false
+934 silly placeDep ROOT argparse@2.0.1 OK for: js-yaml@4.1.1 want: ^2.0.1
+935 silly placeDep ROOT @types/json-schema@7.0.15 OK for: json-schema-to-ts@1.6.4 want: ^7.0.6
+936 silly placeDep ROOT ts-toolbelt@6.15.5 OK for: json-schema-to-ts@1.6.4 want: ^6.15.5
+937 silly placeDep ROOT @isaacs/brace-expansion@5.0.1 OK for: minimatch@10.1.1 want: ^5.0.0
+938 silly fetch manifest @isaacs/balanced-match@^4.0.1
+939 silly packumentCache full:https://registry.npmjs.org/@isaacs%2fbalanced-match cache-miss
+940 http fetch GET 200 https://registry.npmjs.org/@isaacs%2fbalanced-match 399ms (cache revalidated)
+941 silly packumentCache full:https://registry.npmjs.org/@isaacs%2fbalanced-match set size:7823 disposed:false
+942 silly placeDep ROOT @isaacs/balanced-match@4.0.1 OK for: @isaacs/brace-expansion@5.0.1 want: ^4.0.1
+943 silly placeDep ROOT abbrev@3.0.1 OK for: nopt@8.1.0 want: ^3.0.0
+944 silly placeDep ROOT @oxc-transform/binding-android-arm-eabi@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+945 silly placeDep ROOT @oxc-transform/binding-android-arm64@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+946 silly placeDep ROOT @oxc-transform/binding-darwin-arm64@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+947 silly placeDep ROOT @oxc-transform/binding-darwin-x64@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+948 silly placeDep ROOT @oxc-transform/binding-freebsd-x64@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+949 silly placeDep ROOT @oxc-transform/binding-linux-arm-gnueabihf@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+950 silly placeDep ROOT @oxc-transform/binding-linux-arm-musleabihf@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+951 silly placeDep ROOT @oxc-transform/binding-linux-arm64-gnu@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+952 silly placeDep ROOT @oxc-transform/binding-linux-arm64-musl@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+953 silly placeDep ROOT @oxc-transform/binding-linux-ppc64-gnu@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+954 silly placeDep ROOT @oxc-transform/binding-linux-riscv64-gnu@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+955 silly placeDep ROOT @oxc-transform/binding-linux-riscv64-musl@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+956 silly placeDep ROOT @oxc-transform/binding-linux-s390x-gnu@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+957 silly placeDep ROOT @oxc-transform/binding-linux-x64-gnu@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+958 silly placeDep ROOT @oxc-transform/binding-linux-x64-musl@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+959 silly placeDep ROOT @oxc-transform/binding-openharmony-arm64@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+960 silly placeDep ROOT @oxc-transform/binding-wasm32-wasi@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+961 silly placeDep ROOT @oxc-transform/binding-win32-arm64-msvc@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+962 silly placeDep ROOT @oxc-transform/binding-win32-ia32-msvc@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+963 silly placeDep ROOT @oxc-transform/binding-win32-x64-msvc@0.111.0 OK for: oxc-transform@0.111.0 want: 0.111.0
+964 silly fetch manifest @napi-rs/wasm-runtime@^1.1.1
+965 silly packumentCache full:https://registry.npmjs.org/@napi-rs%2fwasm-runtime cache-miss
+966 http fetch GET 200 https://registry.npmjs.org/@napi-rs%2fwasm-runtime 50ms (cache revalidated)
+967 silly packumentCache full:https://registry.npmjs.org/@napi-rs%2fwasm-runtime set size:63456 disposed:false
+968 silly placeDep ROOT @napi-rs/wasm-runtime@1.1.1 OK for: @oxc-transform/binding-wasm32-wasi@0.111.0 want: ^1.1.1
+969 silly fetch manifest @emnapi/core@^1.7.1
+970 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fcore cache-miss
+971 silly fetch manifest @emnapi/runtime@^1.7.1
+972 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime cache-miss
+973 silly fetch manifest @tybys/wasm-util@^0.10.1
+974 silly packumentCache full:https://registry.npmjs.org/@tybys%2fwasm-util cache-miss
+975 http fetch GET 200 https://registry.npmjs.org/@emnapi%2fruntime 44ms (cache revalidated)
+976 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime set size:99452 disposed:false
+977 http fetch GET 200 https://registry.npmjs.org/@emnapi%2fcore 47ms (cache revalidated)
+978 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fcore set size:96861 disposed:false
+979 http fetch GET 200 https://registry.npmjs.org/@tybys%2fwasm-util 50ms (cache revalidated)
+980 silly packumentCache full:https://registry.npmjs.org/@tybys%2fwasm-util set size:55410 disposed:false
+981 silly placeDep ROOT @emnapi/core@1.8.1 OK for: @napi-rs/wasm-runtime@1.1.1 want: ^1.7.1
+982 silly placeDep ROOT @emnapi/runtime@1.8.1 OK for: @napi-rs/wasm-runtime@1.1.1 want: ^1.7.1
+983 silly placeDep ROOT @tybys/wasm-util@0.10.1 OK for: @napi-rs/wasm-runtime@1.1.1 want: ^0.10.1
+984 silly fetch manifest @emnapi/wasi-threads@1.1.0
+985 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fwasi-threads cache-miss
+986 http fetch GET 200 https://registry.npmjs.org/@emnapi%2fwasi-threads 82ms (cache revalidated)
+987 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fwasi-threads set size:19454 disposed:false
+988 silly placeDep ROOT @emnapi/wasi-threads@1.1.0 OK for: @emnapi/core@1.8.1 want: 1.1.0
+989 silly placeDep ROOT lru-cache@11.2.6 OK for: path-scurry@2.0.2 want: ^11.0.0
+990 silly placeDep ROOT ohm-js@17.5.0 OK for: pip-requirements-js@1.0.3 want: ^17.1.0
+991 silly placeDep ROOT parse-ms@2.1.0 OK for: pretty-ms@7.0.1 want: ^2.1.0
+992 silly placeDep ROOT end-of-stream@1.4.5 OK for: pump@3.0.4 want: ^1.1.0
+993 silly placeDep ROOT once@1.4.0 OK for: pump@3.0.4 want: ^1.3.1
+994 silly fetch manifest once@^1.4.0
+995 silly packumentCache full:https://registry.npmjs.org/once cache-hit
+996 silly placeDep ROOT @oxc-project/types@0.110.0 OK for: rolldown@1.0.0-rc.1 want: =0.110.0
+997 silly placeDep ROOT @rolldown/binding-android-arm64@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+998 silly placeDep ROOT @rolldown/binding-darwin-arm64@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+999 silly placeDep ROOT @rolldown/binding-darwin-x64@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1000 silly placeDep ROOT @rolldown/binding-freebsd-x64@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1001 silly placeDep ROOT @rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1002 silly placeDep ROOT @rolldown/binding-linux-arm64-gnu@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1003 silly placeDep ROOT @rolldown/binding-linux-arm64-musl@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1004 silly placeDep ROOT @rolldown/binding-linux-x64-gnu@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1005 silly placeDep ROOT @rolldown/binding-linux-x64-musl@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1006 silly placeDep ROOT @rolldown/binding-openharmony-arm64@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1007 silly placeDep ROOT @rolldown/binding-wasm32-wasi@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1008 silly placeDep ROOT @rolldown/binding-win32-arm64-msvc@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1009 silly placeDep ROOT @rolldown/binding-win32-x64-msvc@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1010 silly placeDep ROOT @rolldown/pluginutils@1.0.0-rc.1 OK for: rolldown@1.0.0-rc.1 want: 1.0.0-rc.1
+1011 silly placeDep ROOT cookie-es@2.0.0 OK for: srvx@0.8.9 want: ^2.0.0
+1012 silly placeDep ROOT convert-hrtime@3.0.0 OK for: time-span@4.0.0 want: ^3.0.0
+1013 silly placeDep ROOT @ts-morph/common@0.11.1 OK for: ts-morph@12.0.0 want: ~0.11.0
+1014 silly placeDep ROOT code-block-writer@10.1.1 OK for: ts-morph@12.0.0 want: ^10.1.1
+1015 silly fetch manifest mkdirp@^1.0.4
+1016 silly packumentCache full:https://registry.npmjs.org/mkdirp cache-miss
+1017 silly fetch manifest fast-glob@^3.2.7
+1018 silly packumentCache full:https://registry.npmjs.org/fast-glob cache-miss
+1019 silly fetch manifest minimatch@^3.0.4
+1020 silly packumentCache full:https://registry.npmjs.org/minimatch cache-hit
+1021 silly fetch manifest path-browserify@^1.0.1
+1022 silly packumentCache full:https://registry.npmjs.org/path-browserify cache-miss
+1023 http fetch GET 200 https://registry.npmjs.org/path-browserify 42ms (cache revalidated)
+1024 silly packumentCache full:https://registry.npmjs.org/path-browserify set size:17399 disposed:false
+1025 http fetch GET 200 https://registry.npmjs.org/fast-glob 214ms (cache revalidated)
+1026 silly packumentCache full:https://registry.npmjs.org/fast-glob set size:220556 disposed:false
+1027 http fetch GET 200 https://registry.npmjs.org/mkdirp 537ms (cache revalidated)
+1028 silly packumentCache full:https://registry.npmjs.org/mkdirp set size:116455 disposed:false
+1029 silly placeDep ROOT fast-glob@3.3.3 OK for: @ts-morph/common@0.11.1 want: ^3.2.7
+1030 silly placeDep node_modules/@ts-morph/common minimatch@3.1.5 OK for: @ts-morph/common@0.11.1 want: ^3.0.4
+1031 silly placeDep ROOT mkdirp@1.0.4 OK for: @ts-morph/common@0.11.1 want: ^1.0.4
+1032 silly placeDep ROOT path-browserify@1.0.1 OK for: @ts-morph/common@0.11.1 want: ^1.0.1
+1033 silly fetch manifest @nodelib/fs.stat@^2.0.2
+1034 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.stat cache-miss
+1035 silly fetch manifest @nodelib/fs.walk@^1.2.3
+1036 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.walk cache-miss
+1037 silly fetch manifest glob-parent@^5.1.2
+1038 silly packumentCache full:https://registry.npmjs.org/glob-parent cache-miss
+1039 silly fetch manifest merge2@^1.3.0
+1040 silly packumentCache full:https://registry.npmjs.org/merge2 cache-miss
+1041 silly fetch manifest micromatch@^4.0.8
+1042 silly packumentCache full:https://registry.npmjs.org/micromatch cache-miss
+1043 silly fetch manifest brace-expansion@^1.1.7
+1044 silly packumentCache full:https://registry.npmjs.org/brace-expansion cache-hit
+1045 http fetch GET 200 https://registry.npmjs.org/glob-parent 39ms (cache revalidated)
+1046 silly packumentCache full:https://registry.npmjs.org/glob-parent set size:42445 disposed:false
+1047 http fetch GET 200 https://registry.npmjs.org/micromatch 42ms (cache revalidated)
+1048 silly packumentCache full:https://registry.npmjs.org/micromatch set size:240630 disposed:false
+1049 http fetch GET 200 https://registry.npmjs.org/merge2 203ms (cache revalidated)
+1050 silly packumentCache full:https://registry.npmjs.org/merge2 set size:46159 disposed:false
+1051 http fetch GET 200 https://registry.npmjs.org/@nodelib%2ffs.stat 214ms (cache revalidated)
+1052 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.stat set size:36993 disposed:false
+1053 http fetch GET 200 https://registry.npmjs.org/@nodelib%2ffs.walk 686ms (cache revalidated)
+1054 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.walk set size:41589 disposed:false
+1055 silly placeDep ROOT @nodelib/fs.stat@2.0.5 OK for: fast-glob@3.3.3 want: ^2.0.2
+1056 silly placeDep ROOT @nodelib/fs.walk@1.2.8 OK for: fast-glob@3.3.3 want: ^1.2.3
+1057 silly placeDep ROOT glob-parent@5.1.2 OK for: fast-glob@3.3.3 want: ^5.1.2
+1058 silly placeDep ROOT merge2@1.4.1 OK for: fast-glob@3.3.3 want: ^1.3.0
+1059 silly placeDep ROOT micromatch@4.0.8 OK for: fast-glob@3.3.3 want: ^4.0.8
+1060 silly fetch manifest fastq@^1.6.0
+1061 silly packumentCache full:https://registry.npmjs.org/fastq cache-miss
+1062 silly fetch manifest @nodelib/fs.scandir@2.1.5
+1063 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.scandir cache-miss
+1064 silly fetch manifest is-glob@^4.0.1
+1065 silly packumentCache full:https://registry.npmjs.org/is-glob cache-miss
+1066 silly fetch manifest braces@^3.0.3
+1067 silly packumentCache full:https://registry.npmjs.org/braces cache-miss
+1068 silly fetch manifest picomatch@^2.3.1
+1069 silly packumentCache full:https://registry.npmjs.org/picomatch cache-hit
+1070 http fetch GET 200 https://registry.npmjs.org/fastq 37ms (cache revalidated)
+1071 silly packumentCache full:https://registry.npmjs.org/fastq set size:78301 disposed:false
+1072 http fetch GET 200 https://registry.npmjs.org/is-glob 38ms (cache revalidated)
+1073 silly packumentCache full:https://registry.npmjs.org/is-glob set size:40530 disposed:false
+1074 http fetch GET 200 https://registry.npmjs.org/braces 45ms (cache revalidated)
+1075 silly packumentCache full:https://registry.npmjs.org/braces set size:114529 disposed:false
+1076 http fetch GET 200 https://registry.npmjs.org/@nodelib%2ffs.scandir 51ms (cache revalidated)
+1077 silly packumentCache full:https://registry.npmjs.org/@nodelib%2ffs.scandir set size:49256 disposed:false
+1078 silly placeDep ROOT @nodelib/fs.scandir@2.1.5 OK for: @nodelib/fs.walk@1.2.8 want: 2.1.5
+1079 silly placeDep ROOT fastq@1.20.1 OK for: @nodelib/fs.walk@1.2.8 want: ^1.6.0
+1080 silly fetch manifest run-parallel@^1.1.9
+1081 silly packumentCache full:https://registry.npmjs.org/run-parallel cache-miss
+1082 silly fetch manifest reusify@^1.0.4
+1083 silly packumentCache full:https://registry.npmjs.org/reusify cache-miss
+1084 http fetch GET 200 https://registry.npmjs.org/run-parallel 34ms (cache revalidated)
+1085 silly packumentCache full:https://registry.npmjs.org/run-parallel set size:35172 disposed:false
+1086 http fetch GET 200 https://registry.npmjs.org/reusify 35ms (cache revalidated)
+1087 silly packumentCache full:https://registry.npmjs.org/reusify set size:14249 disposed:false
+1088 silly placeDep ROOT run-parallel@1.2.0 OK for: @nodelib/fs.scandir@2.1.5 want: ^1.1.9
+1089 silly fetch manifest queue-microtask@^1.2.2
+1090 silly packumentCache full:https://registry.npmjs.org/queue-microtask cache-miss
+1091 http fetch GET 200 https://registry.npmjs.org/queue-microtask 494ms (cache revalidated)
+1092 silly packumentCache full:https://registry.npmjs.org/queue-microtask set size:36088 disposed:false
+1093 silly placeDep ROOT reusify@1.1.0 OK for: fastq@1.20.1 want: ^1.0.4
+1094 silly placeDep ROOT is-glob@4.0.3 OK for: glob-parent@5.1.2 want: ^4.0.1
+1095 silly fetch manifest is-extglob@^2.1.1
+1096 silly packumentCache full:https://registry.npmjs.org/is-extglob cache-miss
+1097 http fetch GET 200 https://registry.npmjs.org/is-extglob 38ms (cache revalidated)
+1098 silly packumentCache full:https://registry.npmjs.org/is-extglob set size:11766 disposed:false
+1099 silly placeDep ROOT is-extglob@2.1.1 OK for: is-glob@4.0.3 want: ^2.1.1
+1100 silly placeDep ROOT braces@3.0.3 OK for: micromatch@4.0.8 want: ^3.0.3
+1101 silly placeDep node_modules/micromatch picomatch@2.3.1 OK for: micromatch@4.0.8 want: ^2.3.1
+1102 silly fetch manifest fill-range@^7.1.1
+1103 silly packumentCache full:https://registry.npmjs.org/fill-range cache-miss
+1104 http fetch GET 200 https://registry.npmjs.org/fill-range 37ms (cache revalidated)
+1105 silly packumentCache full:https://registry.npmjs.org/fill-range set size:90212 disposed:false
+1106 silly placeDep ROOT fill-range@7.1.1 OK for: braces@3.0.3 want: ^7.1.1
+1107 silly fetch manifest to-regex-range@^5.0.1
+1108 silly packumentCache full:https://registry.npmjs.org/to-regex-range cache-miss
+1109 http fetch GET 200 https://registry.npmjs.org/to-regex-range 39ms (cache revalidated)
+1110 silly packumentCache full:https://registry.npmjs.org/to-regex-range set size:61569 disposed:false
+1111 silly placeDep ROOT to-regex-range@5.0.1 OK for: fill-range@7.1.1 want: ^5.0.1
+1112 silly fetch manifest is-number@^7.0.0
+1113 silly packumentCache full:https://registry.npmjs.org/is-number cache-miss
+1114 http fetch GET 200 https://registry.npmjs.org/is-number 46ms (cache revalidated)
+1115 silly packumentCache full:https://registry.npmjs.org/is-number set size:36183 disposed:false
+1116 silly placeDep ROOT queue-microtask@1.2.3 OK for: run-parallel@1.2.0 want: ^1.2.2
+1117 silly placeDep ROOT is-number@7.0.0 OK for: to-regex-range@5.0.1 want: ^7.0.0
+1118 silly placeDep ROOT fsevents@2.3.3 OK for: tsx@4.21.0 want: ~2.3.3
+1119 silly placeDep ROOT get-tsconfig@4.13.6 OK for: tsx@4.21.0 want: ^4.7.5
+1120 silly fetch manifest resolve-pkg-maps@^1.0.0
+1121 silly packumentCache full:https://registry.npmjs.org/resolve-pkg-maps cache-miss
+1122 http fetch GET 200 https://registry.npmjs.org/resolve-pkg-maps 35ms (cache revalidated)
+1123 silly packumentCache full:https://registry.npmjs.org/resolve-pkg-maps set size:11615 disposed:false
+1124 silly placeDep ROOT resolve-pkg-maps@1.0.0 OK for: get-tsconfig@4.13.6 want: ^1.0.0
+1125 silly placeDep ROOT punycode@2.3.1 OK for: uri-js@4.4.1 want: ^2.1.0
+1126 silly placeDep ROOT brace-expansion@1.1.12 OK for: minimatch@3.1.5 want: ^1.1.7
+1127 silly fetch manifest concat-map@0.0.1
+1128 silly packumentCache full:https://registry.npmjs.org/concat-map cache-miss
+1129 silly fetch manifest balanced-match@^1.0.0
+1130 silly packumentCache full:https://registry.npmjs.org/balanced-match cache-miss
+1131 http fetch GET 200 https://registry.npmjs.org/concat-map 36ms (cache revalidated)
+1132 silly packumentCache full:https://registry.npmjs.org/concat-map set size:9290 disposed:false
+1133 http fetch GET 200 https://registry.npmjs.org/balanced-match 39ms (cache revalidated)
+1134 silly packumentCache full:https://registry.npmjs.org/balanced-match set size:39082 disposed:false
+1135 silly placeDep ROOT balanced-match@1.0.2 OK for: brace-expansion@1.1.12 want: ^1.0.0
+1136 silly placeDep ROOT concat-map@0.0.1 OK for: brace-expansion@1.1.12 want: 0.0.1
+1137 silly placeDep ROOT @fastify/busboy@2.1.1 OK for: undici@5.28.4 want: ^2.0.0
+1138 silly placeDep node_modules/glob brace-expansion@5.0.4 OK for: minimatch@10.2.4 want: ^5.0.2
+1139 silly fetch manifest balanced-match@^4.0.2
+1140 silly packumentCache full:https://registry.npmjs.org/balanced-match cache-hit
+1141 silly placeDep node_modules/glob balanced-match@4.0.4 OK for: brace-expansion@5.0.4 want: ^4.0.2
+1142 silly reify mark retired [
+1142 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\backends'
+1142 silly reify ]
+1143 silly reify mark retired [
+1143 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\build-utils'
+1143 silly reify ]
+1144 silly reify mark retired [
+1144 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\cervel',
+1144 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel',
+1144 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel.cmd',
+1144 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel.ps1'
+1144 silly reify ]
+1145 silly reify mark retired [
+1145 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\detect-agent'
+1145 silly reify ]
+1146 silly reify mark retired [
+1146 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\elysia'
+1146 silly reify ]
+1147 silly reify mark retired [
+1147 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\express'
+1147 silly reify ]
+1148 silly reify mark retired [
+1148 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\fastify'
+1148 silly reify ]
+1149 silly reify mark retired [
+1149 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\gatsby-plugin-vercel-builder'
+1149 silly reify ]
+1150 silly reify mark retired [
+1150 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\go'
+1150 silly reify ]
+1151 silly reify mark retired [
+1151 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\h3'
+1151 silly reify ]
+1152 silly reify mark retired [
+1152 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\hono'
+1152 silly reify ]
+1153 silly reify mark retired [
+1153 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\hydrogen'
+1153 silly reify ]
+1154 silly reify mark retired [
+1154 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\koa'
+1154 silly reify ]
+1155 silly reify mark retired [
+1155 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\nestjs'
+1155 silly reify ]
+1156 silly reify mark retired [
+1156 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\next'
+1156 silly reify ]
+1157 silly reify mark retired [
+1157 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\node'
+1157 silly reify ]
+1158 silly reify mark retired [
+1158 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\python'
+1158 silly reify ]
+1159 silly reify mark retired [
+1159 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\python-analysis'
+1159 silly reify ]
+1160 silly reify mark retired [
+1160 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\redwood'
+1160 silly reify ]
+1161 silly reify mark retired [
+1161 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\remix-builder'
+1161 silly reify ]
+1162 silly reify mark retired [
+1162 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\static-build'
+1162 silly reify ]
+1163 silly reify mark retired [
+1163 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\static-config'
+1163 silly reify ]
+1164 silly reify mark retired [
+1164 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\pip-requirements-js'
+1164 silly reify ]
+1165 silly reify mark retired [
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\vercel',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc.cmd',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc.ps1',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel.cmd',
+1165 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel.ps1'
+1165 silly reify ]
+1166 silly reify moves {
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\backends': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.backends-tRHA7MmZ',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\build-utils': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.build-utils-7fUXNK5s',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\cervel': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.cervel-VsEaIUxl',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.cervel-iwVBb0Yp',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel.cmd': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.cervel.cmd-SuZnRxV9',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\cervel.ps1': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.cervel.ps1-ePwdAnT4',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\detect-agent': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.detect-agent-wrufkZY7',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\elysia': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.elysia-0FGyHT1g',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\express': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.express-L5yWncbb',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\fastify': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.fastify-6EHUNbKV',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\gatsby-plugin-vercel-builder': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.gatsby-plugin-vercel-builder-7cw1ah3X',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\go': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.go-JweUWyCe',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\h3': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.h3-3RCV76CH',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\hono': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.hono-mwKKbhT7',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\hydrogen': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.hydrogen-fx9Y9U4S',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\koa': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.koa-Co84cEMI',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\nestjs': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.nestjs-28hhGea1',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\next': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.next-7vGzANJk',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\node': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.node-IZGjijK3',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\python': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.python-jZyzHZKQ',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\python-analysis': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.python-analysis-9wQFFddk',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\redwood': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.redwood-h6eLUU5D',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\remix-builder': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.remix-builder-EtnvyiCH',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\static-build': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.static-build-t9gUzEjv',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\static-config': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\@vercel\\.static-config-K0elSQT5',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\pip-requirements-js': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.pip-requirements-js-QfuTAdIu',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\vercel': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.vercel-knhCIOUO',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vc-EI39nmhn',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc.cmd': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vc.cmd-2wfP2szV',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vc.ps1': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vc.ps1-IJMApR43',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vercel-bK5p45hU',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel.cmd': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vercel.cmd-bYoGM7qG',
+1166 silly reify   'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\vercel.ps1': 'c:\\Users\\caauc\\barbas-cuts-web\\.npm-cache\\_npx\\69f9afb961c37556\\node_modules\\.bin\\.vercel.ps1-TCyIX2qS'
+1166 silly reify }
+1167 silly audit bulk request {
+1167 silly audit   '@iarna/toml': [ '2.2.5' ],
+1167 silly audit   '@isaacs/fs-minipass': [ '4.0.1' ],
+1167 silly audit   '@tootallnate/once': [ '2.0.0' ],
+1167 silly audit   '@tootallnate/quickjs-emscripten': [ '0.23.0' ],
+1167 silly audit   '@vercel/blob': [ '2.3.0' ],
+1167 silly audit   '@vercel/fun': [ '1.3.0' ],
+1167 silly audit   'path-to-regexp': [ '8.2.0', '8.3.0', '6.1.0', '6.3.0' ],
+1167 silly audit   'async-listen': [ '1.2.0', '3.0.0', '3.0.1' ],
+1167 silly audit   'node-fetch': [ '2.6.7', '2.6.9' ],
+1167 silly audit   undici: [ '6.23.0', '5.28.4' ],
+1167 silly audit   semver: [ '7.5.4', '6.3.1' ],
+1167 silly audit   '@vercel/ruby': [ '2.3.2' ],
+1167 silly audit   '@vercel/rust': [ '1.0.5' ],
+1167 silly audit   execa: [ '5.1.1', '3.2.0' ],
+1167 silly audit   'get-stream': [ '6.0.1', '5.2.0' ],
+1167 silly audit   'human-signals': [ '2.1.0', '1.1.1' ],
+1167 silly audit   'signal-exit': [ '3.0.7', '4.0.2' ],
+1167 silly audit   'agent-base': [ '7.1.4' ],
+1167 silly audit   'any-promise': [ '1.3.0' ],
+1167 silly audit   arg: [ '4.1.0' ],
+1167 silly audit   'ast-types': [ '0.13.4' ],
+1167 silly audit   'async-retry': [ '1.3.3' ],
+1167 silly audit   asynckit: [ '0.4.0' ],
+1167 silly audit   'basic-ftp': [ '5.2.0' ],
+1167 silly audit   'buffer-crc32': [ '0.2.13' ],
+1167 silly audit   bytes: [ '3.1.0' ],
+1167 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+1167 silly audit   chokidar: [ '4.0.0' ],
+1167 silly audit   chownr: [ '3.0.0' ],
+1167 silly audit   'combined-stream': [ '1.0.8' ],
+1167 silly audit   'content-type': [ '1.0.4' ],
+1167 silly audit   'cross-spawn': [ '7.0.6' ],
+1167 silly audit   'data-uri-to-buffer': [ '6.0.2' ],
+1167 silly audit   debug: [ '4.3.4' ],
+1167 silly audit   ms: [ '2.1.2', '2.1.1' ],
+1167 silly audit   degenerator: [ '5.0.1' ],
+1167 silly audit   'delayed-stream': [ '1.0.0' ],
+1167 silly audit   depd: [ '1.1.2' ],
+1167 silly audit   'dunder-proto': [ '1.0.1' ],
+1167 silly audit   'end-of-stream': [ '1.1.0', '1.4.5' ],
+1167 silly audit   'es-define-property': [ '1.0.1' ],
+1167 silly audit   'es-errors': [ '1.3.0' ],
+1167 silly audit   'es-object-atoms': [ '1.1.1' ],
+1167 silly audit   'es-set-tostringtag': [ '2.1.0' ],
+1167 silly audit   escodegen: [ '2.1.0' ],
+1167 silly audit   esprima: [ '4.0.1' ],
+1167 silly audit   estraverse: [ '5.3.0' ],
+1167 silly audit   esutils: [ '2.0.3' ],
+1167 silly audit   'events-intercept': [ '2.0.0' ],
+1167 silly audit   'fd-slicer': [ '1.1.0' ],
+1167 silly audit   'form-data': [ '4.0.5' ],
+1167 silly audit   'function-bind': [ '1.1.2' ],
+1167 silly audit   'generic-pool': [ '3.4.2' ],
+1167 silly audit   'get-intrinsic': [ '1.3.0' ],
+1167 silly audit   'get-proto': [ '1.0.1' ],
+1167 silly audit   'get-uri': [ '6.0.5' ],
+1167 silly audit   gopd: [ '1.2.0' ],
+1167 silly audit   'has-symbols': [ '1.1.0' ],
+1167 silly audit   'has-tostringtag': [ '1.0.2' ],
+1167 silly audit   hasown: [ '2.0.2' ],
+1167 silly audit   'http-errors': [ '1.7.3' ],
+1167 silly audit   'http-proxy-agent': [ '7.0.2' ],
+1167 silly audit   'https-proxy-agent': [ '7.0.6' ],
+1167 silly audit   'iconv-lite': [ '0.4.24' ],
+1167 silly audit   inherits: [ '2.0.4' ],
+1167 silly audit   'ip-address': [ '10.1.0' ],
+1167 silly audit   'is-buffer': [ '2.0.5' ],
+1167 silly audit   'is-node-process': [ '1.2.0' ],
+1167 silly audit   'is-stream': [ '2.0.1' ],
+1167 silly audit   isexe: [ '2.0.0' ],
+1167 silly audit   jose: [ '5.9.6' ],
+1167 silly audit   'lru-cache': [ '7.18.3', '6.0.0', '11.2.6' ],
+1167 silly audit   luxon: [ '3.7.2' ],
+1167 silly audit   'math-intrinsics': [ '1.1.0' ],
+1167 silly audit   'merge-stream': [ '2.0.0' ],
+1167 silly audit   micro: [ '9.3.5-canary.3' ],
+1167 silly audit   'mime-db': [ '1.52.0' ],
+1167 silly audit   'mime-types': [ '2.1.35' ],
+1167 silly audit   'mimic-fn': [ '2.1.0' ],
+1167 silly audit   minipass: [ '7.1.3' ],
+1167 silly audit   minizlib: [ '3.1.0' ],
+1167 silly audit   netmask: [ '2.0.2' ],
+1167 silly audit   'npm-run-path': [ '4.0.1' ],
+1167 silly audit   once: [ '1.3.3', '1.4.0' ],
+1167 silly audit   onetime: [ '5.1.2' ],
+1167 silly audit   'os-paths': [ '4.4.0' ],
+1167 silly audit   'pac-proxy-agent': [ '7.2.0' ],
+1167 silly audit   'pac-resolver': [ '7.0.1' ],
+1167 silly audit   'path-key': [ '3.1.1' ],
+1167 silly audit   pend: [ '1.2.0' ],
+1167 silly audit   promisepipe: [ '3.0.0' ],
+1167 silly audit   'proxy-agent': [ '6.4.0' ],
+1167 silly audit   'proxy-from-env': [ '1.1.0' ],
+1167 silly audit   'raw-body': [ '2.4.1' ],
+1167 silly audit   readdirp: [ '4.1.2' ],
+1167 silly audit   retry: [ '0.13.1' ],
+1167 silly audit   'safer-buffer': [ '2.1.2' ],
+1167 silly audit   yallist: [ '4.0.0', '5.0.0' ],
+1167 silly audit   setprototypeof: [ '1.1.1' ],
+1167 silly audit   'shebang-command': [ '2.0.0' ],
+1167 silly audit   'shebang-regex': [ '3.0.0' ],
+1167 silly audit   'smart-buffer': [ '4.2.0' ],
+1167 silly audit   socks: [ '2.8.7' ],
+1167 silly audit   'socks-proxy-agent': [ '8.0.5' ],
+1167 silly audit   'source-map': [ '0.6.1' ],
+1167 silly audit   'stat-mode': [ '0.3.0' ],
+1167 silly audit   statuses: [ '1.5.0' ],
+1167 silly audit   'stream-to-array': [ '2.3.0' ],
+1167 silly audit   'stream-to-promise': [ '2.2.0' ],
+1167 silly audit   'strip-final-newline': [ '2.0.0' ],
+1167 silly audit   tar: [ '7.5.7' ],
+1167 silly audit   throttleit: [ '2.1.0' ],
+1167 silly audit   tinyexec: [ '0.3.2' ],
+1167 silly audit   toidentifier: [ '1.0.0' ],
+1167 silly audit   tr46: [ '0.0.3' ],
+1167 silly audit   'tree-kill': [ '1.2.2' ],
+1167 silly audit   tslib: [ '2.8.1' ],
+1167 silly audit   'uid-promise': [ '1.0.0' ],
+1167 silly audit   unpipe: [ '1.0.0' ],
+1167 silly audit   'webidl-conversions': [ '3.0.1' ],
+1167 silly audit   'whatwg-url': [ '5.0.0' ],
+1167 silly audit   which: [ '2.0.2' ],
+1167 silly audit   wrappy: [ '1.0.2' ],
+1167 silly audit   'xdg-app-paths': [ '5.1.0' ],
+1167 silly audit   'xdg-portable': [ '7.3.0' ],
+1167 silly audit   yauzl: [ '2.10.0' ],
+1167 silly audit   'yauzl-clone': [ '1.0.4' ],
+1167 silly audit   'yauzl-promise': [ '2.1.3' ],
+1167 silly audit   vercel: [ '50.31.1' ],
+1167 silly audit   '@vercel/backends': [ '0.0.45' ],
+1167 silly audit   typescript: [ '5.9.3' ],
+1167 silly audit   '@vercel/build-utils': [ '13.8.0' ],
+1167 silly audit   '@vercel/detect-agent': [ '1.2.0' ],
+1167 silly audit   '@vercel/elysia': [ '0.1.48' ],
+1167 silly audit   '@vercel/express': [ '0.1.57' ],
+1167 silly audit   '@vercel/fastify': [ '0.1.51' ],
+1167 silly audit   '@vercel/go': [ '3.4.4' ],
+1167 silly audit   '@vercel/h3': [ '0.1.57' ],
+1167 silly audit   '@vercel/hono': [ '0.2.51' ],
+1167 silly audit   '@vercel/hydrogen': [ '1.3.6' ],
+1167 silly audit   '@vercel/koa': [ '0.1.31' ],
+1167 silly audit   '@vercel/nestjs': [ '0.2.52' ],
+1167 silly audit   '@vercel/next': [ '4.16.1' ],
+1167 silly audit   '@vercel/node': [ '5.6.15' ],
+1167 silly audit   '@vercel/python': [ '6.22.0' ],
+1167 silly audit   '@vercel/redwood': [ '2.4.10' ],
+1167 silly audit   '@vercel/remix-builder': [ '5.7.0' ],
+1167 silly audit   '@vercel/static-build': [ '2.9.0' ],
+1167 silly audit   esbuild: [ '0.27.0' ],
+1167 silly audit   '@vercel/nft': [ '1.3.0', '1.1.1' ],
+1167 silly audit   'fs-extra': [ '11.1.0', '11.1.1' ],
+1167 silly audit   'oxc-transform': [ '0.111.0' ],
+1167 silly audit   'resolve.exports': [ '2.0.3' ],
+1167 silly audit   rolldown: [ '1.0.0-rc.1' ],
+1167 silly audit   srvx: [ '0.8.9' ],
+1167 silly audit   tsx: [ '4.21.0' ],
+1167 silly audit   zod: [ '3.22.4' ],
+1167 silly audit   '@vercel/python-analysis': [ '0.9.1' ],
+1167 silly audit   '@vercel/static-config': [ '3.2.0' ],
+1167 silly audit   '@vercel/cervel': [ '0.0.32' ],
+1167 silly audit   'ts-morph': [ '12.0.0' ],
+1167 silly audit   '@mapbox/node-pre-gyp': [ '2.0.3' ],
+1167 silly audit   '@rollup/pluginutils': [ '5.3.0' ],
+1167 silly audit   acorn: [ '8.16.0' ],
+1167 silly audit   'acorn-import-attributes': [ '1.9.5' ],
+1167 silly audit   'async-sema': [ '3.1.1' ],
+1167 silly audit   bindings: [ '1.5.0' ],
+1167 silly audit   'estree-walker': [ '2.0.2' ],
+1167 silly audit   glob: [ '13.0.6' ],
+1167 silly audit   'graceful-fs': [ '4.2.11' ],
+1167 silly audit   'node-gyp-build': [ '4.8.4' ],
+1167 silly audit   picomatch: [ '4.0.3', '2.3.1' ],
+1167 silly audit   'resolve-from': [ '5.0.0' ],
+1167 silly audit   consola: [ '3.4.2' ],
+1167 silly audit   'detect-libc': [ '2.1.2' ],
+1167 silly audit   nopt: [ '8.1.0' ],
+1167 silly audit   '@types/estree': [ '1.0.8' ],
+1167 silly audit   '@edge-runtime/node-utils': [ '2.3.0' ],
+1167 silly audit   '@edge-runtime/primitives': [ '4.1.0' ],
+1167 silly audit   '@edge-runtime/vm': [ '3.2.0' ],
+1167 silly audit   '@types/node': [ '20.11.0' ],
+1167 silly audit   '@vercel/error-utils': [ '2.0.3' ],
+1167 silly audit   'cjs-module-lexer': [ '1.2.3' ],
+1167 silly audit   'edge-runtime': [ '2.5.9' ],
+1167 silly audit   'es-module-lexer': [ '1.4.1' ],
+1167 silly audit   etag: [ '1.8.1' ],
+1167 silly audit   'undici-types': [ '5.26.5' ],
+1167 silly audit   '@bytecodealliance/preview2-shim': [ '0.17.6' ],
+1167 silly audit   '@renovatebot/pep440': [ '4.2.1' ],
+1167 silly audit   'js-yaml': [ '4.1.1' ],
+1167 silly audit   minimatch: [ '10.1.1', '10.2.4', '3.1.5' ],
+1167 silly audit   'pip-requirements-js': [ '1.0.3' ],
+1167 silly audit   'smol-toml': [ '1.5.2' ],
+1167 silly audit   '@vercel/gatsby-plugin-vercel-analytics': [ '1.0.11' ],
+1167 silly audit   '@vercel/gatsby-plugin-vercel-builder': [ '2.1.0' ],
+1167 silly audit   'web-vitals': [ '0.2.4' ],
+1167 silly audit   '@sinclair/typebox': [ '0.25.24' ],
+1167 silly audit   ajv: [ '8.6.3' ],
+1167 silly audit   'json-schema-to-ts': [ '1.6.4' ],
+1167 silly audit   'fast-deep-equal': [ '3.1.3' ],
+1167 silly audit   'json-schema-traverse': [ '1.0.0' ],
+1167 silly audit   'require-from-string': [ '2.0.2' ],
+1167 silly audit   'uri-js': [ '4.4.1' ],
+1167 silly audit   'file-uri-to-path': [ '1.0.0' ],
+1167 silly audit   '@edge-runtime/format': [ '2.2.1' ],
+1167 silly audit   '@edge-runtime/ponyfill': [ '2.4.2' ],
+1167 silly audit   mri: [ '1.2.0' ],
+1167 silly audit   picocolors: [ '1.0.0' ],
+1167 silly audit   'pretty-ms': [ '7.0.1' ],
+1167 silly audit   'time-span': [ '4.0.0' ],
+1167 silly audit   '@esbuild/aix-ppc64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/android-arm': [ '0.27.0' ],
+1167 silly audit   '@esbuild/android-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/android-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/darwin-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/darwin-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/freebsd-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/freebsd-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-arm': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-ia32': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-loong64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-mips64el': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-ppc64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-riscv64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-s390x': [ '0.27.0' ],
+1167 silly audit   '@esbuild/linux-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/netbsd-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/netbsd-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/openbsd-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/openbsd-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/openharmony-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/sunos-x64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/win32-arm64': [ '0.27.0' ],
+1167 silly audit   '@esbuild/win32-ia32': [ '0.27.0' ],
+1167 silly audit   '@esbuild/win32-x64': [ '0.27.0' ],
+1167 silly audit   'p-finally': [ '2.0.1' ],
+1167 silly audit   jsonfile: [ '6.2.0' ],
+1167 silly audit   universalify: [ '2.0.1' ],
+1167 silly audit   pump: [ '3.0.4' ],
+1167 silly audit   'path-scurry': [ '2.0.2' ],
+1167 silly audit   argparse: [ '2.0.1' ],
+1167 silly audit   '@types/json-schema': [ '7.0.15' ],
+1167 silly audit   'ts-toolbelt': [ '6.15.5' ],
+1167 silly audit   '@isaacs/brace-expansion': [ '5.0.1' ],
+1167 silly audit   '@isaacs/balanced-match': [ '4.0.1' ],
+1167 silly audit   abbrev: [ '3.0.1' ],
+1167 silly audit   '@oxc-transform/binding-android-arm-eabi': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-android-arm64': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-darwin-arm64': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-darwin-x64': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-freebsd-x64': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-arm-gnueabihf': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-arm-musleabihf': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-arm64-gnu': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-arm64-musl': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-ppc64-gnu': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-riscv64-gnu': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-riscv64-musl': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-s390x-gnu': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-x64-gnu': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-linux-x64-musl': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-openharmony-arm64': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-wasm32-wasi': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-win32-arm64-msvc': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-win32-ia32-msvc': [ '0.111.0' ],
+1167 silly audit   '@oxc-transform/binding-win32-x64-msvc': [ '0.111.0' ],
+1167 silly audit   '@napi-rs/wasm-runtime': [ '1.1.1' ],
+1167 silly audit   '@emnapi/core': [ '1.8.1' ],
+1167 silly audit   '@emnapi/runtime': [ '1.8.1' ],
+1167 silly audit   '@tybys/wasm-util': [ '0.10.1' ],
+1167 silly audit   '@emnapi/wasi-threads': [ '1.1.0' ],
+1167 silly audit   'ohm-js': [ '17.5.0' ],
+1167 silly audit   'parse-ms': [ '2.1.0' ],
+1167 silly audit   '@oxc-project/types': [ '0.110.0' ],
+1167 silly audit   '@rolldown/binding-android-arm64': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-darwin-arm64': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-darwin-x64': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-freebsd-x64': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-linux-arm-gnueabihf': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-linux-arm64-gnu': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-linux-arm64-musl': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-linux-x64-gnu': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-linux-x64-musl': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-openharmony-arm64': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-wasm32-wasi': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-win32-arm64-msvc': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/binding-win32-x64-msvc': [ '1.0.0-rc.1' ],
+1167 silly audit   '@rolldown/pluginutils': [ '1.0.0-rc.1' ],
+1167 silly audit   'cookie-es': [ '2.0.0' ],
+1167 silly audit   'convert-hrtime': [ '3.0.0' ],
+1167 silly audit   '@ts-morph/common': [ '0.11.1' ],
+1167 silly audit   'code-block-writer': [ '10.1.1' ],
+1167 silly audit   'fast-glob': [ '3.3.3' ],
+1167 silly audit   mkdirp: [ '1.0.4' ],
+1167 silly audit   'path-browserify': [ '1.0.1' ],
+1167 silly audit   '@nodelib/fs.stat': [ '2.0.5' ],
+1167 silly audit   '@nodelib/fs.walk': [ '1.2.8' ],
+1167 silly audit   'glob-parent': [ '5.1.2' ],
+1167 silly audit   merge2: [ '1.4.1' ],
+1167 silly audit   micromatch: [ '4.0.8' ],
+1167 silly audit   '@nodelib/fs.scandir': [ '2.1.5' ],
+1167 silly audit   fastq: [ '1.20.1' ],
+1167 silly audit   'run-parallel': [ '1.2.0' ],
+1167 silly audit   reusify: [ '1.1.0' ],
+1167 silly audit   'is-glob': [ '4.0.3' ],
+1167 silly audit   'is-extglob': [ '2.1.1' ],
+1167 silly audit   braces: [ '3.0.3' ],
+1167 silly audit   'fill-range': [ '7.1.1' ],
+1167 silly audit   'to-regex-range': [ '5.0.1' ],
+1167 silly audit   'queue-microtask': [ '1.2.3' ],
+1167 silly audit   'is-number': [ '7.0.0' ],
+1167 silly audit   fsevents: [ '2.3.3' ],
+1167 silly audit   'get-tsconfig': [ '4.13.6' ],
+1167 silly audit   'resolve-pkg-maps': [ '1.0.0' ],
+1167 silly audit   punycode: [ '2.3.1' ],
+1167 silly audit   'brace-expansion': [ '1.1.12', '5.0.4' ],
+1167 silly audit   'balanced-match': [ '1.0.2', '4.0.4' ],
+1167 silly audit   'concat-map': [ '0.0.1' ],
+1167 silly audit   '@fastify/busboy': [ '2.1.1' ]
+1167 silly audit }
+1168 http cache vercel@https://registry.npmjs.org/vercel/-/vercel-50.31.1.tgz 0ms (cache hit)
+1169 http cache pip-requirements-js@https://registry.npmjs.org/pip-requirements-js/-/pip-requirements-js-1.0.3.tgz 0ms (cache hit)
+1170 http cache @vercel/static-config@https://registry.npmjs.org/@vercel/static-config/-/static-config-3.2.0.tgz 0ms (cache hit)
+1171 http cache @vercel/static-build@https://registry.npmjs.org/@vercel/static-build/-/static-build-2.9.0.tgz 0ms (cache hit)
+1172 http cache @vercel/remix-builder@https://registry.npmjs.org/@vercel/remix-builder/-/remix-builder-5.7.0.tgz 0ms (cache hit)
+1173 http cache @vercel/python-analysis@https://registry.npmjs.org/@vercel/python-analysis/-/python-analysis-0.9.1.tgz 0ms (cache hit)
+1174 http cache @vercel/redwood@https://registry.npmjs.org/@vercel/redwood/-/redwood-2.4.10.tgz 0ms (cache hit)
+1175 http cache @vercel/python@https://registry.npmjs.org/@vercel/python/-/python-6.22.0.tgz 0ms (cache hit)
+1176 http cache @vercel/node@https://registry.npmjs.org/@vercel/node/-/node-5.6.15.tgz 0ms (cache hit)
+1177 http cache @vercel/next@https://registry.npmjs.org/@vercel/next/-/next-4.16.1.tgz 0ms (cache hit)
+1178 http cache @vercel/koa@https://registry.npmjs.org/@vercel/koa/-/koa-0.1.31.tgz 0ms (cache hit)
+1179 http cache @vercel/hydrogen@https://registry.npmjs.org/@vercel/hydrogen/-/hydrogen-1.3.6.tgz 0ms (cache hit)
+1180 http cache @vercel/nestjs@https://registry.npmjs.org/@vercel/nestjs/-/nestjs-0.2.52.tgz 0ms (cache hit)
+1181 http cache @vercel/hono@https://registry.npmjs.org/@vercel/hono/-/hono-0.2.51.tgz 0ms (cache hit)
+1182 http cache @vercel/h3@https://registry.npmjs.org/@vercel/h3/-/h3-0.1.57.tgz 0ms (cache hit)
+1183 http cache @vercel/go@https://registry.npmjs.org/@vercel/go/-/go-3.4.4.tgz 0ms (cache hit)
+1184 http cache @vercel/fastify@https://registry.npmjs.org/@vercel/fastify/-/fastify-0.1.51.tgz 0ms (cache hit)
+1185 http cache @vercel/express@https://registry.npmjs.org/@vercel/express/-/express-0.1.57.tgz 0ms (cache hit)
+1186 http cache @vercel/gatsby-plugin-vercel-builder@https://registry.npmjs.org/@vercel/gatsby-plugin-vercel-builder/-/gatsby-plugin-vercel-builder-2.1.0.tgz 0ms (cache hit)
+1187 http cache @vercel/detect-agent@https://registry.npmjs.org/@vercel/detect-agent/-/detect-agent-1.2.0.tgz 0ms (cache hit)
+1188 http cache @vercel/elysia@https://registry.npmjs.org/@vercel/elysia/-/elysia-0.1.48.tgz 0ms (cache hit)
+1189 silly tarball no local data for vercel@https://registry.npmjs.org/vercel/-/vercel-50.31.1.tgz. Extracting by manifest.
+1190 silly tarball no local data for pip-requirements-js@https://registry.npmjs.org/pip-requirements-js/-/pip-requirements-js-1.0.3.tgz. Extracting by manifest.
+1191 silly tarball no local data for @vercel/static-config@https://registry.npmjs.org/@vercel/static-config/-/static-config-3.2.0.tgz. Extracting by manifest.
+1192 http cache @vercel/build-utils@https://registry.npmjs.org/@vercel/build-utils/-/build-utils-13.8.0.tgz 0ms (cache hit)
+1193 http cache @vercel/backends@https://registry.npmjs.org/@vercel/backends/-/backends-0.0.45.tgz 0ms (cache hit)
+1194 http cache @vercel/cervel@https://registry.npmjs.org/@vercel/cervel/-/cervel-0.0.32.tgz 0ms (cache hit)
+1195 silly tarball no local data for @vercel/static-build@https://registry.npmjs.org/@vercel/static-build/-/static-build-2.9.0.tgz. Extracting by manifest.
+1196 silly tarball no local data for @vercel/remix-builder@https://registry.npmjs.org/@vercel/remix-builder/-/remix-builder-5.7.0.tgz. Extracting by manifest.
+1197 silly tarball no local data for @vercel/python-analysis@https://registry.npmjs.org/@vercel/python-analysis/-/python-analysis-0.9.1.tgz. Extracting by manifest.
+1198 silly tarball no local data for @vercel/redwood@https://registry.npmjs.org/@vercel/redwood/-/redwood-2.4.10.tgz. Extracting by manifest.
+1199 silly tarball no local data for @vercel/python@https://registry.npmjs.org/@vercel/python/-/python-6.22.0.tgz. Extracting by manifest.
+1200 silly tarball no local data for @vercel/node@https://registry.npmjs.org/@vercel/node/-/node-5.6.15.tgz. Extracting by manifest.
+1201 silly tarball no local data for @vercel/next@https://registry.npmjs.org/@vercel/next/-/next-4.16.1.tgz. Extracting by manifest.
+1202 silly tarball no local data for @vercel/koa@https://registry.npmjs.org/@vercel/koa/-/koa-0.1.31.tgz. Extracting by manifest.
+1203 silly tarball no local data for @vercel/hydrogen@https://registry.npmjs.org/@vercel/hydrogen/-/hydrogen-1.3.6.tgz. Extracting by manifest.
+1204 silly tarball no local data for @vercel/nestjs@https://registry.npmjs.org/@vercel/nestjs/-/nestjs-0.2.52.tgz. Extracting by manifest.
+1205 silly tarball no local data for @vercel/hono@https://registry.npmjs.org/@vercel/hono/-/hono-0.2.51.tgz. Extracting by manifest.
+1206 silly tarball no local data for @vercel/h3@https://registry.npmjs.org/@vercel/h3/-/h3-0.1.57.tgz. Extracting by manifest.
+1207 silly tarball no local data for @vercel/go@https://registry.npmjs.org/@vercel/go/-/go-3.4.4.tgz. Extracting by manifest.
+1208 silly tarball no local data for @vercel/fastify@https://registry.npmjs.org/@vercel/fastify/-/fastify-0.1.51.tgz. Extracting by manifest.
+1209 silly tarball no local data for @vercel/express@https://registry.npmjs.org/@vercel/express/-/express-0.1.57.tgz. Extracting by manifest.
+1210 silly tarball no local data for @vercel/gatsby-plugin-vercel-builder@https://registry.npmjs.org/@vercel/gatsby-plugin-vercel-builder/-/gatsby-plugin-vercel-builder-2.1.0.tgz. Extracting by manifest.
+1211 silly tarball no local data for @vercel/detect-agent@https://registry.npmjs.org/@vercel/detect-agent/-/detect-agent-1.2.0.tgz. Extracting by manifest.
+1212 silly tarball no local data for @vercel/elysia@https://registry.npmjs.org/@vercel/elysia/-/elysia-0.1.48.tgz. Extracting by manifest.
+1213 silly tarball no local data for @vercel/build-utils@https://registry.npmjs.org/@vercel/build-utils/-/build-utils-13.8.0.tgz. Extracting by manifest.
+1214 silly tarball no local data for @vercel/backends@https://registry.npmjs.org/@vercel/backends/-/backends-0.0.45.tgz. Extracting by manifest.
+1215 silly tarball no local data for @vercel/cervel@https://registry.npmjs.org/@vercel/cervel/-/cervel-0.0.32.tgz. Extracting by manifest.
+1216 http fetch GET 200 https://registry.npmjs.org/pip-requirements-js/-/pip-requirements-js-1.0.3.tgz 91ms (cache miss)
+1217 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 256ms
+1218 silly audit report {
+1218 silly audit report   '@tootallnate/once': [
+1218 silly audit report     {
+1218 silly audit report       id: 1113977,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-vpq2-c234-7xj6',
+1218 silly audit report       title: '@tootallnate/once vulnerable to Incorrect Control Flow Scoping',
+1218 silly audit report       severity: 'low',
+1218 silly audit report       vulnerable_versions: '<3.0.1',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ],
+1218 silly audit report   'path-to-regexp': [
+1218 silly audit report     {
+1218 silly audit report       id: 1101846,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-9wv6-86v2-598j',
+1218 silly audit report       title: 'path-to-regexp outputs backtracking regular expressions',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '>=4.0.0 <6.3.0',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ],
+1218 silly audit report   undici: [
+1218 silly audit report     {
+1218 silly audit report       id: 1101610,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-c76h-2ccp-4975',
+1218 silly audit report       title: 'Use of Insufficiently Random Values in undici',
+1218 silly audit report       severity: 'moderate',
+1218 silly audit report       vulnerable_versions: '>=4.5.0 <5.28.5',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1112496,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-g9mf-h72j-4rw9',
+1218 silly audit report       title: 'Undici has an unbounded decompression chain in HTTP responses on Node.js Fetch API via Content-Encoding leads to resource exhaustion',
+1218 silly audit report       severity: 'moderate',
+1218 silly audit report       vulnerable_versions: '<6.23.0',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1113069,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-cxrh-j4jr-qwg3',
+1218 silly audit report       title: 'undici Denial of Service attack via bad certificate data',
+1218 silly audit report       severity: 'low',
+1218 silly audit report       vulnerable_versions: '<5.29.0',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ],
+1218 silly audit report   tar: [
+1218 silly audit report     {
+1218 silly audit report       id: 1113375,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-83g3-92jg-28cx',
+1218 silly audit report       title: 'Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '<7.5.8',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1114200,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-qffp-2rhf-9h96',
+1218 silly audit report       title: 'tar has Hardlink Path Traversal via Drive-Relative Linkpath',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '<=7.5.9',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1114302,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-9ppj-qmqm-q256',
+1218 silly audit report       title: 'node-tar Symlink Path Traversal via Drive-Relative Linkpath',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '<=7.5.10',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ],
+1218 silly audit report   minimatch: [
+1218 silly audit report     {
+1218 silly audit report       id: 1113466,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-3ppc-4f35-3m26',
+1218 silly audit report       title: 'minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '>=10.0.0 <10.2.1',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1113545,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-7r86-cg39-jmmj',
+1218 silly audit report       title: 'minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '>=10.0.0 <10.2.3',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     },
+1218 silly audit report     {
+1218 silly audit report       id: 1113553,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-23c5-xmqv-rm74',
+1218 silly audit report       title: 'minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions',
+1218 silly audit report       severity: 'high',
+1218 silly audit report       vulnerable_versions: '>=10.0.0 <10.2.3',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ],
+1218 silly audit report   ajv: [
+1218 silly audit report     {
+1218 silly audit report       id: 1113715,
+1218 silly audit report       url: 'https://github.com/advisories/GHSA-2g4f-4pwh-qvx6',
+1218 silly audit report       title: 'ajv has ReDoS when using `$data` option',
+1218 silly audit report       severity: 'moderate',
+1218 silly audit report       vulnerable_versions: '>=7.0.0-alpha.0 <8.18.0',
+1218 silly audit report       cwe: [Array],
+1218 silly audit report       cvss: [Object]
+1218 silly audit report     }
+1218 silly audit report   ]
+1218 silly audit report }
+1219 silly packumentCache corgi:https://registry.npmjs.org/@tootallnate%2fonce cache-miss
+1220 silly packumentCache corgi:https://registry.npmjs.org/path-to-regexp cache-miss
+1221 silly packumentCache corgi:https://registry.npmjs.org/undici cache-miss
+1222 silly packumentCache corgi:https://registry.npmjs.org/tar cache-miss
+1223 silly packumentCache corgi:https://registry.npmjs.org/minimatch cache-miss
+1224 silly packumentCache corgi:https://registry.npmjs.org/ajv cache-miss
+1225 http fetch GET 200 https://registry.npmjs.org/@vercel/static-config/-/static-config-3.2.0.tgz 272ms (cache miss)
+1226 http fetch GET 200 https://registry.npmjs.org/@vercel/h3/-/h3-0.1.57.tgz 279ms (cache miss)
+1227 http fetch GET 200 https://registry.npmjs.org/@vercel/hono/-/hono-0.2.51.tgz 300ms (cache miss)
+1228 http fetch GET 200 https://registry.npmjs.org/@vercel/next/-/next-4.16.1.tgz 309ms (cache miss)
+1229 http fetch GET 200 https://registry.npmjs.org/vercel/-/vercel-50.31.1.tgz 327ms (cache miss)
+1230 http fetch GET 200 https://registry.npmjs.org/@vercel/python-analysis/-/python-analysis-0.9.1.tgz 381ms (cache miss)
+1231 http fetch GET 200 https://registry.npmjs.org/@vercel/fastify/-/fastify-0.1.51.tgz 464ms (cache miss)
+1232 http fetch GET 200 https://registry.npmjs.org/@vercel/express/-/express-0.1.57.tgz 472ms (cache miss)
+1233 http fetch GET 200 https://registry.npmjs.org/@vercel/gatsby-plugin-vercel-builder/-/gatsby-plugin-vercel-builder-2.1.0.tgz 477ms (cache miss)
+1234 http fetch GET 200 https://registry.npmjs.org/path-to-regexp 257ms (cache revalidated)
+1235 silly packumentCache corgi:https://registry.npmjs.org/path-to-regexp set size:63416 disposed:false
+1236 http fetch GET 200 https://registry.npmjs.org/@vercel/detect-agent/-/detect-agent-1.2.0.tgz 512ms (cache miss)
+1237 http fetch GET 200 https://registry.npmjs.org/@vercel/python/-/python-6.22.0.tgz 534ms (cache miss)
+1238 http fetch GET 200 https://registry.npmjs.org/tar 295ms (cache revalidated)
+1239 silly packumentCache corgi:https://registry.npmjs.org/tar set size:197340 disposed:false
+1240 http fetch GET 200 https://registry.npmjs.org/@vercel/static-build/-/static-build-2.9.0.tgz 582ms (cache miss)
+1241 http fetch GET 200 https://registry.npmjs.org/@vercel/redwood/-/redwood-2.4.10.tgz 590ms (cache miss)
+1242 http fetch GET 200 https://registry.npmjs.org/@vercel/remix-builder/-/remix-builder-5.7.0.tgz 597ms (cache miss)
+1243 http fetch GET 200 https://registry.npmjs.org/minimatch 366ms (cache revalidated)
+1244 silly packumentCache corgi:https://registry.npmjs.org/minimatch set size:167610 disposed:false
+1245 http fetch GET 200 https://registry.npmjs.org/@vercel/elysia/-/elysia-0.1.48.tgz 610ms (cache miss)
+1246 http fetch GET 200 https://registry.npmjs.org/@vercel/koa/-/koa-0.1.31.tgz 636ms (cache miss)
+1247 http fetch GET 200 https://registry.npmjs.org/@vercel/nestjs/-/nestjs-0.2.52.tgz 637ms (cache miss)
+1248 http fetch GET 200 https://registry.npmjs.org/ajv 425ms (cache revalidated)
+1249 silly packumentCache corgi:https://registry.npmjs.org/ajv set size:464537 disposed:false
+1250 http fetch GET 200 https://registry.npmjs.org/@vercel/node/-/node-5.6.15.tgz 676ms (cache miss)
+1251 http fetch GET 200 https://registry.npmjs.org/@vercel/hydrogen/-/hydrogen-1.3.6.tgz 679ms (cache miss)
+1252 http fetch GET 200 https://registry.npmjs.org/@tootallnate%2fonce 462ms (cache revalidated)
+1253 silly packumentCache corgi:https://registry.npmjs.org/@tootallnate%2fonce set size:10818 disposed:false
+1254 http fetch GET 200 https://registry.npmjs.org/@vercel/cervel/-/cervel-0.0.32.tgz 701ms (cache miss)
+1255 http fetch GET 200 https://registry.npmjs.org/@vercel/build-utils/-/build-utils-13.8.0.tgz 731ms (cache miss)
+1256 http fetch GET 200 https://registry.npmjs.org/@vercel/backends/-/backends-0.0.45.tgz 735ms (cache miss)
+1257 http fetch GET 200 https://registry.npmjs.org/@vercel/go/-/go-3.4.4.tgz 784ms (cache miss)
+1258 http fetch GET 200 https://registry.npmjs.org/undici 689ms (cache revalidated)
+1259 silly packumentCache corgi:https://registry.npmjs.org/undici set size:409147 disposed:false
+1260 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2ffun cache-miss
+1261 http fetch GET 200 https://registry.npmjs.org/@vercel%2ffun 389ms (cache revalidated)
+1262 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2ffun set size:23528 disposed:false
+1263 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fnode cache-miss
+1264 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fremix-builder cache-miss
+1265 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnode 68ms (cache updated)
+1266 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fnode set size:undefined disposed:false
+1267 http fetch GET 200 https://registry.npmjs.org/@vercel%2fremix-builder 394ms (cache updated)
+1268 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fremix-builder set size:undefined disposed:false
+1269 silly packumentCache corgi:https://registry.npmjs.org/@mapbox%2fnode-pre-gyp cache-miss
+1270 http fetch GET 200 https://registry.npmjs.org/@mapbox%2fnode-pre-gyp 106ms (cache revalidated)
+1271 silly packumentCache corgi:https://registry.npmjs.org/@mapbox%2fnode-pre-gyp set size:47144 disposed:false
+1272 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fpython-analysis cache-miss
+1273 http fetch GET 200 https://registry.npmjs.org/@vercel%2fpython-analysis 692ms (cache updated)
+1274 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fpython-analysis set size:undefined disposed:false
+1275 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fstatic-config cache-miss
+1276 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-config 389ms (cache updated)
+1277 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fstatic-config set size:undefined disposed:false
+1278 silly packumentCache corgi:https://registry.npmjs.org/vercel cache-miss
+1279 http cache https://registry.npmjs.org/vercel 9ms (cache hit)
+1280 silly packumentCache corgi:https://registry.npmjs.org/vercel set size:3972516 disposed:false
+1281 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2felysia cache-miss
+1282 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fexpress cache-miss
+1283 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2ffastify cache-miss
+1284 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fh3 cache-miss
+1285 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fhono cache-miss
+1286 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fkoa cache-miss
+1287 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fnestjs cache-miss
+1288 http fetch GET 200 https://registry.npmjs.org/@vercel%2fh3 558ms (cache updated)
+1289 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fh3 set size:undefined disposed:false
+1290 http fetch GET 200 https://registry.npmjs.org/@vercel%2fnestjs 570ms (cache updated)
+1291 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fnestjs set size:undefined disposed:false
+1292 http fetch GET 200 https://registry.npmjs.org/@vercel%2felysia 847ms (cache updated)
+1293 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2felysia set size:undefined disposed:false
+1294 http fetch GET 200 https://registry.npmjs.org/@vercel%2fexpress 882ms (cache updated)
+1295 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fexpress set size:undefined disposed:false
+1296 http fetch GET 200 https://registry.npmjs.org/@vercel%2fhono 891ms (cache updated)
+1297 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fhono set size:undefined disposed:false
+1298 http fetch GET 200 https://registry.npmjs.org/@vercel%2ffastify 896ms (cache updated)
+1299 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2ffastify set size:undefined disposed:false
+1300 http fetch GET 200 https://registry.npmjs.org/@vercel%2fkoa 1185ms (cache updated)
+1301 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fkoa set size:undefined disposed:false
+1302 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fbuild-utils cache-miss
+1303 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fpython cache-miss
+1304 http fetch GET 200 https://registry.npmjs.org/@vercel%2fpython 370ms (cache updated)
+1305 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fpython set size:undefined disposed:false
+1306 http fetch GET 200 https://registry.npmjs.org/@vercel%2fbuild-utils 719ms (cache updated)
+1307 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fbuild-utils set size:undefined disposed:false
+1308 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fhydrogen cache-miss
+1309 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fredwood cache-miss
+1310 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fstatic-build cache-miss
+1311 http fetch GET 200 https://registry.npmjs.org/@vercel%2fredwood 392ms (cache updated)
+1312 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fredwood set size:undefined disposed:false
+1313 http fetch GET 200 https://registry.npmjs.org/@vercel%2fhydrogen 697ms (cache updated)
+1314 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fhydrogen set size:undefined disposed:false
+1315 http fetch GET 200 https://registry.npmjs.org/@vercel%2fstatic-build 761ms (cache updated)
+1316 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fstatic-build set size:undefined disposed:false
+1317 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fbackends cache-miss
+1318 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder cache-miss
+1319 http fetch GET 200 https://registry.npmjs.org/@vercel%2fbackends 822ms (cache updated)
+1320 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fbackends set size:undefined disposed:false
+1321 http fetch GET 200 https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder 1200ms (cache updated)
+1322 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fgatsby-plugin-vercel-builder set size:undefined disposed:false
+1323 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fcervel cache-miss
+1324 http fetch GET 200 https://registry.npmjs.org/@vercel%2fcervel 733ms (cache updated)
+1325 silly packumentCache corgi:https://registry.npmjs.org/@vercel%2fcervel set size:undefined disposed:false
+1326 verbose cwd C:\Users\caauc\barbas-cuts-web
+1327 verbose os Windows_NT 10.0.26200
+1328 verbose node v22.19.0
+1329 verbose npm  v11.6.2
+1330 verbose exit 0
+1331 info ok

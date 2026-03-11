@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -121,12 +121,12 @@ export default function AppointmentsScreen() {
   }
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6">
+    <main className="min-h-screen bg-barbas-black p-4 sm:p-6 overflow-x-hidden">
       <div className="max-w-md mx-auto">
         <header className="flex items-center mb-8 mt-2">
           <button
             onClick={() => router.push("/home")}
-            className="text-barbas-gold p-2 hover:bg-white/10 rounded-full mr-3 transition-colors"
+            className="text-barbas-gold w-11 h-11 flex items-center justify-center hover:bg-white/10 rounded-full mr-2 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +139,7 @@ export default function AppointmentsScreen() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
           </button>
-          <h1 className="text-2xl font-bold text-white">Mis Citas</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Mis Citas</h1>
         </header>
 
         {appointments.length === 0 ? (
@@ -163,8 +163,8 @@ export default function AppointmentsScreen() {
         ) : (
           <div className="flex flex-col gap-4">
             {appointments.map((app) => (
-              <div key={app.id} className="bg-barbas-dark border border-white/10 rounded-xl p-5 shadow-lg">
-                <div className="flex justify-between items-start mb-4">
+              <div key={app.id} className="bg-barbas-dark border border-white/10 rounded-xl p-4 sm:p-5 shadow-lg">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
                   <div>
                     <h2 className="text-white font-bold text-lg">{app.serviceName}</h2>
                     <p className="text-gray-400 text-sm">Con {app.barberName}</p>
@@ -174,7 +174,7 @@ export default function AppointmentsScreen() {
 
                 <hr className="border-white/5 mb-4" />
 
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
                   <div className="flex items-center text-gray-300">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +208,7 @@ export default function AppointmentsScreen() {
                 <button
                   onClick={() => void handleCancel(app)}
                   disabled={cancelingId === app.id}
-                  className="w-full border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white font-semibold py-2 rounded-lg transition-colors flex justify-center items-center disabled:opacity-50"
+                  className="w-full border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white font-semibold py-3 rounded-lg transition-colors flex justify-center items-center disabled:opacity-50 min-h-11"
                 >
                   {cancelingId === app.id ? <span className="animate-pulse">Cancelando...</span> : "Cancelar Cita"}
                 </button>
@@ -220,3 +220,4 @@ export default function AppointmentsScreen() {
     </main>
   );
 }
+

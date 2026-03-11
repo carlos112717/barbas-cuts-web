@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
@@ -133,31 +134,38 @@ export default function ProfileScreen() {
   }
 
   return (
-    <main className="min-h-screen bg-barbas-black p-6">
+    <main className="min-h-screen bg-barbas-black p-4 sm:p-6 overflow-x-hidden">
       <div className="max-w-md mx-auto">
-        <header className="flex items-center mb-10 mt-2">
-          <button onClick={() => router.push("/home")} className="text-barbas-gold p-2 hover:bg-white/10 rounded-full mr-3 transition-colors">
+        <header className="flex items-center mb-6 sm:mb-10 mt-2">
+          <button onClick={() => router.push("/home")} className="text-barbas-gold w-11 h-11 flex items-center justify-center hover:bg-white/10 rounded-full mr-2 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
           </button>
-          <h1 className="text-2xl font-bold text-white">Mi Perfil</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Mi Perfil</h1>
         </header>
 
         <div className="flex flex-col items-center mb-8 gap-3">
-          <div className="w-24 h-24 bg-barbas-dark border-2 border-barbas-gold rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+          <div className="w-24 h-24 bg-barbas-dark border-2 border-barbas-gold rounded-full flex items-center justify-center shadow-lg overflow-hidden relative">
             {photoURL ? (
-              <img src={photoURL} alt="Foto de perfil" className="w-full h-full object-cover" />
+              <Image
+                src={photoURL}
+                alt="Foto de perfil"
+                fill
+                sizes="96px"
+                unoptimized={photoURL.startsWith("blob:")}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-barbas-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             )}
           </div>
-          <input type="file" accept="image/*" onChange={handlePhotoChange} className="text-sm text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:bg-barbas-gold file:text-barbas-black file:font-semibold hover:file:bg-yellow-500" />
+          <input type="file" accept="image/*" onChange={handlePhotoChange} className="w-full text-xs sm:text-sm text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:bg-barbas-gold file:text-barbas-black file:font-semibold hover:file:bg-yellow-500" />
         </div>
 
-        <form onSubmit={handleUpdateProfile} className="bg-barbas-dark p-6 rounded-2xl border border-white/5 shadow-lg flex flex-col gap-5">
+        <form onSubmit={handleUpdateProfile} className="bg-barbas-dark p-4 sm:p-6 rounded-2xl border border-white/5 shadow-lg flex flex-col gap-5">
           <div>
             <label className="text-gray-400 text-sm mb-1 block">Nombre Completo</label>
             <input type="text" value={name} onChange={(event) => setName(event.target.value)} className="w-full bg-transparent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-barbas-gold transition-colors" required />
@@ -180,7 +188,7 @@ export default function ProfileScreen() {
             </div>
           )}
 
-          <button type="submit" disabled={isSaving} className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <button type="submit" disabled={isSaving} className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-11">
             {isSaving ? "GUARDANDO..." : "GUARDAR CAMBIOS"}
           </button>
         </form>
@@ -188,3 +196,4 @@ export default function ProfileScreen() {
     </main>
   );
 }
+

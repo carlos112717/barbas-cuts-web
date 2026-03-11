@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -72,8 +72,8 @@ export default function AuthScreen() {
   };
 
   return (
-    <main className="min-h-screen bg-barbas-black flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md bg-barbas-dark p-8 rounded-2xl shadow-xl border border-barbas-gold/20">
+    <main className="min-h-screen bg-barbas-black flex flex-col items-center justify-center p-4 sm:p-6 overflow-x-hidden">
+      <div className="w-full max-w-md bg-barbas-dark p-5 sm:p-8 rounded-2xl shadow-xl border border-barbas-gold/20">
         <div className="flex flex-col items-center mb-8">
           <div className="w-36 h-36 mb-4">
             <Image
@@ -144,7 +144,7 @@ export default function AuthScreen() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50"
+            className="w-full bg-barbas-gold text-barbas-black font-bold text-lg py-3 rounded-lg mt-2 hover:bg-yellow-500 transition-colors disabled:opacity-50 min-h-11"
           >
             {loading ? "Cargando..." : isLogin ? "INICIAR SESION" : "REGISTRARSE"}
           </button>
@@ -164,3 +164,4 @@ export default function AuthScreen() {
     </main>
   );
 }
+

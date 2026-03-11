@@ -15,10 +15,10 @@ import {
   did_you_mean_default,
   executeUpgrade,
   login
-} from "./chunks/chunk-R64JN33C.js";
+} from "./chunks/chunk-7KHMGQNF.js";
 import {
   getUpdateCommand
-} from "./chunks/chunk-XCJJHUSH.js";
+} from "./chunks/chunk-2MDXGVZV.js";
 import {
   Client,
   getAuthConfigFilePath,
@@ -27,20 +27,21 @@ import {
   readConfigFile,
   writeToAuthConfigFile,
   writeToConfigFile
-} from "./chunks/chunk-4WJOWTHI.js";
+} from "./chunks/chunk-AABYT6JI.js";
 import {
   highlight
 } from "./chunks/chunk-V5P25P7F.js";
 import {
   getScope
-} from "./chunks/chunk-NHGOGVX6.js";
+} from "./chunks/chunk-XIQUACWR.js";
 import {
   commandNames,
   commands
-} from "./chunks/chunk-4RS5Z362.js";
+} from "./chunks/chunk-677KLOZL.js";
 import "./chunks/chunk-U6XOC6E4.js";
 import "./chunks/chunk-O7I4ZOCC.js";
 import "./chunks/chunk-LW5ZNGW7.js";
+import "./chunks/chunk-P5Q6F5IA.js";
 import "./chunks/chunk-2DLBVZWU.js";
 import "./chunks/chunk-E65JE2CC.js";
 import {
@@ -48,19 +49,19 @@ import {
 } from "./chunks/chunk-IB5L4LKZ.js";
 import {
   require_dist as require_dist3
-} from "./chunks/chunk-Q7PNQO77.js";
+} from "./chunks/chunk-XGUZYJXE.js";
 import {
   require_lib as require_lib2
 } from "./chunks/chunk-QXRJ52T4.js";
 import {
   require_execa,
   require_isexe
-} from "./chunks/chunk-YHX5HRA5.js";
-import "./chunks/chunk-BSGCBDUW.js";
-import "./chunks/chunk-HN6HFP24.js";
-import "./chunks/chunk-DTOQNQUH.js";
-import "./chunks/chunk-5QC74A5F.js";
-import "./chunks/chunk-UZO6X2EJ.js";
+} from "./chunks/chunk-CUUJWNAY.js";
+import "./chunks/chunk-F2FJ3QZG.js";
+import "./chunks/chunk-VKQV2LPP.js";
+import "./chunks/chunk-NN6I6YMJ.js";
+import "./chunks/chunk-43L4BNYM.js";
+import "./chunks/chunk-DOBFJJLK.js";
 import {
   getTeams,
   getUser,
@@ -70,14 +71,15 @@ import {
   readJSONFile,
   require_lib,
   require_xdg_app_paths
-} from "./chunks/chunk-D6EWLYB6.js";
+} from "./chunks/chunk-4MTNDNUR.js";
 import {
   TelemetryClient,
   TelemetryEventStore
 } from "./chunks/chunk-XB2KZC2B.js";
-import "./chunks/chunk-CO5D46AG.js";
+import "./chunks/chunk-SOTR4CXR.js";
 import "./chunks/chunk-LWBSOTJP.js";
 import "./chunks/chunk-7EHTK7LP.js";
+import "./chunks/chunk-GGP5R3FU.js";
 import {
   APIError,
   CantFindConfig,
@@ -22964,6 +22966,12 @@ var RootTelemetryClient = class extends TelemetryClient {
       value: actual
     });
   }
+  trackCliCommandAlerts(actual) {
+    this.trackCliCommand({
+      command: "alerts",
+      value: actual
+    });
+  }
   trackCliCommandApi(actual) {
     this.trackCliCommand({
       command: "api",
@@ -23009,6 +23017,12 @@ var RootTelemetryClient = class extends TelemetryClient {
   trackCliCommandContract(actual) {
     this.trackCliCommand({
       command: "contract",
+      value: actual
+    });
+  }
+  trackCliCommandCrons(actual) {
+    this.trackCliCommand({
+      command: "crons",
       value: actual
     });
   }
@@ -23207,6 +23221,12 @@ var RootTelemetryClient = class extends TelemetryClient {
   trackCliCommandRemove(actual) {
     this.trackCliCommand({
       command: "remove",
+      value: actual
+    });
+  }
+  trackCliCommandSkills(actual) {
+    this.trackCliCommand({
+      command: "skills",
       value: actual
     });
   }
@@ -23507,7 +23527,7 @@ var main = async () => {
   }
   const targetOrSubcommand = parsedArgs.args[2];
   const subSubCommand = parsedArgs.args[3];
-  const betaCommands = ["api", "curl", "webhooks"];
+  const betaCommands = ["api", "crons", "curl", "webhooks"];
   const msg = betaCommands.includes(targetOrSubcommand) ? `${getTitleName()} CLI ${pkg_default.version} | ${targetOrSubcommand} is in beta \u2014 https://vercel.com/feedback` : `${getTitleName()} CLI ${pkg_default.version}`;
   if (process.env.VERCEL === "1") {
     output_manager_default.print(`${msg}
@@ -23697,7 +23717,8 @@ var main = async () => {
     "init",
     "build",
     "telemetry",
-    "upgrade"
+    "upgrade",
+    "skills"
   ];
   if (process.env.FF_GUIDANCE_MODE) {
     subcommandsWithoutToken.push("guidance");
@@ -23902,6 +23923,15 @@ var main = async () => {
           telemetry.trackCliCommandActivity(userSuppliedSubCommand);
           func = (await import("./commands-bulk.js")).activity;
           break;
+        case "alerts":
+          if (process.env.FF_ALERTS) {
+            telemetry.trackCliCommandAlerts(userSuppliedSubCommand);
+            func = (await import("./commands-bulk.js")).alerts;
+            break;
+          } else {
+            func = null;
+            break;
+          }
         case "api":
           telemetry.trackCliCommandApi(userSuppliedSubCommand);
           func = (await import("./commands-bulk.js")).api;
@@ -23933,6 +23963,11 @@ var main = async () => {
         case "certs":
           telemetry.trackCliCommandCerts(userSuppliedSubCommand);
           func = (await import("./commands-bulk.js")).certs;
+          break;
+        case "crons":
+        case "cron":
+          telemetry.trackCliCommandCrons(userSuppliedSubCommand);
+          func = (await import("./commands-bulk.js")).crons;
           break;
         case "curl":
           telemetry.trackCliCommandCurl(userSuppliedSubCommand);
@@ -24054,6 +24089,10 @@ var main = async () => {
         case "rolling-release":
           telemetry.trackCliCommandRollingRelease(userSuppliedSubCommand);
           func = (await import("./commands-bulk.js")).rollingRelease;
+          break;
+        case "skills":
+          telemetry.trackCliCommandSkills(userSuppliedSubCommand);
+          func = (await import("./commands-bulk.js")).skills;
           break;
         case "target":
           telemetry.trackCliCommandTarget(userSuppliedSubCommand);

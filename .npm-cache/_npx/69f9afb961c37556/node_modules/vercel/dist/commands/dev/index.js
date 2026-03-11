@@ -9,7 +9,7 @@ import {
 } from "../../chunks/chunk-2HSQ7YUK.js";
 import {
   getUpdateCommand
-} from "../../chunks/chunk-XCJJHUSH.js";
+} from "../../chunks/chunk-2MDXGVZV.js";
 import {
   highlight
 } from "../../chunks/chunk-V5P25P7F.js";
@@ -26,33 +26,33 @@ import {
   require_npa,
   staticFiles,
   validateConfig
-} from "../../chunks/chunk-E6ZQVOZ6.js";
+} from "../../chunks/chunk-4QETQOUQ.js";
 import "../../chunks/chunk-IB5L4LKZ.js";
 import {
   pickOverrides
-} from "../../chunks/chunk-SIXBAQRA.js";
+} from "../../chunks/chunk-IGWOW3XS.js";
 import {
   require_dist as require_dist2
-} from "../../chunks/chunk-Q7PNQO77.js";
+} from "../../chunks/chunk-XGUZYJXE.js";
 import {
   require_lib as require_lib2
 } from "../../chunks/chunk-QXRJ52T4.js";
-import "../../chunks/chunk-YHX5HRA5.js";
-import "../../chunks/chunk-BSGCBDUW.js";
+import "../../chunks/chunk-CUUJWNAY.js";
+import "../../chunks/chunk-F2FJ3QZG.js";
 import {
   displayDetectedServices,
   readConfig,
   setupAndLink
-} from "../../chunks/chunk-OAI7OWE5.js";
+} from "../../chunks/chunk-HXZPHN34.js";
 import {
   getLocalPathConfig
-} from "../../chunks/chunk-HN6HFP24.js";
+} from "../../chunks/chunk-VKQV2LPP.js";
 import {
   require_main
-} from "../../chunks/chunk-DTOQNQUH.js";
+} from "../../chunks/chunk-NN6I6YMJ.js";
 import {
   help
-} from "../../chunks/chunk-UZO6X2EJ.js";
+} from "../../chunks/chunk-DOBFJJLK.js";
 import {
   VERCEL_DIR,
   buildCommandWithYes,
@@ -73,17 +73,18 @@ import {
   require_minimatch2 as require_minimatch,
   resolveProjectCwd,
   tryDetectServices
-} from "../../chunks/chunk-D6EWLYB6.js";
+} from "../../chunks/chunk-4MTNDNUR.js";
 import {
   TelemetryClient
 } from "../../chunks/chunk-XB2KZC2B.js";
-import {
-  require_ms
-} from "../../chunks/chunk-CO5D46AG.js";
+import "../../chunks/chunk-SOTR4CXR.js";
 import "../../chunks/chunk-LWBSOTJP.js";
 import {
   require_pluralize
 } from "../../chunks/chunk-7EHTK7LP.js";
+import {
+  require_ms
+} from "../../chunks/chunk-GGP5R3FU.js";
 import {
   CantParseJSONFile,
   LambdaSizeExceededError,
@@ -19141,7 +19142,7 @@ Please ensure that ${cmd(err.path)} is properly installed`;
     return void 0;
   }
   async _getVercelConfig() {
-    const { compileVercelConfig } = await import("../../chunks/compile-vercel-config-D3Y7XB5H.js");
+    const { compileVercelConfig } = await import("../../chunks/compile-vercel-config-VEZ3PRGB.js");
     await compileVercelConfig(this.cwd);
     const configPath = getLocalPathConfig(this.cwd);
     const [
@@ -19170,15 +19171,7 @@ Please ensure that ${cmd(err.path)} is properly installed`;
       const files = (await staticFiles(this.cwd, {})).map(
         (f) => relative2(this.cwd, f)
       );
-      let {
-        builders,
-        warnings,
-        errors,
-        defaultRoutes,
-        redirectRoutes,
-        rewriteRoutes,
-        errorRoutes
-      } = await (0, import_fs_detectors3.detectBuilders)(files, pkg, {
+      const detectedBuilders = await (0, import_fs_detectors3.detectBuilders)(files, pkg, {
         tag: "latest",
         functions: vercelConfig.functions,
         projectSettings: projectSettings || this.projectSettings,
@@ -19187,6 +19180,16 @@ Please ensure that ${cmd(err.path)} is properly installed`;
         trailingSlash,
         workPath: this.cwd
       });
+      let {
+        builders,
+        warnings,
+        errors,
+        defaultRoutes,
+        redirectRoutes,
+        rewriteRoutes,
+        errorRoutes
+      } = detectedBuilders;
+      const hostRewriteRoutes = detectedBuilders.hostRewriteRoutes;
       if (errors) {
         output_manager_default.error(errors[0].message);
         await this.exit();
@@ -19206,6 +19209,11 @@ Please ensure that ${cmd(err.path)} is properly installed`;
       }
       let routes = [];
       routes.push(...redirectRoutes || []);
+      routes = (0, import_routing_utils3.appendRoutesToPhase)({
+        routes,
+        newRoutes: hostRewriteRoutes ?? null,
+        phase: null
+      });
       routes.push(
         ...(0, import_routing_utils3.appendRoutesToPhase)({
           routes: vercelConfig.routes,
