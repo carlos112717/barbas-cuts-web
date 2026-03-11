@@ -55,6 +55,15 @@ interface ClosureDay {
   blockedTimes: string[];
 }
 
+interface AvailabilitySlot {
+  slot: string;
+  blockedByClosure: boolean;
+  isPast: boolean;
+  occupiedCount: number;
+  freeCount: number;
+  isUnavailable: boolean;
+}
+
 const hourOptions = Array.from({ length: 18 }, (_, index) => index + 6);
 
 const getToday = () => {
@@ -104,6 +113,11 @@ export default function AdminDashboard() {
   const [closureDate, setClosureDate] = useState(getToday());
   const [closureClosedAllDay, setClosureClosedAllDay] = useState(false);
   const [closureBlockedTimes, setClosureBlockedTimes] = useState<string[]>([]);
+  const [availabilityDate, setAvailabilityDate] = useState(getToday());
+  const [availabilityBarberId, setAvailabilityBarberId] = useState("all");
+  const [availabilitySlots, setAvailabilitySlots] = useState<AvailabilitySlot[]>([]);
+  const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [availabilityRefreshKey, setAvailabilityRefreshKey] = useState(0);
 
   const [isSaving, setIsSaving] = useState(false);
 
@@ -111,6 +125,14 @@ export default function AdminDashboard() {
   const activeServices = useMemo(() => services.filter((item) => item.active), [services]);
   const manualSlots = useMemo(() => buildTimeSlots({ ...businessHours, slotMinutes: 60 }), [businessHours]);
   const allAppointmentsSelected = appointments.length > 0 && selectedAppointmentIds.length === appointments.length;
+  const availabilitySummary = useMemo(() => {
+    const available = availabilitySlots.filter((entry) => !entry.isUnavailable).length;
+    return {
+      total: availabilitySlots.length,
+      available,
+      unavailable: availabilitySlots.length - available,
+    };
+  }, [availabilitySlots]);
   const closuresByDate = useMemo(() => {
     const map = new Map<string, ClosureDay>();
     closures.forEach((closure) => map.set(closure.date, closure));
@@ -263,6 +285,13 @@ export default function AdminDashboard() {
   }, [isModalOpen, activeBarbers, activeServices, newBarberId, newServiceId, newTime, manualSlots]);
 
   useEffect(() => {
+    if (availabilityBarberId === "all") return;
+    if (!activeBarbers.some((barber) => barber.id === availabilityBarberId)) {
+      setAvailabilityBarberId("all");
+    }
+  }, [availabilityBarberId, activeBarbers]);
+
+  useEffect(() => {
     const closure = closuresByDate.get(closureDate);
     if (!closure) {
       setClosureClosedAllDay(false);
@@ -306,6 +335,105 @@ export default function AdminDashboard() {
     };
   }, [getBlockedTimesForDate, isModalOpen, newDate, newBarberId, manualSlots]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    const run = async () => {
+      if (!availabilityDate || manualSlots.length === 0) {
+        setAvailabilitySlots([]);
+        return;
+      }
+
+      setLoadingAvailability(true);
+      try {
+        const blockedByClosure = getBlockedTimesForDate(availabilityDate, manualSlots);
+        const now = new Date();
+        const isToday = availabilityDate === getToday();
+
+        if (availabilityBarberId === "all") {
+          const activeBarberIds = activeBarbers.map((barber) => barber.id);
+          const occupiedByBarber = await Promise.all(
+            activeBarberIds.map((barberId) => getBookedTimesForBarber(db, availabilityDate, barberId))
+          );
+
+          const nextSlots = manualSlots.map((slot) => {
+            const [hour, minute] = slot.split(":").map((value) => Number(value));
+            const slotDate = new Date(availabilityDate);
+            slotDate.setHours(hour, minute, 0, 0);
+
+            let occupiedCount = 0;
+            occupiedByBarber.forEach((occupiedSet) => {
+              if (occupiedSet.has(slot)) occupiedCount += 1;
+            });
+
+            const freeCount = Math.max(activeBarberIds.length - occupiedCount, 0);
+            const isPast = isToday && slotDate.getTime() <= now.getTime();
+            const blocked = blockedByClosure.has(slot);
+            const isUnavailable = blocked || isPast || freeCount === 0;
+
+            return {
+              slot,
+              blockedByClosure: blocked,
+              isPast,
+              occupiedCount,
+              freeCount,
+              isUnavailable,
+            };
+          });
+
+          if (!mounted) return;
+          setAvailabilitySlots(nextSlots);
+          return;
+        }
+
+        const occupied = await getBookedTimesForBarber(db, availabilityDate, availabilityBarberId);
+        if (!mounted) return;
+
+        const nextSlots = manualSlots.map((slot) => {
+          const [hour, minute] = slot.split(":").map((value) => Number(value));
+          const slotDate = new Date(availabilityDate);
+          slotDate.setHours(hour, minute, 0, 0);
+
+          const booked = occupied.has(slot);
+          const isPast = isToday && slotDate.getTime() <= now.getTime();
+          const blocked = blockedByClosure.has(slot);
+          const freeCount = booked ? 0 : 1;
+
+          return {
+            slot,
+            blockedByClosure: blocked,
+            isPast,
+            occupiedCount: booked ? 1 : 0,
+            freeCount,
+            isUnavailable: blocked || isPast || booked,
+          };
+        });
+
+        setAvailabilitySlots(nextSlots);
+      } catch (error) {
+        if (!mounted) return;
+        console.error("Error loading admin availability:", error);
+        setAvailabilitySlots([]);
+      } finally {
+        if (mounted) {
+          setLoadingAvailability(false);
+        }
+      }
+    };
+
+    void run();
+    return () => {
+      mounted = false;
+    };
+  }, [
+    activeBarbers,
+    availabilityBarberId,
+    availabilityDate,
+    availabilityRefreshKey,
+    getBlockedTimesForDate,
+    manualSlots,
+  ]);
+
   const notifyCancellationByEmail = async (appointment: Appointment) => {
     try {
       await queueAppointmentCancellationEmail(db, {
@@ -334,6 +462,7 @@ export default function AdminDashboard() {
     await notifyCancellationByEmail(item);
     setAppointments((prev) => prev.filter((entry) => entry.id !== item.id));
     setSelectedAppointmentIds((prev) => prev.filter((id) => id !== item.id));
+    setAvailabilityRefreshKey((prev) => prev + 1);
   };
 
   const handleDeleteSelectedAppointments = async () => {
@@ -356,6 +485,7 @@ export default function AdminDashboard() {
 
       setAppointments((prev) => prev.filter((appointment) => !selectedAppointmentIds.includes(appointment.id)));
       setSelectedAppointmentIds([]);
+      setAvailabilityRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error("Error deleting selected appointments:", error);
       alert("No se pudieron eliminar todas las citas seleccionadas.");
@@ -419,6 +549,7 @@ export default function AdminDashboard() {
       setNewCustomerName("");
       setNewDate("");
       setIsModalOpen(false);
+      setAvailabilityRefreshKey((prev) => prev + 1);
     } catch (error) {
       if (error instanceof Error && error.message === "SLOT_TAKEN") {
         alert("Ese horario ya esta ocupado.");
@@ -660,6 +791,97 @@ export default function AdminDashboard() {
             ))}
             {appointments.length === 0 && <p className="text-gray-400">No hay citas.</p>}
           </div>
+        </section>
+
+        <section className="bg-barbas-dark p-4 rounded-xl border border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+            <h2 className="text-xl font-bold">Disponibilidad para llamadas</h2>
+            <button
+              onClick={() => setAvailabilityRefreshKey((prev) => prev + 1)}
+              className="px-3 py-2 border border-white/20 rounded-lg text-sm text-gray-200 w-full sm:w-auto min-h-11"
+            >
+              Actualizar
+            </button>
+          </div>
+          <p className="text-sm text-gray-400 mb-3">
+            Consulta al instante si una fecha y hora estan libres para agendar manualmente.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 mb-3">
+            <input
+              type="date"
+              value={availabilityDate}
+              min={getToday()}
+              onChange={(event) => setAvailabilityDate(event.target.value)}
+              className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2 scheme-dark"
+            />
+            <select
+              value={availabilityBarberId}
+              onChange={(event) => setAvailabilityBarberId(event.target.value)}
+              className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2"
+            >
+              <option value="all">Todos los barberos</option>
+              {activeBarbers.map((barber) => (
+                <option key={barber.id} value={barber.id}>
+                  {barber.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 text-xs text-gray-300 mb-3">
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded border border-barbas-gold"></span>
+              Disponible
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded bg-barbas-gold border border-barbas-gold"></span>
+              No disponible
+            </span>
+            <span className="text-gray-400">
+              Disponibles: {availabilitySummary.available} / {availabilitySummary.total}
+            </span>
+          </div>
+
+          {availabilityDate && closuresByDate.get(availabilityDate)?.closedAllDay && (
+            <p className="text-red-300 text-sm mb-3 border border-red-500/30 p-2 rounded-lg bg-red-950/20">
+              La barberia esta marcada como cerrada todo el dia.
+            </p>
+          )}
+
+          {loadingAvailability && <p className="text-gray-400 text-sm mb-3">Cargando disponibilidad...</p>}
+
+          {!loadingAvailability && availabilitySlots.length === 0 && (
+            <p className="text-gray-400 text-sm">No hay horarios para mostrar.</p>
+          )}
+
+          {!loadingAvailability && availabilitySlots.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+              {availabilitySlots.map((entry) => (
+                <div
+                  key={entry.slot}
+                  className={`rounded-lg border p-2 text-center ${
+                    entry.isUnavailable
+                      ? "bg-barbas-gold text-barbas-black border-barbas-gold"
+                      : "bg-transparent text-barbas-gold border-barbas-gold"
+                  }`}
+                >
+                  <p className="font-bold text-sm">{entry.slot}</p>
+                  <p className="text-[10px] leading-tight">
+                    {entry.blockedByClosure
+                      ? "Bloqueado"
+                      : entry.isPast
+                        ? "Hora pasada"
+                        : availabilityBarberId === "all"
+                          ? `${entry.freeCount} libre(s)`
+                          : entry.isUnavailable
+                            ? "Ocupado"
+                            : "Libre"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="grid md:grid-cols-2 gap-4">
