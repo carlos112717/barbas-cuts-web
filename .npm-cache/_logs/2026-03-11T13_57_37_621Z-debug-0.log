@@ -5,14 +5,14 @@
 4 silly config load:file:C:\Users\caauc\barbas-cuts-web\.npmrc
 5 silly config load:file:C:\Users\caauc\.npmrc
 6 silly config load:file:C:\Users\caauc\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm exec vercel env ls
-8 verbose argv "exec" "--" "vercel" "env" "ls"
-9 verbose logfile logs-max:10 dir:c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_54_07_464Z-
-10 verbose logfile c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_54_07_464Z-debug-0.log
+7 verbose title npm exec vercel --prod --yes
+8 verbose argv "exec" "--" "vercel" "--prod" "--yes"
+9 verbose logfile logs-max:10 dir:c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T13_57_37_621Z-
+10 verbose logfile c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T13_57_37_621Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
 13 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
-14 http fetch GET 200 https://registry.npmjs.org/vercel 692ms (cache revalidated)
+14 http fetch GET 200 https://registry.npmjs.org/vercel 165ms (cache revalidated)
 15 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 16 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 17 verbose cwd C:\Users\caauc\barbas-cuts-web

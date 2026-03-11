@@ -103,30 +103,43 @@ export const createAppointmentWithLock = async (db: Firestore, appointment: Appo
 };
 
 export const getBookedTimesForBarber = async (db: Firestore, date: string, barberId: string) => {
-  const [locksSnapshot, appointmentsSnapshot] = await Promise.all([
-    getDocs(query(collection(db, "appointmentLocks"), where("date", "==", date))),
-    getDocs(query(collection(db, "appointments"), where("date", "==", date))),
-  ]);
   const occupied = new Set<string>();
+  const locksSnapshot = await getDocs(
+    query(
+      collection(db, "appointmentLocks"),
+      where("date", "==", date),
+      where("barberId", "==", barberId)
+    )
+  );
 
   locksSnapshot.forEach((lockDoc) => {
     const data = lockDoc.data();
-    if (data.barberId === barberId && typeof data.time === "string" && data.time) {
+    if (typeof data.time === "string" && data.time) {
       occupied.add(data.time);
     }
   });
 
-  appointmentsSnapshot.forEach((appointmentDoc) => {
-    const data = appointmentDoc.data();
-    if (
-      data.barberId === barberId &&
-      typeof data.time === "string" &&
-      data.time &&
-      isActiveAppointmentStatus(data.status)
-    ) {
-      occupied.add(data.time);
-    }
-  });
+  // Intento de respaldo para entornos con datos legacy sin lock.
+  // Si el cliente no tiene permiso de lectura de "appointments",
+  // seguimos funcionando con "appointmentLocks".
+  try {
+    const appointmentsSnapshot = await getDocs(
+      query(
+        collection(db, "appointments"),
+        where("date", "==", date),
+        where("barberId", "==", barberId)
+      )
+    );
+
+    appointmentsSnapshot.forEach((appointmentDoc) => {
+      const data = appointmentDoc.data();
+      if (typeof data.time === "string" && data.time && isActiveAppointmentStatus(data.status)) {
+        occupied.add(data.time);
+      }
+    });
+  } catch {
+    // No-op intencional: para clientes puede ser esperado por reglas.
+  }
 
   return occupied;
 };

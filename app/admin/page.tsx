@@ -88,6 +88,7 @@ export default function AdminDashboard() {
 
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminName, setAdminName] = useState("Administrador");
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [barbers, setBarbers] = useState<Barber[]>([]);
@@ -262,6 +263,11 @@ export default function AdminDashboard() {
           router.push("/home");
           setLoading(false);
           return;
+        }
+
+        const userData = userDoc.data();
+        if (typeof userData.name === "string" && userData.name.trim()) {
+          setAdminName(userData.name.trim());
         }
 
         setIsAdmin(true);
@@ -710,9 +716,13 @@ export default function AdminDashboard() {
     <main className="min-h-screen bg-barbas-black p-3 sm:p-6 text-white overflow-x-hidden">
       <div className="max-w-6xl mx-auto space-y-6">
         <header className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center border-b border-white/10 pb-4">
-          <h1 className="text-2xl sm:text-3xl font-bold">Administrador</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Administrador</h1>
+            <p className="text-sm text-gray-400 mt-1">Sesion: {adminName}</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full sm:w-auto">
             <button onClick={() => setIsModalOpen(true)} className="bg-barbas-gold text-barbas-black px-3 py-2 rounded-lg font-bold min-h-11">Nueva cita</button>
+            <button onClick={() => router.push("/profile")} className="bg-white/10 text-gray-100 px-3 py-2 rounded-lg min-h-11">Mi perfil</button>
             <button onClick={async () => { await signOut(auth); router.push("/"); }} className="bg-red-500/20 text-red-400 px-3 py-2 rounded-lg min-h-11">Cerrar sesion</button>
           </div>
         </header>

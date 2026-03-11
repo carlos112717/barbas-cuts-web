@@ -5,19 +5,19 @@
 4 silly config load:file:C:\Users\caauc\barbas-cuts-web\.npmrc
 5 silly config load:file:C:\Users\caauc\.npmrc
 6 silly config load:file:C:\Users\caauc\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm exec vercel logs barbas-cuts-web.vercel.app --since 1h
-8 verbose argv "exec" "--" "vercel" "logs" "barbas-cuts-web.vercel.app" "--since" "1h"
-9 verbose logfile logs-max:10 dir:c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_54_07_973Z-
-10 verbose logfile c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T05_54_07_973Z-debug-0.log
-11 silly logfile start cleaning logs, removing 2 files
+7 verbose title npm exec vercel logs --environment production --since 30m --no-follow --limit 120
+8 verbose argv "exec" "--" "vercel" "logs" "--environment" "production" "--since" "30m" "--no-follow" "--limit" "120"
+9 verbose logfile logs-max:10 dir:c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T14_00_33_689Z-
+10 verbose logfile c:\Users\caauc\barbas-cuts-web\.npm-cache\_logs\2026-03-11T14_00_33_689Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
 13 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
-14 http fetch GET 200 https://registry.npmjs.org/vercel 696ms (cache revalidated)
+14 http fetch GET 200 https://registry.npmjs.org/vercel 198ms (cache revalidated)
 15 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 16 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 17 verbose cwd C:\Users\caauc\barbas-cuts-web
 18 verbose os Windows_NT 10.0.26200
 19 verbose node v22.19.0
 20 verbose npm  v11.6.2
-21 verbose exit 1
-22 verbose code 1
+21 verbose exit 0
+22 info ok

@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   title: "Barbas Cut's",
   description: "Reserva tu cita en Barbas Cut's",
   icons: {
-    icon: "/LOGO_BARBER.png",
-    shortcut: "/LOGO_BARBER.png",
-    apple: "/LOGO_BARBER.png",
+    icon: "/icon.png?v=2",
+    shortcut: "/icon.png?v=2",
+    apple: "/apple-icon.png?v=2",
   },
 };
 
