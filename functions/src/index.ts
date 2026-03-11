@@ -1,9 +1,21 @@
 import * as admin from "firebase-admin";
+import { setGlobalOptions } from "firebase-functions/v2/options";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { buildReminderEmail } from "./emailTemplates.js";
 
 admin.initializeApp();
 const db = admin.firestore();
+const DEFAULT_SERVICE_ACCOUNT = "560366801052-compute@developer.gserviceaccount.com";
+const serviceAccount =
+  typeof process.env.FUNCTIONS_SERVICE_ACCOUNT === "string" &&
+  process.env.FUNCTIONS_SERVICE_ACCOUNT.trim()
+    ? process.env.FUNCTIONS_SERVICE_ACCOUNT.trim()
+    : DEFAULT_SERVICE_ACCOUNT;
+
+setGlobalOptions({
+  region: "us-central1",
+  serviceAccount,
+});
 
 const isValidEmail = (email: unknown) => {
   if (typeof email !== "string") return false;
