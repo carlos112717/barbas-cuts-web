@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Barbas Cut's",
   description: "Reserva tu cita en Barbas Cut's",
+  icons: {
+    icon: "/LOGO_BARBER.png",
+    shortcut: "/LOGO_BARBER.png",
+    apple: "/LOGO_BARBER.png",
+  },
 };
 
 export default function RootLayout({
