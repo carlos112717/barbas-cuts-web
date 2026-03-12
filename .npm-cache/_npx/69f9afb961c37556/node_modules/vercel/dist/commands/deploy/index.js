@@ -13,10 +13,10 @@ import {
   purchaseDomainIfAvailable,
   require_cjs,
   setupDomain
-} from "../../chunks/chunk-GMKRSAXH.js";
+} from "../../chunks/chunk-P5QFJHJZ.js";
 import {
   readLocalConfig
-} from "../../chunks/chunk-AABYT6JI.js";
+} from "../../chunks/chunk-UA5FZ6JU.js";
 import {
   highlight
 } from "../../chunks/chunk-V5P25P7F.js";
@@ -28,7 +28,7 @@ import {
   getDeployment,
   mapCertError
 } from "../../chunks/chunk-2IQTNMUG.js";
-import "../../chunks/chunk-XIQUACWR.js";
+import "../../chunks/chunk-DGG3YKA2.js";
 import {
   validateJsonOutput
 } from "../../chunks/chunk-XPKWKPWA.js";
@@ -41,7 +41,7 @@ import {
   deprecatedArchiveSplitTgz,
   getCommandAliases,
   initSubcommand
-} from "../../chunks/chunk-677KLOZL.js";
+} from "../../chunks/chunk-YWFGPAMJ.js";
 import "../../chunks/chunk-U6XOC6E4.js";
 import "../../chunks/chunk-O7I4ZOCC.js";
 import "../../chunks/chunk-LW5ZNGW7.js";
@@ -50,24 +50,24 @@ import "../../chunks/chunk-2DLBVZWU.js";
 import "../../chunks/chunk-E65JE2CC.js";
 import {
   pickOverrides
-} from "../../chunks/chunk-IGWOW3XS.js";
+} from "../../chunks/chunk-JIS3P4GY.js";
 import {
   require_dist as require_dist2
-} from "../../chunks/chunk-XGUZYJXE.js";
+} from "../../chunks/chunk-IUO3OCIL.js";
 import "../../chunks/chunk-QXRJ52T4.js";
-import "../../chunks/chunk-F2FJ3QZG.js";
+import "../../chunks/chunk-UPP3OQY4.js";
 import {
   ensureLink
-} from "../../chunks/chunk-LF56WF3E.js";
+} from "../../chunks/chunk-QE7MP4UA.js";
 import {
   validatePaths,
   validateRootDirectory
-} from "../../chunks/chunk-HXZPHN34.js";
-import "../../chunks/chunk-VKQV2LPP.js";
+} from "../../chunks/chunk-CJ3LGMHG.js";
+import "../../chunks/chunk-ZYNFSRAX.js";
 import {
   compileVercelConfig
-} from "../../chunks/chunk-NN6I6YMJ.js";
-import "../../chunks/chunk-43L4BNYM.js";
+} from "../../chunks/chunk-UEK3GLQ7.js";
+import "../../chunks/chunk-MWSH3KUM.js";
 import {
   help
 } from "../../chunks/chunk-DOBFJJLK.js";
@@ -77,7 +77,7 @@ import {
   parseEnv,
   parseTarget,
   require_lib
-} from "../../chunks/chunk-4MTNDNUR.js";
+} from "../../chunks/chunk-QZIKP33H.js";
 import {
   TelemetryClient
 } from "../../chunks/chunk-XB2KZC2B.js";

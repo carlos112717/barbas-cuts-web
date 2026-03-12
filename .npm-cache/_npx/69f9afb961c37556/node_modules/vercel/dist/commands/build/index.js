@@ -11,35 +11,35 @@ import {
   staticFiles,
   validateConfig,
   writeBuildResult
-} from "../../chunks/chunk-4QETQOUQ.js";
+} from "../../chunks/chunk-MM7YCFM3.js";
 import {
   require_semver
 } from "../../chunks/chunk-IB5L4LKZ.js";
 import {
   pullCommandLogic
-} from "../../chunks/chunk-GEYBIZGF.js";
+} from "../../chunks/chunk-GOAQV2VE.js";
 import {
   pickOverrides,
   readProjectSettings
-} from "../../chunks/chunk-IGWOW3XS.js";
+} from "../../chunks/chunk-JIS3P4GY.js";
 import {
   require_dist
-} from "../../chunks/chunk-XGUZYJXE.js";
+} from "../../chunks/chunk-IUO3OCIL.js";
 import "../../chunks/chunk-QXRJ52T4.js";
-import "../../chunks/chunk-CUUJWNAY.js";
-import "../../chunks/chunk-F2FJ3QZG.js";
-import "../../chunks/chunk-LF56WF3E.js";
-import "../../chunks/chunk-HXZPHN34.js";
-import "../../chunks/chunk-VKQV2LPP.js";
+import "../../chunks/chunk-QFEHHCRR.js";
+import "../../chunks/chunk-UPP3OQY4.js";
+import "../../chunks/chunk-QE7MP4UA.js";
+import "../../chunks/chunk-CJ3LGMHG.js";
+import "../../chunks/chunk-ZYNFSRAX.js";
 import {
   DEFAULT_VERCEL_CONFIG_FILENAME,
   compileVercelConfig,
   findSourceVercelConfigFile,
   require_main
-} from "../../chunks/chunk-NN6I6YMJ.js";
+} from "../../chunks/chunk-UEK3GLQ7.js";
 import {
   buildCommand
-} from "../../chunks/chunk-43L4BNYM.js";
+} from "../../chunks/chunk-MWSH3KUM.js";
 import {
   help
 } from "../../chunks/chunk-DOBFJJLK.js";
@@ -54,7 +54,7 @@ import {
   require_lib,
   require_minimatch2 as require_minimatch,
   resolveProjectCwd
-} from "../../chunks/chunk-4MTNDNUR.js";
+} from "../../chunks/chunk-QZIKP33H.js";
 import {
   TelemetryClient
 } from "../../chunks/chunk-XB2KZC2B.js";

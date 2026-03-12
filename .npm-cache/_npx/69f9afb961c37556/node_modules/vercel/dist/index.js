@@ -15,10 +15,10 @@ import {
   did_you_mean_default,
   executeUpgrade,
   login
-} from "./chunks/chunk-7KHMGQNF.js";
+} from "./chunks/chunk-YFK6VPTB.js";
 import {
   getUpdateCommand
-} from "./chunks/chunk-2MDXGVZV.js";
+} from "./chunks/chunk-DLPKFSED.js";
 import {
   Client,
   getAuthConfigFilePath,
@@ -27,17 +27,17 @@ import {
   readConfigFile,
   writeToAuthConfigFile,
   writeToConfigFile
-} from "./chunks/chunk-AABYT6JI.js";
+} from "./chunks/chunk-UA5FZ6JU.js";
 import {
   highlight
 } from "./chunks/chunk-V5P25P7F.js";
 import {
   getScope
-} from "./chunks/chunk-XIQUACWR.js";
+} from "./chunks/chunk-DGG3YKA2.js";
 import {
   commandNames,
   commands
-} from "./chunks/chunk-677KLOZL.js";
+} from "./chunks/chunk-YWFGPAMJ.js";
 import "./chunks/chunk-U6XOC6E4.js";
 import "./chunks/chunk-O7I4ZOCC.js";
 import "./chunks/chunk-LW5ZNGW7.js";
@@ -49,18 +49,18 @@ import {
 } from "./chunks/chunk-IB5L4LKZ.js";
 import {
   require_dist as require_dist3
-} from "./chunks/chunk-XGUZYJXE.js";
+} from "./chunks/chunk-IUO3OCIL.js";
 import {
   require_lib as require_lib2
 } from "./chunks/chunk-QXRJ52T4.js";
 import {
   require_execa,
   require_isexe
-} from "./chunks/chunk-CUUJWNAY.js";
-import "./chunks/chunk-F2FJ3QZG.js";
-import "./chunks/chunk-VKQV2LPP.js";
-import "./chunks/chunk-NN6I6YMJ.js";
-import "./chunks/chunk-43L4BNYM.js";
+} from "./chunks/chunk-QFEHHCRR.js";
+import "./chunks/chunk-UPP3OQY4.js";
+import "./chunks/chunk-ZYNFSRAX.js";
+import "./chunks/chunk-UEK3GLQ7.js";
+import "./chunks/chunk-MWSH3KUM.js";
 import "./chunks/chunk-DOBFJJLK.js";
 import {
   getTeams,
@@ -71,7 +71,7 @@ import {
   readJSONFile,
   require_lib,
   require_xdg_app_paths
-} from "./chunks/chunk-4MTNDNUR.js";
+} from "./chunks/chunk-QZIKP33H.js";
 import {
   TelemetryClient,
   TelemetryEventStore
@@ -23924,14 +23924,9 @@ var main = async () => {
           func = (await import("./commands-bulk.js")).activity;
           break;
         case "alerts":
-          if (process.env.FF_ALERTS) {
-            telemetry.trackCliCommandAlerts(userSuppliedSubCommand);
-            func = (await import("./commands-bulk.js")).alerts;
-            break;
-          } else {
-            func = null;
-            break;
-          }
+          telemetry.trackCliCommandAlerts(userSuppliedSubCommand);
+          func = (await import("./commands-bulk.js")).alerts;
+          break;
         case "api":
           telemetry.trackCliCommandApi(userSuppliedSubCommand);
           func = (await import("./commands-bulk.js")).api;

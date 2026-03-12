@@ -75,7 +75,6 @@ export const enviarRecordatorios = onSchedule("every 30 minutes", async () => {
 
     snapshot.docs.forEach((docSnap) => {
       const appointment = docSnap.data();
-      if (appointment.customerId === "manual") return;
       if (!isValidEmail(appointment.customerEmail)) return;
 
       const reminderEmail = buildReminderEmail({

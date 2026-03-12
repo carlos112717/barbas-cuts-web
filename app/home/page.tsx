@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -10,6 +11,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [userName, setUserName] = useState<string>("");
+  const [userPhotoURL, setUserPhotoURL] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,12 +35,21 @@ export default function HomeScreen() {
             } else {
               setUserName("Usuario sin nombre");
             }
+            if (typeof data.photoURL === "string" && data.photoURL.trim()) {
+              setUserPhotoURL(data.photoURL.trim());
+            } else if (currentUser.photoURL) {
+              setUserPhotoURL(currentUser.photoURL);
+            } else {
+              setUserPhotoURL("");
+            }
           } else {
             setUserName("Usuario de Prueba");
+            setUserPhotoURL(currentUser.photoURL || "");
           }
         } catch (error) {
           console.error("Error al obtener datos del usuario:", error);
           setUserName("Cliente");
+          setUserPhotoURL(currentUser.photoURL || "");
         }
       } else {
         router.push("/");
@@ -72,15 +83,30 @@ export default function HomeScreen() {
             <p className="text-gray-400 text-sm">Hola, {userName}</p>
             <h1 className="text-white text-lg sm:text-2xl font-bold leading-tight">Bienvenido a Barbas Cut&apos;s</h1>
           </div>
-          <button
-            onClick={handleLogout}
-            className="w-11 h-11 flex items-center justify-center text-barbas-gold hover:bg-white/10 rounded-full transition-colors shrink-0"
-            title="Cerrar sesion"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => router.push("/profile")}
+              className="w-11 h-11 rounded-full border border-barbas-gold/40 bg-barbas-dark overflow-hidden flex items-center justify-center relative"
+              title="Mi perfil"
+            >
+              {userPhotoURL ? (
+                <Image src={userPhotoURL} alt={userName || "Foto de perfil"} fill sizes="44px" className="w-full h-full object-cover" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-barbas-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-11 h-11 flex items-center justify-center text-barbas-gold hover:bg-white/10 rounded-full transition-colors"
+              title="Cerrar sesion"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </button>
+          </div>
         </header>
 
         <button

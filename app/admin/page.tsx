@@ -14,6 +14,7 @@ import {
   getBookedTimesForBarber,
   queueAppointmentCancellationEmail,
 } from "../../lib/appointments";
+import { buildBookingConfirmationEmail } from "../../lib/emailTemplates";
 import { buildTimeSlots, DEFAULT_BUSINESS_HOURS, normalizeBusinessHours, type BusinessHours } from "../../lib/scheduling";
 
 interface Appointment {
@@ -83,12 +84,15 @@ const getWhatsAppLink = (phone: string | undefined) => {
   return `https://wa.me/${normalized}`;
 };
 
+const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
 export default function AdminDashboard() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminName, setAdminName] = useState("Administrador");
+  const [adminPhotoURL, setAdminPhotoURL] = useState("");
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [barbers, setBarbers] = useState<Barber[]>([]);
@@ -99,6 +103,7 @@ export default function AdminDashboard() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
+  const [newCustomerEmail, setNewCustomerEmail] = useState("");
   const [newBarberId, setNewBarberId] = useState("");
   const [newServiceId, setNewServiceId] = useState("");
   const [newDate, setNewDate] = useState("");
@@ -268,6 +273,13 @@ export default function AdminDashboard() {
         const userData = userDoc.data();
         if (typeof userData.name === "string" && userData.name.trim()) {
           setAdminName(userData.name.trim());
+        }
+        if (typeof userData.photoURL === "string" && userData.photoURL.trim()) {
+          setAdminPhotoURL(userData.photoURL.trim());
+        } else if (currentUser.photoURL) {
+          setAdminPhotoURL(currentUser.photoURL);
+        } else {
+          setAdminPhotoURL("");
         }
 
         setIsAdmin(true);
@@ -515,7 +527,12 @@ export default function AdminDashboard() {
     const barber = activeBarbers.find((item) => item.id === newBarberId);
     const service = activeServices.find((item) => item.id === newServiceId);
     const customerName = newCustomerName.trim();
+    const customerEmail = newCustomerEmail.trim().toLowerCase();
     if (!barber || !service || !customerName || !newDate || !newTime) return;
+    if (!isValidEmail(customerEmail)) {
+      alert("Ingresa un correo electronico valido para enviar confirmacion y recordatorio.");
+      return;
+    }
     if (bookedManualTimes.includes(newTime)) {
       alert("Ese horario no esta disponible.");
       return;
@@ -526,7 +543,7 @@ export default function AdminDashboard() {
       const { appointmentId, lockId } = await createAppointmentWithLock(db, {
         customerId: "manual",
         customerName,
-        customerEmail: "Presencial / Telefono",
+        customerEmail,
         barberId: barber.id,
         barberName: barber.name,
         serviceId: service.id,
@@ -542,7 +559,7 @@ export default function AdminDashboard() {
         lockId,
         customerId: "manual",
         customerName,
-        customerEmail: "Presencial / Telefono",
+        customerEmail,
         barberId: barber.id,
         barberName: barber.name,
         serviceId: service.id,
@@ -552,7 +569,27 @@ export default function AdminDashboard() {
         time: newTime,
       }]));
 
+      try {
+        const confirmationEmail = buildBookingConfirmationEmail({
+          customerName,
+          barberName: barber.name,
+          serviceName: service.name,
+          date: newDate,
+          time: newTime,
+          price: service.price,
+        });
+
+        await addDoc(collection(db, "mail"), {
+          to: customerEmail,
+          message: confirmationEmail,
+        });
+      } catch (emailError) {
+        console.error("Error sending manual booking confirmation email:", emailError);
+        alert("La cita se creo, pero no se pudo enviar el correo de confirmacion.");
+      }
+
       setNewCustomerName("");
+      setNewCustomerEmail("");
       setNewDate("");
       setIsModalOpen(false);
       setAvailabilityRefreshKey((prev) => prev + 1);
@@ -716,9 +753,24 @@ export default function AdminDashboard() {
     <main className="min-h-screen bg-barbas-black p-3 sm:p-6 text-white overflow-x-hidden">
       <div className="max-w-6xl mx-auto space-y-6">
         <header className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center border-b border-white/10 pb-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold">Administrador</h1>
-            <p className="text-sm text-gray-400 mt-1">Sesion: {adminName}</p>
+          <div className="flex items-center gap-3 min-w-0">
+            <button
+              onClick={() => router.push("/profile")}
+              className="w-12 h-12 rounded-full border border-barbas-gold/40 bg-black/30 overflow-hidden flex items-center justify-center relative shrink-0"
+              title="Mi perfil"
+            >
+              {adminPhotoURL ? (
+                <Image src={adminPhotoURL} alt={adminName || "Foto de perfil"} fill sizes="48px" className="w-full h-full object-cover" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-barbas-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold">Administrador</h1>
+              <p className="text-sm text-gray-400 mt-1 wrap-break-word">Sesion: {adminName}</p>
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full sm:w-auto">
             <button onClick={() => setIsModalOpen(true)} className="bg-barbas-gold text-barbas-black px-3 py-2 rounded-lg font-bold min-h-11">Nueva cita</button>
@@ -1046,6 +1098,7 @@ export default function AdminDashboard() {
           <form onSubmit={handleManualBooking} className="w-full max-w-md bg-barbas-dark border border-white/10 rounded-xl p-4 space-y-3 max-h-[90vh] overflow-y-auto">
             <h3 className="text-xl font-bold">Nueva cita manual</h3>
             <input value={newCustomerName} onChange={(event) => setNewCustomerName(event.target.value)} placeholder="Cliente" className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2" required />
+            <input type="email" value={newCustomerEmail} onChange={(event) => setNewCustomerEmail(event.target.value)} placeholder="Correo del cliente" className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2" required />
             <select value={newBarberId} onChange={(event) => setNewBarberId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeBarbers.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
             <select value={newServiceId} onChange={(event) => setNewServiceId(event.target.value)} className="w-full bg-black/30 border border-gray-600 rounded px-3 py-2">{activeServices.map((item) => <option key={item.id} value={item.id}>{item.name} - {item.price} EUR</option>)}</select>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
